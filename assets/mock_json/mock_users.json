@@ -1,0 +1,104 @@
+[
+  {
+    "isMale": true,
+    "selectedGoalsIndexes": [
+      1,
+      2,
+      3
+    ],
+    "selectedSplitIndexes": [
+      2,
+      0,
+      1
+    ],
+    "dateOfBirth": "2004-07-11T00:00:00.000",
+    "weight": 78,
+    "height": 183,
+    "fitPercentage": 0.9,
+    "coins": 150,
+    "nickName": "Alish",
+    "location": "Kazakhstan, Astana",
+    "totalKm": 152.9
+  },
+  {
+    "isMale": true,
+    "selectedGoalsIndexes": [
+      1,
+      2,
+      3
+    ],
+    "selectedSplitIndexes": [
+      2,
+      0,
+      1
+    ],
+    "dateOfBirth": "1995-03-20T00:00:00.000",
+    "weight": 70,
+    "height": 175,
+    "fitPercentage": 0.85,
+    "coins": 230,
+    "nickName": "JohnDoe",
+    "location": "United States, New York",
+    "totalKm": 1255.2
+  },
+  {
+    "isMale": false,
+    "selectedGoalsIndexes": [
+      0,
+      4
+    ],
+    "selectedSplitIndexes": [
+      1,
+      0,
+      2
+    ],
+    "dateOfBirth": "1990-11-02T00:00:00.000",
+    "weight": 63,
+    "height": 160,
+    "fitPercentage": 0.75,
+    "coins": 80,
+    "nickName": "RunningQueen",
+    "location": "Germany, Berlin",
+    "totalKm": 11.5
+  },
+  {
+    "isMale": true,
+    "selectedGoalsIndexes": [
+      0,
+      1
+    ],
+    "selectedSplitIndexes": [
+      0,
+      1,
+      2
+    ],
+    "dateOfBirth": "1988-05-15T00:00:00.000",
+    "weight": 90,
+    "height": 195,
+    "fitPercentage": 0.8,
+    "coins": 300,
+    "nickName": "SpeedRacer",
+    "location": "Canada, Toronto",
+    "totalKm": 220.1
+  },
+  {
+    "isMale": false,
+    "selectedGoalsIndexes": [
+      2,
+      4
+    ],
+    "selectedSplitIndexes": [
+      2,
+      0,
+      1
+    ],
+    "dateOfBirth": "2000-09-30T00:00:00.000",
+    "weight": 55,
+    "height": 168,
+    "fitPercentage": 0.95,
+    "coins": 420,
+    "nickName": "RunnerGirl",
+    "location": "Australia, Sydney",
+    "totalKm": 154.05
+  }
+]
