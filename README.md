@@ -1,4 +1,4 @@
-# smerse
+# tracksync
 
 A new Flutter project.
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smerse/presentation/screens/choose_level_screen.dart';
-import 'package:smerse/presentation/screens/choose_split_screen.dart';
+import 'package:tracksync/presentation/screens/choose_level_screen.dart';
+import 'package:tracksync/presentation/screens/choose_split_screen.dart';
 
 import '../blocs/user_config_bloc/user_config_bloc.dart';
 import 'choose_details_screen.dart';

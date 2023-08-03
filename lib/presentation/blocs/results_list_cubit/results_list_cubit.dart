@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:smerse/domain/use_cases/run_result_use_case.dart';
+import 'package:tracksync/domain/use_cases/run_result_use_case.dart';
 
 import '../../../data/models/run_result.dart';
 

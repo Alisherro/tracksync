@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:smerse/config/app_dependencies.dart';
-import 'package:smerse/config/app_theme.dart';
-import 'package:smerse/config/router_config.dart';
+import 'package:tracksync/config/app_dependencies.dart';
+import 'package:tracksync/config/app_theme.dart';
+import 'package:tracksync/config/router_config.dart';
 
 import 'config/bloc_observer.dart';
 

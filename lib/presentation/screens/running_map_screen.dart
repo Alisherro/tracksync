@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smerse/constants.dart';
+import 'package:tracksync/constants.dart';
 
 import '../blocs/running_map_bloc/running_map_bloc.dart';
 
@@ -24,9 +24,12 @@ class RunningMapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(GoRouter.of(context).routerDelegate.currentConfiguration.fullPath);
-
-    return BlocBuilder<RunningMapBloc, RunningMapState>(
+    return BlocConsumer<RunningMapBloc, RunningMapState>(
+      listener: (context, state){
+        if(state is RunningMapRunEnd){
+          context.go('/health/result/${state.id}');
+        }
+      },
       builder: (context, state) {
         if (state is RunningMapErrorState) {
           return Center(

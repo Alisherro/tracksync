@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smerse/constants.dart';
+import 'package:tracksync/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/discovery_button_widget.dart';
 
@@ -110,7 +111,12 @@ class GroupsScreen extends StatelessWidget {
                                 child: SvgPicture.asset(twitter),
                               ),
                               subtitle: 'Follow friends from Twitter',
-                              onTap: () {},
+                              onTap: () async {
+                                if (!await launchUrl(
+                                    Uri.parse('https://twitter.com'))) {
+                                  throw Exception('Could not launch');
+                                }
+                              },
                               buttonText: 'CONNECT',
                             ),
                           ),
@@ -124,7 +130,12 @@ class GroupsScreen extends StatelessWidget {
                                 child: SvgPicture.asset(discord),
                               ),
                               subtitle: 'Follow friends from Discord',
-                              onTap: () {},
+                              onTap: () async {
+                                if (!await launchUrl(
+                                    Uri.parse('https://discord.com'))) {
+                                  throw Exception('Could not launch');
+                                }
+                              },
                               buttonText: 'CONNECT',
                             ),
                           ),

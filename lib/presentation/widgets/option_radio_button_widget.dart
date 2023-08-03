@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:smerse/constants.dart';
+import 'package:tracksync/constants.dart';
 
 class OptionRadioButtonWidget extends StatelessWidget {
   const OptionRadioButtonWidget(

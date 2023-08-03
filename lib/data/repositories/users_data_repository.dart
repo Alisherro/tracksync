@@ -1,5 +1,5 @@
-import 'package:smerse/data/data_provider/users_data_provider.dart';
-import 'package:smerse/domain/repositories/users_repository.dart';
+import 'package:tracksync/data/data_provider/users_data_provider.dart';
+import 'package:tracksync/domain/repositories/users_repository.dart';
 
 import '../models/user.dart';
 

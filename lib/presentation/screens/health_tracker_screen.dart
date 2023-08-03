@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:smerse/constants.dart';
-import 'package:smerse/presentation/blocs/results_list_cubit/results_list_cubit.dart';
+import 'package:tracksync/constants.dart';
+import 'package:tracksync/presentation/blocs/results_list_cubit/results_list_cubit.dart';
 
 class HealthTrackerScreen extends StatelessWidget {
   const HealthTrackerScreen({super.key});

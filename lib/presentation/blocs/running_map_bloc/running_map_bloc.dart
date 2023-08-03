@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smerse/domain/use_cases/run_result_use_case.dart';
+import 'package:tracksync/domain/use_cases/run_result_use_case.dart';
 
 import '../../../data/models/run_result.dart';
 
@@ -79,7 +79,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           ..distance = currentState.distance
           ..avgPaceSeconds = currentState.avgPace.inSeconds,
       );
-      event.context.go('/health/result/$id');
+      emit(RunningMapRunEnd(id));
       emit(
         (state as RunningMapAvailableState).copyWith(
           isRunning: isRunning,

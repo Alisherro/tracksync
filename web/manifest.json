@@ -1,6 +1,6 @@
 {
-    "name": "smerse",
-    "short_name": "smerse",
+    "name": "tracksync",
+    "short_name": "tracksync",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

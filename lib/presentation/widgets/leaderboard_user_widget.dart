@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:smerse/constants.dart';
+import 'package:tracksync/constants.dart';
 
 import '../../data/models/user.dart';
 

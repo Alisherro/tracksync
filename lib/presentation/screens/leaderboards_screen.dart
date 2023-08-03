@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smerse/constants.dart';
-import 'package:smerse/presentation/blocs/leaderboard_cubit/leaderboard_cubit.dart';
+import 'package:tracksync/constants.dart';
+import 'package:tracksync/presentation/blocs/leaderboard_cubit/leaderboard_cubit.dart';
 
 import '../widgets/leaderboard_user_widget.dart';
 

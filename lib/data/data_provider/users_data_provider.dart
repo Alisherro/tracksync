@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:smerse/data/models/user.dart';
+import 'package:tracksync/data/models/user.dart';
 
 abstract class UsersDataProvider {
   Future<List<User>> getUsersList(String filter);

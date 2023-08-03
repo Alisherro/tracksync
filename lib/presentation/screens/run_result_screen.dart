@@ -7,7 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:smerse/presentation/blocs/result_cubit/run_result_cubit.dart';
+import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
 
 import '../../constants.dart';
 import '../../data/models/run_result.dart';

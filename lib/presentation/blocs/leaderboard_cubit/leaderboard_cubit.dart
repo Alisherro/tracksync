@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:smerse/domain/use_cases/users_use_case.dart';
+import 'package:tracksync/domain/use_cases/users_use_case.dart';
 
 import '../../../constants.dart';
 import '../../../data/models/user.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smerse/constants.dart';
-import 'package:smerse/presentation/widgets/next_button_widget.dart';
+import 'package:tracksync/constants.dart';
+import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 
 import '../widgets/pop_button_widget.dart';
 

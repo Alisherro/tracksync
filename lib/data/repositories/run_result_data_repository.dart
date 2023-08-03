@@ -1,6 +1,6 @@
 import 'package:flutter/src/material/date.dart';
 
-import 'package:smerse/data/models/run_result.dart';
+import 'package:tracksync/data/models/run_result.dart';
 
 import '../../domain/repositories/run_result_repository.dart';
 import '../data_provider/run_result_data_provider.dart';

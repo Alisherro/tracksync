@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smerse/constants.dart';
-import 'package:smerse/presentation/widgets/config_title_widget.dart';
-import 'package:smerse/presentation/widgets/next_button_widget.dart';
+import 'package:tracksync/constants.dart';
+import 'package:tracksync/presentation/widgets/config_title_widget.dart';
+import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 
 import '../blocs/user_config_bloc/user_config_bloc.dart';
 
