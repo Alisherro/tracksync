@@ -24,12 +24,7 @@ class RunningMapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<RunningMapBloc, RunningMapState>(
-      listener: (context, state){
-        if(state is RunningMapRunEnd){
-          context.go('/health/result/${state.id}');
-        }
-      },
+    return BlocBuilder<RunningMapBloc, RunningMapState>(
       builder: (context, state) {
         if (state is RunningMapErrorState) {
           return Center(

@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:tracksync/data/models/user.dart';
 
-abstract class UsersDataProvider {
+abstract class LeaderboardDataProvider {
   Future<List<User>> getUsersList(String filter);
 }
 
-class MockUsersDataProvider extends UsersDataProvider {
+class MockUsersDataProvider extends LeaderboardDataProvider {
   @override
   Future<List<User>> getUsersList(String filter) async {
     final String jsonString =

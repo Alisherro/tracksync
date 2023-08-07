@@ -18,6 +18,7 @@ part 'running_map_state.dart';
 
 class Ticker {
   const Ticker();
+
   Stream<int> tick() {
     return Stream.periodic(const Duration(seconds: 1), (x) => x + 1);
   }
@@ -79,7 +80,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           ..distance = currentState.distance
           ..avgPaceSeconds = currentState.avgPace.inSeconds,
       );
-      emit(RunningMapRunEnd(id));
+      event.context.go('/health/result/${id}');
       emit(
         (state as RunningMapAvailableState).copyWith(
           isRunning: isRunning,

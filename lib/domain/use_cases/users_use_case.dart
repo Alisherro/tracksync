@@ -8,7 +8,6 @@ class UsersUseCase {
   final UsersRepository usersRepository;
 
   Future<List<User>> getUsers(String filter) async {
-    print(filter);
     return await usersRepository.getUsersList(filter);
   }
 }

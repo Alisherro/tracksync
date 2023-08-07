@@ -61,12 +61,3 @@ class RunningMapAvailableState extends RunningMapState {
     );
   }
 }
-
-class RunningMapRunEnd extends RunningMapState {
-  RunningMapRunEnd(this.id);
-
-  final int? id;
-
-  @override
-  List<Object?> get props => [];
-}

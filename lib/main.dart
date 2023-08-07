@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
         ),
         Provider.value(
           value: AppDependencies.provideUsersUseCase(),
+        ),
+        Provider.value(
+          value: AppDependencies.provideUserUseCase(),
         )
       ],
       child: MaterialApp.router(
