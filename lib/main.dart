@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:tracksync/config/app_dependencies.dart';
 import 'package:tracksync/config/app_theme.dart';
 import 'package:tracksync/config/router_config.dart';
+import 'package:tracksync/presentation/providers/user_provider.dart';
 
 import 'config/bloc_observer.dart';
 
@@ -31,7 +32,8 @@ class MyApp extends StatelessWidget {
         ),
         Provider.value(
           value: AppDependencies.provideUserUseCase(),
-        )
+        ),
+        ChangeNotifierProvider(create: (_) => UserProvider())
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

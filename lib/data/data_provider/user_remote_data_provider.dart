@@ -14,7 +14,6 @@ class UserHttpDataProvider extends UserRemoteDataProvider {
 
   @override
   Future<String> login(String userName, String password) async {
-    print('LOGIN');
     final url = Uri.parse('${_baseUrl}auth');
     final body = {"username": userName, "password": password};
     final json = jsonEncode(body);
@@ -34,8 +33,10 @@ class UserHttpDataProvider extends UserRemoteDataProvider {
   Future<bool> register(String userName, String email, String password) async {
     final url = Uri.parse('${_baseUrl}registration');
     final body = {"username": userName, "password": password, "email": email};
-    final json = jsonEncode(body.toString());
-    final response = await http.post(url, body: json);
+    final json = jsonEncode(body);
+    final response = await http.post(url, body: json,headers: {
+      'Content-Type': 'application/json',
+    });
     if (response.statusCode == 200) {
       return true;
     } else {

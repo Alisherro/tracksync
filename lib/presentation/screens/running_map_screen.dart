@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tracksync/constants.dart';
+import 'package:tracksync/presentation/providers/user_provider.dart';
 
 import '../blocs/running_map_bloc/running_map_bloc.dart';
 
@@ -143,20 +143,20 @@ class RunningMapScreen extends StatelessWidget {
                                   '${state.kcal.toStringAsFixed(1)}k',
                                   style: _mediumTextStyle,
                                 ),
-                                Text(
+                                const Text(
                                   'Сalories',
                                   style: _smallTextStyle,
                                 ),
                               ],
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Column(
                               children: [
                                 Text(
                                   '${minutesStr(state.avgPace.inSeconds)}:${secondsStr(state.avgPace.inSeconds)}',
                                   style: _mediumTextStyle,
                                 ),
-                                Text(
+                                const Text(
                                   'Avg. pace (min/km)',
                                   style: _smallTextStyle,
                                 ),

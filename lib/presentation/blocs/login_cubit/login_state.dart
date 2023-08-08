@@ -5,8 +5,12 @@ abstract class LoginState {}
 
 class LoginInitial extends LoginState {}
 
-class LoginLoading extends LoginState{}
+class LoginLoading extends LoginState {}
 
 class LoginError extends LoginState {}
 
-class LoginSuccess extends LoginState {}
+class LoginSuccess extends LoginState {
+  LoginSuccess(this.user);
+
+  final User user;
+}

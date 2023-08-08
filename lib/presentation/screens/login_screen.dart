@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tracksync/presentation/blocs/login_cubit/login_cubit.dart';
+import 'package:tracksync/presentation/providers/user_provider.dart';
 
 import '../../constants.dart';
 
@@ -16,6 +17,7 @@ class LoginScreen extends StatelessWidget {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
+          context.read<UserProvider>().user = state.user;
           context.go('/run');
         } else if (state is LoginError) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -97,9 +99,12 @@ class LoginScreen extends StatelessWidget {
                       child: BlocBuilder<LoginCubit, LoginState>(
                         builder: (context, state) {
                           if (state is LoginLoading) {
-                            return const ElevatedButton(
-                              onPressed: null,
-                              child: Text(
+                            return ElevatedButton(
+                              style: const ButtonStyle(
+                                  backgroundColor: MaterialStatePropertyAll(
+                                      disabledButtonColor)),
+                              onPressed: () {},
+                              child: const Text(
                                 'Login',
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -108,9 +113,10 @@ class LoginScreen extends StatelessWidget {
                             return ElevatedButton(
                               onPressed: () {
                                 context.read<LoginCubit>().onLoginButtonTapped(
-                                    userNameController.text,
-                                    passwordController.text,
-                                    true);
+                                      userNameController.text,
+                                      passwordController.text,
+                                      true,
+                                    );
                               },
                               child: const Text('Login'),
                             );
