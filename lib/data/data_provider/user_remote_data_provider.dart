@@ -15,11 +15,15 @@ class UserHttpDataProvider extends UserRemoteDataProvider {
   @override
   Future<String> login(String userName, String password) async {
     final url = Uri.parse('${_baseUrl}auth');
+
     final body = {"username": userName, "password": password};
+
     final json = jsonEncode(body);
+
     final response = await http.post(url, body: json, headers: {
       'Content-Type': 'application/json',
-    });
+    }).timeout(const Duration(seconds: 5));
+
     if (response.statusCode == 200) {
       final String token = (jsonDecode(response.body) as Map)["token"];
       return token;
@@ -34,9 +38,9 @@ class UserHttpDataProvider extends UserRemoteDataProvider {
     final url = Uri.parse('${_baseUrl}registration');
     final body = {"username": userName, "password": password, "email": email};
     final json = jsonEncode(body);
-    final response = await http.post(url, body: json,headers: {
+    final response = await http.post(url, body: json, headers: {
       'Content-Type': 'application/json',
-    });
+    }).timeout(const Duration(seconds: 5));
     if (response.statusCode == 200) {
       return true;
     } else {

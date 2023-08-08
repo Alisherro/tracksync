@@ -6,12 +6,21 @@ import 'package:tracksync/presentation/blocs/register_cubit/register_cubit.dart'
 import 'package:tracksync/presentation/providers/user_provider.dart';
 import '../../constants.dart';
 
-class RegistrationScreen extends StatelessWidget {
-  RegistrationScreen({super.key});
+class RegistrationScreen extends StatefulWidget {
+  const RegistrationScreen({super.key});
 
+  @override
+  State<RegistrationScreen> createState() => _RegistrationScreenState();
+}
+
+class _RegistrationScreenState extends State<RegistrationScreen> {
   final nameController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
+
+  bool remember = true;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +28,8 @@ class RegistrationScreen extends StatelessWidget {
       listener: (context, state) {
         if (state is RegisterFail) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Error'),
+            SnackBar(
+              content: Text(state.errorDescription ?? 'Error'),
             ),
           );
         } else if (state is RegisterSuccess) {
@@ -82,7 +91,8 @@ class RegistrationScreen extends StatelessWidget {
                           context.read<RegisterCubit>().onLoginButtonTapped(
                               nameController.text,
                               emailController.text,
-                              passwordController.text);
+                              passwordController.text,
+                              remember);
                         },
                         child: const Text('Login'),
                       );
@@ -96,7 +106,13 @@ class RegistrationScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Checkbox(value: true, onChanged: (val) {}),
+                      Checkbox(
+                          value: remember,
+                          onChanged: (val) {
+                            setState(() {
+                              remember = val ?? false;
+                            });
+                          }),
                       const SizedBox(width: 5),
                       Text(
                         'Remember Me',
@@ -145,7 +161,7 @@ class RegistrationScreen extends StatelessWidget {
                               backgroundColor:
                                   const MaterialStatePropertyAll(pinkColor)),
                       onPressed: () {},
-                      child: Text('Google'),
+                      child: const Text('Google'),
                     ),
                   ),
                   const SizedBox(width: 15),

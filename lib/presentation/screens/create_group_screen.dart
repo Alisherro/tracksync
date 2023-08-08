@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tracksync/constants.dart';
 import 'package:tracksync/presentation/widgets/next_button_widget.dart';
-
+import 'dart:io';
 import '../widgets/pop_button_widget.dart';
 
-class CreateGroupScreen extends StatelessWidget {
+class CreateGroupScreen extends StatefulWidget {
   const CreateGroupScreen({super.key});
+
+  @override
+  State<CreateGroupScreen> createState() => _CreateGroupScreenState();
+}
+
+class _CreateGroupScreenState extends State<CreateGroupScreen> {
+  Future<void> _pickImageFromGallery() async {
+    final returnedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
+    if (returnedImage == null) return;
+    setState(() {
+      selectedImage = File(returnedImage.path);
+    });
+  }
+
+  File? selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +44,18 @@ class CreateGroupScreen extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: (MediaQuery.sizeOf(context).width - 100) / 2,
-                      child: const CircleAvatar(
+                      child: CircleAvatar(
                         radius: 80,
                         backgroundColor: emptyColor,
-                        child: Icon(
-                          Icons.image_outlined,
-                          size: 30,
-                        ),
+                        backgroundImage: selectedImage != null
+                            ? FileImage(selectedImage!)
+                            : null,
+                        child: selectedImage != null
+                            ? null
+                            : const Icon(
+                                Icons.image_outlined,
+                                size: 30,
+                              ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -59,7 +81,9 @@ class CreateGroupScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _pickImageFromGallery();
+                            },
                             style: const ButtonStyle(
                                 padding: MaterialStatePropertyAll(
                                     EdgeInsets.symmetric(
@@ -105,7 +129,7 @@ class CreateGroupScreen extends StatelessWidget {
               width: double.infinity,
               child: NextButtonWidget(
                 isEnable: true,
-                enableCallback: () =>context.go('/groups/create/group'),
+                enableCallback: () => context.go('/groups/create/group'),
                 disableCallback: () {},
                 title: 'Create',
               ),

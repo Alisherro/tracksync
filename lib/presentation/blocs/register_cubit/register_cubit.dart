@@ -13,11 +13,15 @@ class RegisterCubit extends Cubit<RegisterState> {
   final UserUseCase _userUseCase;
 
   Future<void> onLoginButtonTapped(
-      String userName, String email, String password) async {
+      String userName, String email, String password, bool remember) async {
     emit(RegisterLoading());
-    bool success = await _userUseCase.register(userName, email, password);
-    success
-        ? emit(RegisterSuccess(User(nickName: userName)))
-        : emit(RegisterFail());
+    try {
+      bool success = await _userUseCase.register(userName, email, password);
+      success
+          ? emit(RegisterSuccess(User(nickName: userName)))
+          : emit(RegisterFail());
+    } catch (e) {
+      emit(RegisterFail(errorDescription: e.toString()));
+    }
   }
 }

@@ -6,11 +6,19 @@ import 'package:tracksync/presentation/providers/user_provider.dart';
 
 import '../../constants.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController userNameController = TextEditingController();
+
   final TextEditingController passwordController = TextEditingController();
+
+  bool remember = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +29,9 @@ class LoginScreen extends StatelessWidget {
           context.go('/run');
         } else if (state is LoginError) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Error'),
-              duration: Duration(milliseconds: 300),
+            SnackBar(
+              content: Text(state.errorDescription ?? 'Error'),
+              duration: const Duration(milliseconds: 300),
             ),
           );
         }
@@ -71,8 +79,12 @@ class LoginScreen extends StatelessWidget {
                     Row(
                       children: [
                         Checkbox(
-                          value: true,
-                          onChanged: (val) {},
+                          value: remember,
+                          onChanged: (val) {
+                            setState(() {
+                              remember = val ?? false;
+                            });
+                          },
                         ),
                         const SizedBox(width: 5),
                         Text(
@@ -106,7 +118,7 @@ class LoginScreen extends StatelessWidget {
                               onPressed: () {},
                               child: const Text(
                                 'Login',
-                                style: TextStyle(color: Colors.white),
+                                style: TextStyle(color: Colors.grey),
                               ),
                             );
                           } else {
@@ -115,7 +127,7 @@ class LoginScreen extends StatelessWidget {
                                 context.read<LoginCubit>().onLoginButtonTapped(
                                       userNameController.text,
                                       passwordController.text,
-                                      true,
+                                      remember,
                                     );
                               },
                               child: const Text('Login'),

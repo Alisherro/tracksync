@@ -11,6 +11,10 @@ class RegisterSuccess extends RegisterState {
   final User user;
 }
 
-class RegisterFail extends RegisterState {}
+class RegisterFail extends RegisterState {
+  RegisterFail({this.errorDescription});
+
+  final String? errorDescription;
+}
 
 class RegisterLoading extends RegisterState {}
