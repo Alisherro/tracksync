@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:tracksync/constants.dart';
 
 import '../../data/models/user.dart';
@@ -36,7 +35,7 @@ class LeaderboardUserWidget extends StatelessWidget {
                             : index == 1
                                 ? blueColor
                                 : index == 2
-                                    ? secondColor
+                                    ? greenColor
                                     : Colors.white,
                         fontFamily: 'EurostileRound'),
                   ),

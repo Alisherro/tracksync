@@ -64,7 +64,7 @@ class HealthTrackerScreen extends StatelessWidget {
                                       data: cupertinoPickerStyle,
                                       child: CupertinoDatePicker(
                                         initialDateTime: DateTime.now(),
-                                        mode: CupertinoDatePickerMode.monthYear,
+                                        mode: CupertinoDatePickerMode.date,
                                         use24hFormat: true,
                                         onDateTimeChanged: (DateTime newDate) {
                                           BlocProvider.of<ResultsListCubit>(
@@ -225,7 +225,7 @@ class HealthTrackerScreen extends StatelessWidget {
                                               Text(
                                                 '${data.distance?.toStringAsFixed(2) ?? '0'}km',
                                                 style: style.copyWith(
-                                                    color: secondColor),
+                                                    color: orangeColor),
                                               ),
                                               Text(
                                                 '${hoursStr(data.totalSeconds ?? 0)}:${minutesStr(data.totalSeconds ?? 0)}:${secondsStr(data.totalSeconds ?? 0)}',

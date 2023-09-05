@@ -15,26 +15,28 @@ class ProfileScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Padding(
+                padding:  EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child:  Text(
                   'PROFILE',
                   style: TextStyle(fontWeight: FontWeight.w600),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        avatar,
-                        width: 100,
-                        height: 100,
-                      ),
-                      const SizedBox(width: 40),
-                      Column(
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      avatar,
+                      width: 100,
+                      height: 100,
+                    ),
+                    const SizedBox(width: 40),
+                    Expanded(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -44,14 +46,16 @@ class ProfileScreen extends StatelessWidget {
                                 .titleMedium
                                 ?.copyWith(color: Colors.white),
                           ),
-                          Text(
-                            context.read<UserProvider>().user?.nickName ??
-                                'null',
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      color: redColor,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                          FittedBox(
+                            child: Text(
+                                context.read<UserProvider>().user?.nickName ??
+                                    'null',
+                              style:
+                                  Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                        color: redColor,
+                                        fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis
+                                      ),
+                            ),
                           ),
                           Text(
                             'Male',
@@ -62,13 +66,12 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Spacer(),
-                      SvgPicture.asset(edit),
-                    ],
-                  ),
+                    ),
+                    SvgPicture.asset(edit),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           DecoratedBox(
             decoration: const BoxDecoration(color: emptyColor),
@@ -78,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '\$MERSE',
+                    'TRACKSYNC',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   DecoratedBox(

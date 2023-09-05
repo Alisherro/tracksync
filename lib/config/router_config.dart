@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tracksync/config/app_dependencies.dart';
 import 'package:tracksync/domain/use_cases/run_result_use_case.dart';
 import 'package:tracksync/domain/use_cases/users_use_case.dart';
 import 'package:tracksync/presentation/blocs/login_cubit/login_cubit.dart';
 import 'package:tracksync/presentation/blocs/register_cubit/register_cubit.dart';
 import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
-import 'package:tracksync/presentation/screens/configuration_pages_screen.dart';
 import 'package:tracksync/presentation/screens/login_screen.dart';
 import 'package:tracksync/presentation/screens/profile_screen.dart';
 import '../domain/use_cases/user_use_case.dart';
 import '../presentation/blocs/leaderboard_cubit/leaderboard_cubit.dart';
 import '../presentation/blocs/results_list_cubit/results_list_cubit.dart';
 import '../presentation/blocs/running_map_bloc/running_map_bloc.dart';
-import '../presentation/blocs/user_config_bloc/user_config_bloc.dart';
 import '../presentation/screens/community_screen.dart';
 import '../presentation/screens/create_group_screen.dart';
 import '../presentation/screens/group_screen.dart';
@@ -55,17 +51,11 @@ class AppRouter {
     initialLocation: '/',
     routes: [
       GoRoute(
-        // redirect: (context, state) async {
-        //   final SharedPreferences pref = await SharedPreferences.getInstance();
-        //   final bool isLoggedIn = (pref.getBool('isMale') != null);
-        //   if (isLoggedIn) return '/run';
-        //   return null;
-        // },
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,
           state: state,
           child: BlocProvider(
-            child: LoginScreen(),
+            child: const LoginScreen(),
             create: (c) => LoginCubit(
               Provider.of<UserUseCase>(context),
             ),
@@ -78,23 +68,13 @@ class AppRouter {
           context: context,
           state: state,
           child: BlocProvider(
-              create: (c) => RegisterCubit(
-                    context.read<UserUseCase>(),
-                  ),
-              child:  RegistrationScreen()),
-        ),
-        path: '/registration',
-      ),
-      GoRoute(
-        pageBuilder: (context, state) => buildPageWithDefaultTransition(
-          context: context,
-          state: state,
-          child: BlocProvider(
-            create: (BuildContext context) => UserConfigBloc(),
-            child: const ConfigurationPagesScreen(),
+            create: (c) => RegisterCubit(
+              context.read<UserUseCase>(),
+            ),
+            child: const RegistrationScreen(),
           ),
         ),
-        path: '/config',
+        path: '/registration',
       ),
       StatefulShellRoute.indexedStack(
         pageBuilder: (context, state, navigationShell) {
@@ -124,7 +104,7 @@ class AppRouter {
                 pageBuilder: (context, state) => buildPageWithDefaultTransition(
                   context: context,
                   state: state,
-                  child:  const RunningMapScreen(),
+                  child: const RunningMapScreen(),
                 ),
               )
             ],
@@ -239,24 +219,24 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                  pageBuilder: (context, state) =>
-                      buildPageWithDefaultTransition(
-                        context: context,
-                        state: state,
-                        child: const ProfileScreen(),
-                      ),
-                  path: '/profile',
-                  routes: [
-                    GoRoute(
-                      pageBuilder: (context, state) =>
-                          buildPageWithDefaultTransition(
-                        context: context,
-                        state: state,
-                        child: const GroupsListScreen(),
-                      ),
-                      path: 'groups',
+                pageBuilder: (context, state) => buildPageWithDefaultTransition(
+                  context: context,
+                  state: state,
+                  child: const ProfileScreen(),
+                ),
+                path: '/profile',
+                routes: [
+                  GoRoute(
+                    pageBuilder: (context, state) =>
+                        buildPageWithDefaultTransition(
+                      context: context,
+                      state: state,
+                      child: const GroupsListScreen(),
                     ),
-                  ]),
+                    path: 'groups',
+                  ),
+                ],
+              ),
             ],
           )
         ],

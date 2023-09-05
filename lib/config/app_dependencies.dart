@@ -19,6 +19,6 @@ class AppDependencies {
   }
 
   static UserUseCase provideUserUseCase() {
-    return UserUseCase(UserRepositoryImpl(UserHttpDataProvider()));
+    return UserUseCase(UserRepositoryImpl(UserMockDataProvider()));
   }
 }

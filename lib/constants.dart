@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 
-const Color mainColor = Color(0xff251844);
-const Color secondColor = Color(0xffA026FE);
-const Color disabledButtonColor = Color(0xff4E256F);
-const Color pinkColor = Color(0xffFF676B);
+const Color mainColor = Color(0xff2A2C24);
+const Color secondColor = Color(0xff575A4B);
+const Color disabledButtonColor = Color(0xff816C61);
+const Color pinkColor = Color(0xffB9D8C2);
 const Color blueColor = Color(0xff456FFF);
 const Color greyColor = Color(0xff9C95AD);
-const Color emptyColor = Color(0xff120A27);
-const Color redColor = Color.fromRGBO(255, 103, 107, 1);
+const Color emptyColor = Color(0xff4A5043);
+const Color redColor = Color(0xff9AC2C9);
 const Color greenColor = Color(0xff2FDA9C);
 const Color orangeColor = Color(0xffFD9B00);
 

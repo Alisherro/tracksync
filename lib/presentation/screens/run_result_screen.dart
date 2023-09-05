@@ -92,7 +92,7 @@ class RunResultScreen extends StatelessWidget {
                                   const Text('Total time'),
                                   Text(
                                     '${hoursStr(result.totalSeconds ?? 0)}:${minutesStr(result.totalSeconds ?? 0)}:${secondsStr(result.totalSeconds ?? 0)}',
-                                    style: style.copyWith(color: secondColor),
+                                    style: style.copyWith(color: orangeColor),
                                   ),
                                 ],
                               ),

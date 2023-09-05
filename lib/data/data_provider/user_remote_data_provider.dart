@@ -49,3 +49,17 @@ class UserHttpDataProvider extends UserRemoteDataProvider {
     }
   }
 }
+
+
+class UserMockDataProvider extends UserRemoteDataProvider {
+
+  @override
+  Future<String> login(String userName, String password) async {
+      return 'mock_token';
+  }
+
+  @override
+  Future<bool> register(String userName, String email, String password) async {
+    return true;
+  }
+}
