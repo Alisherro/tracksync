@@ -3,6 +3,7 @@ import 'package:tracksync/constants.dart';
 
 class AppTheme {
   static ThemeData themeData = ThemeData(
+    splashColor: Colors.transparent,
     fontFamily: 'EuclidFlex',
     splashFactory: NoSplash.splashFactory,
     scaffoldBackgroundColor: mainColor,
@@ -76,4 +77,12 @@ class AppTheme {
       ),
     ),
   );
+}
+
+class NoSplashScrollBehavior extends ScrollBehavior{
+  @override
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
 }

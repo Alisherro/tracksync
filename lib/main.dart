@@ -37,6 +37,10 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider())
       ],
       child: MaterialApp.router(
+        builder: (context, child) {
+          return ScrollConfiguration(
+              behavior: NoSplashScrollBehavior(), child: child!);
+        },
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
         title: 'Flutter App',

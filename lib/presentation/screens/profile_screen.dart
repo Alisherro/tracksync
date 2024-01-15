@@ -81,7 +81,7 @@ class ProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'TRACKSYNC',
+                    'tracksync',
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   DecoratedBox(
