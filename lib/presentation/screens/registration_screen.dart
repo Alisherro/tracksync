@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tracksync/presentation/blocs/register_cubit/register_cubit.dart';
 import 'package:tracksync/presentation/providers/user_provider.dart';
-import '../../constants.dart';
+import '../../config/constants.dart';
 
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({super.key});

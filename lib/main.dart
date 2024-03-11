@@ -10,6 +10,7 @@ import 'package:tracksync/presentation/providers/user_provider.dart';
 import 'config/bloc_observer.dart';
 
 void main() async {
+  await setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyGlobalObserver();
   SystemChrome.setPreferredOrientations(
@@ -25,15 +26,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider.value(
-          value: AppDependencies.provideRunResultUseCase(),
-        ),
-        Provider.value(
-          value: AppDependencies.provideUsersUseCase(),
-        ),
-        Provider.value(
-          value: AppDependencies.provideUserUseCase(),
-        ),
         ChangeNotifierProvider(create: (_) => UserProvider())
       ],
       child: MaterialApp.router(

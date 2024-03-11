@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/constants.dart';
+import 'package:tracksync/config/constants.dart';
 import 'package:tracksync/presentation/widgets/pop_button_widget.dart';
 
 class GroupsListScreen extends StatelessWidget {

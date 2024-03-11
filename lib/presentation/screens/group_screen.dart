@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/constants.dart';
+import 'package:tracksync/config/constants.dart';
 import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 
 class GroupScreen extends StatelessWidget {

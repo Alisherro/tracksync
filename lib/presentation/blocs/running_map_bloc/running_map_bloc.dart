@@ -8,9 +8,10 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tracksync/domain/use_cases/run_result_use_case.dart';
+import 'package:tracksync/config/app_dependencies.dart';
 
 import '../../../data/models/run_result.dart';
+import '../../../domain/repositories/run_result_repository.dart';
 
 part 'running_map_event.dart';
 
@@ -25,16 +26,14 @@ class Ticker {
 }
 
 class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
-  RunningMapBloc(this.useCase) : super(RunningMapInitial()) {
+  RunningMapBloc() : super(RunningMapInitial()) {
     on<InitPermissions>(_onInitPermissions);
     on<MapCreated>(_mapCreated);
     on<PositionChanged>(_positionChanged);
     on<RunButtonTapped>(_runButtonTapped);
     on<TimerTicked>(_timerTicked);
   }
-
-  final RunResultUseCase useCase;
-
+  RunResultRepository get _repo=> locator.get<RunResultRepository>();
   late Position position;
   late GoogleMapController controller;
   bool isRunning = false;
@@ -67,7 +66,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
       _tickerSubscription?.cancel();
       final currentState = (state as RunningMapAvailableState);
       int? id;
-      id = await useCase.saveResult(
+      id = await _repo.saveRunResult(
         RunResult()
           ..totalSeconds = currentState.duration.inSeconds
           ..points = currentState.points

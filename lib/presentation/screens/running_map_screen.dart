@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:tracksync/constants.dart';
-import 'package:tracksync/presentation/providers/user_provider.dart';
+import 'package:tracksync/config/constants.dart';
 
 import '../blocs/running_map_bloc/running_map_bloc.dart';
 

@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tracksync/presentation/blocs/login_cubit/login_cubit.dart';
 import 'package:tracksync/presentation/providers/user_provider.dart';
 
-import '../../constants.dart';
+import '../../config/constants.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

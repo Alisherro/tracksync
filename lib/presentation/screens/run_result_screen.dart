@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
 
-import '../../constants.dart';
+import '../../config/constants.dart';
 import '../../data/models/run_result.dart';
 import '../widgets/pop_button_widget.dart';
 

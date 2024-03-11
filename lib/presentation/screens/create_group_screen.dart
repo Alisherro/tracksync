@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tracksync/constants.dart';
+import 'package:tracksync/config/constants.dart';
 import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 import 'dart:io';
 import '../widgets/pop_button_widget.dart';

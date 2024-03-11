@@ -1,19 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:tracksync/domain/use_cases/run_result_use_case.dart';
+import 'package:tracksync/domain/repositories/run_result_repository.dart';
 
+import '../../../config/app_dependencies.dart';
 import '../../../data/models/run_result.dart';
 
 part 'results_list_state.dart';
 
 class ResultsListCubit extends Cubit<ResultsListState> {
-  ResultsListCubit(this.useCase) : super(ResultsListInitial());
-  final RunResultUseCase useCase;
-
+  ResultsListCubit() : super(ResultsListInitial());
+  RunResultRepository get _repo=>locator.get<RunResultRepository>();
   Future<void> initState([DateTimeRange? range]) async {
     final DateTime now = DateTime.now();
-    final List<RunResult> results = await useCase.getAllResults(
+    final List<RunResult> results = await _repo.getAllResults(
       range ??
           DateTimeRange(
             start: DateTime(now.year, now.month, 0),

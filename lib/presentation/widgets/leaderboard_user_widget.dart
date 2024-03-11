@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tracksync/constants.dart';
+import 'package:tracksync/config/constants.dart';
 
 import '../../data/models/user.dart';
 

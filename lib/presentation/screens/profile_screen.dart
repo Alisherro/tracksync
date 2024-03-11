@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/constants.dart';
+import 'package:tracksync/config/constants.dart';
 import 'package:tracksync/presentation/providers/user_provider.dart';
 
 import '../widgets/info_section_widget.dart';

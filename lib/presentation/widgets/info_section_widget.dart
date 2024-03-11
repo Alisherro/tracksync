@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants.dart';
+import '../../config/constants.dart';
 
 class InfoSectionWidget extends StatelessWidget {
   const InfoSectionWidget({super.key, required this.title, required this.subtitle});

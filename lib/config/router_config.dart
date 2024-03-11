@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:tracksync/domain/use_cases/run_result_use_case.dart';
-import 'package:tracksync/domain/use_cases/users_use_case.dart';
 import 'package:tracksync/presentation/blocs/login_cubit/login_cubit.dart';
 import 'package:tracksync/presentation/blocs/register_cubit/register_cubit.dart';
 import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
 import 'package:tracksync/presentation/screens/login_screen.dart';
 import 'package:tracksync/presentation/screens/profile_screen.dart';
-import '../domain/use_cases/user_use_case.dart';
 import '../presentation/blocs/leaderboard_cubit/leaderboard_cubit.dart';
 import '../presentation/blocs/results_list_cubit/results_list_cubit.dart';
 import '../presentation/blocs/running_map_bloc/running_map_bloc.dart';
@@ -57,7 +54,6 @@ class AppRouter {
           child: BlocProvider(
             child: const LoginScreen(),
             create: (c) => LoginCubit(
-              Provider.of<UserUseCase>(context),
             ),
           ),
         ),
@@ -68,9 +64,7 @@ class AppRouter {
           context: context,
           state: state,
           child: BlocProvider(
-            create: (c) => RegisterCubit(
-              context.read<UserUseCase>(),
-            ),
+            create: (c) => RegisterCubit(),
             child: const RegistrationScreen(),
           ),
         ),
@@ -85,7 +79,7 @@ class AppRouter {
               providers: [
                 BlocProvider(
                   create: (_) =>
-                      RunningMapBloc(Provider.of<RunResultUseCase>(context))
+                      RunningMapBloc()
                         ..add(InitPermissions()),
                 )
               ],
@@ -120,7 +114,7 @@ class AppRouter {
                     key: UniqueKey(),
                     child: const HealthTrackerScreen(),
                     create: (_) =>
-                        ResultsListCubit(Provider.of<RunResultUseCase>(context))
+                        ResultsListCubit()
                           ..initState(),
                   ),
                 ),
@@ -133,9 +127,7 @@ class AppRouter {
                       state: state,
                       child: BlocProvider<RunResultCubit>(
                         key: UniqueKey(),
-                        create: (_) => RunResultCubit(
-                            Provider.of<RunResultUseCase>(context),
-                            state.pathParameters["id"]!)
+                        create: (_) => RunResultCubit(state.pathParameters["id"]!)
                           ..initState(),
                         child: const RunResultScreen(),
                       ),
@@ -154,7 +146,7 @@ class AppRouter {
                   state: state,
                   child: BlocProvider<LeaderboardCubit>(
                     create: (_) =>
-                        LeaderboardCubit(Provider.of<UsersUseCase>(context))
+                        LeaderboardCubit()
                           ..initData(),
                     child: const LeaderboardsScreen(),
                   ),
