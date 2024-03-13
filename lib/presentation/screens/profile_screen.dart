@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/config/constants.dart';
+
 import 'package:tracksync/presentation/providers/user_provider.dart';
 
+import '../../core/resources/images.dart';
+import '../../core/resources/palette.dart';
 import '../widgets/info_section_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -30,7 +33,7 @@ class ProfileScreen extends StatelessWidget {
                 child: Row(
                   children: [
                     SvgPicture.asset(
-                      avatar,
+                      Images.avatar,
                       width: 100,
                       height: 100,
                     ),
@@ -52,9 +55,9 @@ class ProfileScreen extends StatelessWidget {
                                     'null',
                               style:
                                   Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                        color: redColor,
-                                        fontWeight: FontWeight.w500,overflow: TextOverflow.ellipsis
-                                      ),
+                                      color: Palette.redColor,
+                                      fontWeight: FontWeight.w500,
+                                      overflow: TextOverflow.ellipsis),
                             ),
                           ),
                           Text(
@@ -67,14 +70,14 @@ class ProfileScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SvgPicture.asset(edit),
+                    SvgPicture.asset(Images.edit),
                   ],
                 ),
               ),
             ],
           ),
           DecoratedBox(
-            decoration: const BoxDecoration(color: emptyColor),
+            decoration: const BoxDecoration(color: Palette.emptyColor),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
               child: Row(
@@ -86,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   DecoratedBox(
                     decoration: BoxDecoration(
-                      color: secondColor,
+                      color: Palette.secondColor,
                       borderRadius: BorderRadius.circular(38),
                     ),
                     child: const Padding(
@@ -108,7 +111,7 @@ class ProfileScreen extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           DecoratedBox(
-            decoration: const BoxDecoration(color: emptyColor),
+            decoration: const BoxDecoration(color: Palette.emptyColor),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 33, horizontal: 40),
               child: Row(
@@ -118,7 +121,7 @@ class ProfileScreen extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.w900,
                           fontFamily: 'EurostileRound',
-                          color: orangeColor,
+                          color: Palette.orangeColor,
                         ),
                   ),
                   const SizedBox(width: 20),
@@ -135,7 +138,7 @@ class ProfileScreen extends StatelessWidget {
                       const Text(
                         '99 level',
                         style: TextStyle(
-                          color: orangeColor,
+                          color: Palette.orangeColor,
                           fontWeight: FontWeight.w300,
                           fontSize: 12,
                         ),
@@ -146,7 +149,7 @@ class ProfileScreen extends StatelessWidget {
                   const Text(
                     '1 456 643',
                     style: TextStyle(
-                        color: orangeColor,
+                        color: Palette.orangeColor,
                         fontWeight: FontWeight.w900,
                         fontSize: 15,
                         fontFamily: 'EurostileRound'),
@@ -191,7 +194,7 @@ class ProfileScreen extends StatelessWidget {
               context.go('/profile/groups');
             },
             child: const DecoratedBox(
-              decoration: BoxDecoration(color: emptyColor),
+              decoration: BoxDecoration(color: Palette.emptyColor),
               child: SizedBox(
                 width: double.infinity,
                 child: Padding(
@@ -206,7 +209,8 @@ class ProfileScreen extends StatelessWidget {
                             fontFamily: 'EurostileRound'),
                       ),
                       Spacer(),
-                      Icon(Icons.arrow_forward_outlined, color: redColor)
+                      Icon(Icons.arrow_forward_outlined,
+                          color: Palette.redColor)
                     ],
                   ),
                 ),

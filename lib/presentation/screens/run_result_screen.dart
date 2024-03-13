@@ -8,8 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
-
-import '../../config/constants.dart';
+import '../../../utils/helper/helper.dart';
+import '../../core/resources/palette.dart';
 import '../../data/models/run_result.dart';
 import '../widgets/pop_button_widget.dart';
 
@@ -65,7 +65,7 @@ class RunResultScreen extends StatelessWidget {
                     width: double.infinity,
                     child: DecoratedBox(
                       decoration: const BoxDecoration(
-                        color: emptyColor,
+                        color: Palette.emptyColor,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
@@ -79,8 +79,8 @@ class RunResultScreen extends StatelessWidget {
                                   padding: EdgeInsets.all(14),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(100),
-                                    border:
-                                        Border.all(width: 2, color: pinkColor),
+                                    border: Border.all(
+                                        width: 2, color: Palette.pinkColor),
                                   ),
                                   child: SvgPicture.asset(
                                       'assets/images/running_icon.svg'),
@@ -92,7 +92,8 @@ class RunResultScreen extends StatelessWidget {
                                   const Text('Total time'),
                                   Text(
                                     '${hoursStr(result.totalSeconds ?? 0)}:${minutesStr(result.totalSeconds ?? 0)}:${secondsStr(result.totalSeconds ?? 0)}',
-                                    style: style.copyWith(color: orangeColor),
+                                    style: style.copyWith(
+                                        color: Palette.orangeColor),
                                   ),
                                 ],
                               ),
@@ -102,7 +103,8 @@ class RunResultScreen extends StatelessWidget {
                                   const Text('Distance'),
                                   Text(
                                     '${result.distance?.toStringAsFixed(2)}km',
-                                    style: style.copyWith(color: pinkColor),
+                                    style: style.copyWith(
+                                        color: Palette.pinkColor),
                                   ),
                                 ],
                               ),
@@ -112,7 +114,8 @@ class RunResultScreen extends StatelessWidget {
                                   const Text('Calories'),
                                   Text(
                                     '${result.kcal?.toStringAsFixed(2)}kCal',
-                                    style: style.copyWith(color: blueColor),
+                                    style: style.copyWith(
+                                        color: Palette.blueColor),
                                   ),
                                 ],
                               )
@@ -141,7 +144,8 @@ class RunResultScreen extends StatelessWidget {
                                   ),
                                   Text(
                                     '${result.kcal?.toStringAsFixed(2)}kCal',
-                                    style: style.copyWith(color: blueColor),
+                                    style: style.copyWith(
+                                        color: Palette.blueColor),
                                   ),
                                 ],
                               ),
@@ -153,7 +157,8 @@ class RunResultScreen extends StatelessWidget {
                                           .bodySmall),
                                   Text(
                                     '54Ft',
-                                    style: style.copyWith(color: orangeColor),
+                                    style: style.copyWith(
+                                        color: Palette.orangeColor),
                                   ),
                                 ],
                               ),
@@ -165,7 +170,8 @@ class RunResultScreen extends StatelessWidget {
                                           .bodySmall),
                                   Text(
                                     '120Bpm',
-                                    style: style.copyWith(color: secondColor),
+                                    style: style.copyWith(
+                                        color: Palette.secondColor),
                                   ),
                                 ],
                               )
@@ -181,7 +187,7 @@ class RunResultScreen extends StatelessWidget {
                             const SizedBox(width: 15),
                             Text(
                               '123Bpm AVG',
-                              style: style.copyWith(color: blueColor),
+                              style: style.copyWith(color: Palette.blueColor),
                             )
                           ],
                         ),
@@ -273,7 +279,10 @@ class RunResultScreen extends StatelessWidget {
                                   ],
                                   isCurved: true,
                                   gradient: const LinearGradient(
-                                    colors: [secondColor, secondColor],
+                                    colors: [
+                                      Palette.secondColor,
+                                      Palette.secondColor
+                                    ],
                                   ),
                                   barWidth: 2,
                                   isStrokeCapRound: true,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tracksync/config/constants.dart';
 
+import '../../core/resources/images.dart';
+import '../../core/resources/palette.dart';
 import '../../data/models/user.dart';
 
 class LeaderboardUserWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class LeaderboardUserWidget extends StatelessWidget {
       width: double.infinity,
       child: DecoratedBox(
         decoration: const BoxDecoration(
-          color: emptyColor,
+          color: Palette.emptyColor,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -31,18 +32,18 @@ class LeaderboardUserWidget extends StatelessWidget {
                         fontSize: 24,
                         fontWeight: FontWeight.w900,
                         color: index == 0
-                            ? orangeColor
+                            ? Palette.orangeColor
                             : index == 1
-                                ? blueColor
+                                ? Palette.blueColor
                                 : index == 2
-                                    ? greenColor
+                                    ? Palette.greenColor
                                     : Colors.white,
                         fontFamily: 'EurostileRound'),
                   ),
                   const SizedBox(width: 10),
                   const CircleAvatar(
                     radius: 25,
-                    backgroundImage: AssetImage(xMenAvatar),
+                    backgroundImage: AssetImage(Images.xMenAvatar),
                   ),
                   const SizedBox(width: 15),
                   Column(
@@ -56,7 +57,7 @@ class LeaderboardUserWidget extends StatelessWidget {
                             fontSize: 12,
                             fontWeight: FontWeight.w300,
                             fontFamily: 'EurostileRound',
-                            color: orangeColor),
+                            color: Palette.orangeColor),
                       )
                     ],
                   ),
@@ -70,12 +71,12 @@ class LeaderboardUserWidget extends StatelessWidget {
                         fontFamily: 'EurostileRound',
                         fontSize: 15,
                         fontWeight: FontWeight.w900,
-                        color: orangeColor),
+                        color: Palette.orangeColor),
                   ),
                   const SizedBox(width: 12),
                   const CircleAvatar(
                     radius: 11,
-                    backgroundImage: AssetImage(logo),
+                    backgroundImage: AssetImage(Images.logo),
                   )
                 ],
               )

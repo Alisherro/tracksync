@@ -6,7 +6,8 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
   geolocator_windows
   isar_flutter_libs
-  url_launcher_windows
+        sentry_flutter
+        url_launcher_windows
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

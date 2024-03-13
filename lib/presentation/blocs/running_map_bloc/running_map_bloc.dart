@@ -8,7 +8,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tracksync/config/app_dependencies.dart';
+import '../../../dependencies_injection.dart';
 
 import '../../../data/models/run_result.dart';
 import '../../../domain/repositories/run_result_repository.dart';

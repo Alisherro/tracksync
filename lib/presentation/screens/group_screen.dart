@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/config/constants.dart';
 import 'package:tracksync/presentation/widgets/next_button_widget.dart';
+
+import '../../core/resources/images.dart';
+import '../../core/resources/palette.dart';
 
 class GroupScreen extends StatelessWidget {
   const GroupScreen({super.key});
@@ -41,7 +43,8 @@ class GroupScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const Icon(Icons.grid_view_outlined, color: redColor),
+                      const Icon(Icons.grid_view_outlined,
+                          color: Palette.redColor),
                     ],
                   ),
                 ),
@@ -52,7 +55,7 @@ class GroupScreen extends StatelessWidget {
                   child: Center(
                     child: CircleAvatar(
                       radius: 72,
-                      backgroundImage: AssetImage(runGroup),
+                      backgroundImage: AssetImage(Images.runGroup),
                     ),
                   ),
                 ),
@@ -69,14 +72,14 @@ class GroupScreen extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
-                      ?.copyWith(color: greyColor),
+                      ?.copyWith(color: Palette.greyColor),
                 ),
               ],
             ),
           ),
           DecoratedBox(
             decoration: const BoxDecoration(
-              color: emptyColor,
+              color: Palette.emptyColor,
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -98,7 +101,8 @@ class GroupScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
-                            border: Border.all(width: 2, color: pinkColor),
+                            border:
+                                Border.all(width: 2, color: Palette.pinkColor),
                           ),
                           child: SvgPicture.asset(
                             'assets/images/running_icon.svg',
@@ -113,7 +117,7 @@ class GroupScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.w900,
-                          color: secondColor,
+                          color: Palette.secondColor,
                           fontFamily: 'EurostileRound',
                         ),
                       ),
@@ -126,7 +130,7 @@ class GroupScreen extends StatelessWidget {
           const SizedBox(height: 10),
           DecoratedBox(
             decoration: const BoxDecoration(
-              color: emptyColor,
+              color: Palette.emptyColor,
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 40),
@@ -139,7 +143,7 @@ class GroupScreen extends StatelessWidget {
                           fontWeight: FontWeight.w600,
                         ),
                   ),
-                  const Icon(Icons.arrow_forward, color: redColor)
+                  const Icon(Icons.arrow_forward, color: Palette.redColor)
                 ],
               ),
             ),
@@ -147,7 +151,7 @@ class GroupScreen extends StatelessWidget {
           const SizedBox(height: 10),
           DecoratedBox(
             decoration: const BoxDecoration(
-              color: emptyColor,
+              color: Palette.emptyColor,
             ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -192,7 +196,7 @@ class GroupScreen extends StatelessWidget {
                         child: Row(
                           children: [
                             const CircleAvatar(
-                              backgroundImage: AssetImage(xMenAvatar),
+                              backgroundImage: AssetImage(Images.xMenAvatar),
                               radius: 25,
                             ),
                             const SizedBox(width: 15),
@@ -211,7 +215,7 @@ class GroupScreen extends StatelessWidget {
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: 12,
-                                      color: orangeColor),
+                                      color: Palette.orangeColor),
                                 ),
                               ],
                             )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tracksync/config/constants.dart';
+
+import '../../core/resources/palette.dart';
 
 class OptionRadioButtonWidget extends StatelessWidget {
   const OptionRadioButtonWidget(
@@ -21,7 +22,7 @@ class OptionRadioButtonWidget extends StatelessWidget {
         child: SizedBox(
           child: DecoratedBox(
             decoration: BoxDecoration(
-              color: isSelected ? pinkColor : emptyColor,
+              color: isSelected ? Palette.pinkColor : Palette.emptyColor,
               borderRadius: BorderRadius.circular(6),
             ),
             child: Row(

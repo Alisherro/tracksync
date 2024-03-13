@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/config/constants.dart';
+
 import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 import 'package:tracksync/presentation/widgets/pop_button_widget.dart';
+
+import '../../core/resources/images.dart';
+import '../../core/resources/palette.dart';
 
 class InvitationScreen extends StatelessWidget {
   const InvitationScreen({super.key});
@@ -25,7 +28,7 @@ class InvitationScreen extends StatelessWidget {
         ),
         DecoratedBox(
           decoration: const BoxDecoration(
-            color: emptyColor,
+            color: Palette.emptyColor,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 25),
@@ -68,7 +71,7 @@ class InvitationScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   width: (MediaQuery.sizeOf(context).width - 80) * 0.30,
-                  child: SvgPicture.asset(groupTell),
+                  child: SvgPicture.asset(Images.groupTell),
                 )
               ],
             ),

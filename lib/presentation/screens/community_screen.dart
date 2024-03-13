@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/config/constants.dart';
 import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 import 'package:tracksync/presentation/widgets/pop_button_widget.dart';
+import '../../core/resources/images.dart';
+import '../../core/resources/palette.dart';
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
@@ -22,7 +23,7 @@ class CommunityScreen extends StatelessWidget {
         ),
         DecoratedBox(
           decoration: const BoxDecoration(
-            color: emptyColor,
+            color: Palette.emptyColor,
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
@@ -36,11 +37,11 @@ class CommunityScreen extends StatelessWidget {
                         'SUBSCRIBERS (0)',
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontWeight: FontWeight.w900,
-                            color: redColor,
+                            color: Palette.redColor,
                             fontFamily: 'EurostileRound'),
                       ),
                       const Divider(
-                        color: redColor,
+                        color: Palette.redColor,
                         thickness: 1,
                       )
                     ],
@@ -75,8 +76,7 @@ class CommunityScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.asset(
-                    teamIcon,
-                    color: redColor,
+                    Images.teamIcon,
                   ),
                   const SizedBox(height: 20),
                   const Text(

@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:tracksync/config/app_dependencies.dart';
+import '../../../dependencies_injection.dart';
 import 'package:tracksync/data/models/user.dart';
-
 import '../../../domain/repositories/user_repository.dart';
 
 part 'login_state.dart';
@@ -18,6 +17,7 @@ class LoginCubit extends Cubit<LoginState> {
       emit(LoginLoading());
       try {
         String token = await _repo.login(userName, password);
+        print(token);
         emit(LoginSuccess(User(nickName: userName)));
       } catch (e) {
         emit(LoginError(errorDescription: e.toString()));

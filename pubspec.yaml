@@ -24,6 +24,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
 
 
   cupertino_icons: ^1.0.2
@@ -40,13 +43,20 @@ dependencies:
   path_provider: ^2.0.15
   isar_flutter_libs: ^3.1.0+1
   flutter_animate: ^4.2.0+1
-  intl: ^0.18.1
+  intl: ^0.18.0
   syncfusion_flutter_datepicker: ^22.1.39
   provider: ^6.0.5
   url_launcher: ^6.1.12
   freezed_annotation: ^2.4.1
   image_picker: ^1.0.2
   get_it: ^7.6.6
+  dio: ^5.4.1
+  dartz: ^0.10.1
+  flutter_screenutil: ^5.9.0
+  oktoast: ^3.4.0
+  logger: ^2.1.0
+  cached_network_image: ^3.3.1
+  sentry_flutter: ^7.17.0
 
 
 dev_dependencies:
@@ -73,6 +83,7 @@ flutter:
   assets:
     - assets/images/
     - assets/mock_json/
+    - assets/fonts/
 
   fonts:
     - family: EuclidFlex
@@ -100,4 +111,18 @@ flutter:
         - asset: assets/fonts/EurostileRound-Heavy.ttf
           weight: 700
         - asset: assets/fonts/EurostileRound-Black.ttf
+          weight: 900
+    - family: Poppins
+      fonts:
+        - asset: assets/fonts/Poppins-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Poppins-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Poppins-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Poppins-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Poppins-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Poppins-Black.ttf
           weight: 900

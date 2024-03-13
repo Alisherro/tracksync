@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../config/constants.dart';
+import '../../core/resources/palette.dart';
 
 class NextButtonWidget extends StatelessWidget {
   const NextButtonWidget({
@@ -20,8 +20,8 @@ class NextButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-            backgroundColor: MaterialStatePropertyAll(
-                isEnable ? secondColor : disabledButtonColor),
+        backgroundColor: MaterialStatePropertyAll(
+                isEnable ? Palette.secondColor : Palette.disabledButtonColor),
           ),
       onPressed: isEnable ? enableCallback : disableCallback,
       child: Text(

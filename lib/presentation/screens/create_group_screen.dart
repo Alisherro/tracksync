@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tracksync/config/constants.dart';
 import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 import 'dart:io';
+import '../../core/resources/palette.dart';
 import '../widgets/pop_button_widget.dart';
 
 class CreateGroupScreen extends StatefulWidget {
@@ -46,7 +46,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                       width: (MediaQuery.sizeOf(context).width - 100) / 2,
                       child: CircleAvatar(
                         radius: 80,
-                        backgroundColor: emptyColor,
+                        backgroundColor: Palette.emptyColor,
                         backgroundImage: selectedImage != null
                             ? FileImage(selectedImage!)
                             : null,
@@ -76,7 +76,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
                                 .textTheme
                                 .bodyMedium
                                 ?.copyWith(
-                                    color: greyColor,
+                                color: Palette.greyColor,
                                     fontWeight: FontWeight.w300),
                           ),
                           const SizedBox(height: 20),
@@ -105,7 +105,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
             const TextField(
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                fillColor: emptyColor,
+                fillColor: Palette.emptyColor,
                 filled: true,
               ),
               style: TextStyle(color: Colors.white),
@@ -119,7 +119,7 @@ class _CreateGroupScreenState extends State<CreateGroupScreen> {
               keyboardType: TextInputType.text,
               maxLines: 5,
               decoration: InputDecoration(
-                fillColor: emptyColor,
+                fillColor: Palette.emptyColor,
                 filled: true,
               ),
               style: TextStyle(color: Colors.white),

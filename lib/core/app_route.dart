@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:tracksync/presentation/blocs/login_cubit/login_cubit.dart';
 import 'package:tracksync/presentation/blocs/register_cubit/register_cubit.dart';
 import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
@@ -78,9 +77,7 @@ class AppRouter {
             child: MultiBlocProvider(
               providers: [
                 BlocProvider(
-                  create: (_) =>
-                      RunningMapBloc()
-                        ..add(InitPermissions()),
+                  create: (_) => RunningMapBloc()..add(InitPermissions()),
                 )
               ],
               child: ScaffoldWithBottomNavBar(
@@ -113,9 +110,7 @@ class AppRouter {
                   child: BlocProvider<ResultsListCubit>(
                     key: UniqueKey(),
                     child: const HealthTrackerScreen(),
-                    create: (_) =>
-                        ResultsListCubit()
-                          ..initState(),
+                    create: (_) => ResultsListCubit()..initState(),
                   ),
                 ),
                 routes: [
@@ -127,8 +122,9 @@ class AppRouter {
                       state: state,
                       child: BlocProvider<RunResultCubit>(
                         key: UniqueKey(),
-                        create: (_) => RunResultCubit(state.pathParameters["id"]!)
-                          ..initState(),
+                        create: (_) =>
+                            RunResultCubit(state.pathParameters["id"]!)
+                              ..initState(),
                         child: const RunResultScreen(),
                       ),
                     ),
@@ -145,9 +141,7 @@ class AppRouter {
                   context: context,
                   state: state,
                   child: BlocProvider<LeaderboardCubit>(
-                    create: (_) =>
-                        LeaderboardCubit()
-                          ..initData(),
+                    create: (_) => LeaderboardCubit()..initData(),
                     child: const LeaderboardsScreen(),
                   ),
                 ),

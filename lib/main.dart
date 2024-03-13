@@ -1,43 +1,28 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
-import 'package:tracksync/config/app_dependencies.dart';
-import 'package:tracksync/config/app_theme.dart';
-import 'package:tracksync/config/router_config.dart';
-import 'package:tracksync/presentation/providers/user_provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:tracksync/tracksync_app.dart';
+import 'dependencies_injection.dart';
 
-import 'config/bloc_observer.dart';
-
-void main() async {
-  await setupLocator();
-  WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = MyGlobalObserver();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider())
-      ],
-      child: MaterialApp.router(
-        builder: (context, child) {
-          return ScrollConfiguration(
-              behavior: NoSplashScrollBehavior(), child: child!);
-        },
-        debugShowCheckedModeBanner: false,
-        routerConfig: AppRouter.router,
-        title: 'Flutter App',
-        theme: AppTheme.themeData,
-      ),
-    );
-  }
+void main() {
+  runZonedGuarded(
+    () async {
+      await SentryFlutter.init((options) {
+        options.dsn =
+            "https://5fb978de73c822f9ef33ca571211e00f@o4506539902107648.ingest.us.sentry.io/4506896984244224";
+        options.tracesSampleRate = 0.01;
+      }, appRunner: () async {
+        WidgetsFlutterBinding.ensureInitialized();
+        await setupLocator();
+        return SystemChrome.setPreferredOrientations(
+          [
+            DeviceOrientation.portraitUp,
+            DeviceOrientation.portraitDown,
+          ],
+        ).then((_) => runApp(TrackSyncApp()));
+      });
+    },
+    (error, stackTrace) async {},
+  );
 }

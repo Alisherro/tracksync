@@ -1,16 +1,20 @@
 # tracksync
 
-A new Flutter project.
-
+Pet Project
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+- Run `fvm flutter gen-l10n` to generate localization files
+- Run `fvm flutter run --dart-define-from-file .env.dev.json` for development env run
+- Run `fvm flutter run --dart-define-from-file .env.prd.json` for production env run
 
-A few resources to get you started if this is your first Flutter project:
+## Feature
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [x] BLoC, Provider, GoRouter, GetIt,
+- [x] Theme Configuration: `System, Light, Dark`
+- [x] Multi-Language: `English, Kazakh, Russian`
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## TODO 📝
+
+- [x] Refactor ThemeData
+- [x] Implement UserAuth logic
+- [x] Diff appIcon, name, id and so on with flavors use

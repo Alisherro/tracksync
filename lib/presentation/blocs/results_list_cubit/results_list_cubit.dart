@@ -3,14 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:tracksync/domain/repositories/run_result_repository.dart';
 
-import '../../../config/app_dependencies.dart';
+import '../../../dependencies_injection.dart';
+
 import '../../../data/models/run_result.dart';
 
 part 'results_list_state.dart';
 
 class ResultsListCubit extends Cubit<ResultsListState> {
   ResultsListCubit() : super(ResultsListInitial());
-  RunResultRepository get _repo=>locator.get<RunResultRepository>();
+
+  RunResultRepository get _repo => locator.get<RunResultRepository>();
+
   Future<void> initState([DateTimeRange? range]) async {
     final DateTime now = DateTime.now();
     final List<RunResult> results = await _repo.getAllResults(

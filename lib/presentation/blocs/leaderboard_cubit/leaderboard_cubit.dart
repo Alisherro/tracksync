@@ -1,14 +1,16 @@
 import 'package:bloc/bloc.dart';
 
-import '../../../config/app_dependencies.dart';
-import '../../../config/constants.dart';
+import '../../../dependencies_injection.dart';
+
 import '../../../data/models/user.dart';
 import '../../../domain/repositories/users_repository.dart';
+import '../../../utils/helper/helper.dart';
 
 part 'leaderboard_state.dart';
 
 class LeaderboardCubit extends Cubit<LeaderboardState> {
   LeaderboardCubit() : super(LeaderboardInitial());
+
   UsersRepository get repo => locator<UsersRepository>();
 
   Future<void> initData() async {

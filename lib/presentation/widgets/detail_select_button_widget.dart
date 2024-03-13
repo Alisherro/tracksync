@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../config/constants.dart';
+import '../../core/resources/palette.dart';
 
 class DetailSelectButtonWidget extends StatelessWidget {
-  const DetailSelectButtonWidget(
-      {super.key,
-      required this.onSelect,
-      required this.title,
-    });
+  const DetailSelectButtonWidget({
+    super.key,
+    required this.onSelect,
+    required this.title,
+  });
 
   final VoidCallback onSelect;
   final String title;
@@ -19,7 +19,7 @@ class DetailSelectButtonWidget extends StatelessWidget {
       child: SizedBox(
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color:  emptyColor,
+            color: Palette.emptyColor,
             borderRadius: BorderRadius.circular(6),
           ),
           child: Padding(

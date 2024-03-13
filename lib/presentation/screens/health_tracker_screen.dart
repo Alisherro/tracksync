@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:tracksync/config/constants.dart';
+import '../../../utils/helper/helper.dart';
 import 'package:tracksync/presentation/blocs/results_list_cubit/results_list_cubit.dart';
+
+import '../../core/resources/palette.dart';
 
 class HealthTrackerScreen extends StatelessWidget {
   const HealthTrackerScreen({super.key});
@@ -61,7 +63,15 @@ class HealthTrackerScreen extends StatelessWidget {
                                   child: SafeArea(
                                     top: false,
                                     child: CupertinoTheme(
-                                      data: cupertinoPickerStyle,
+                                      data: const CupertinoThemeData(
+                                        textTheme: CupertinoTextThemeData(
+                                          dateTimePickerTextStyle: TextStyle(
+                                            fontSize: 20,
+                                            color: Color(0xff9C95AD),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
                                       child: CupertinoDatePicker(
                                         initialDateTime: DateTime.now(),
                                         mode: CupertinoDatePickerMode.date,
@@ -82,7 +92,7 @@ class HealthTrackerScreen extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
-                                  ?.copyWith(color: blueColor),
+                                  ?.copyWith(color: Palette.blueColor),
                             ),
                           )
                         ],
@@ -102,7 +112,8 @@ class HealthTrackerScreen extends StatelessWidget {
                                     const Text('Running'),
                                     Text(
                                       '${state.totalKm > 10 ? state.totalKm.toInt() : state.totalKm.toStringAsFixed(2)}km',
-                                      style: style.copyWith(color: secondColor),
+                                      style: style.copyWith(
+                                          color: Palette.secondColor),
                                     ),
                                   ],
                                 ),
@@ -134,7 +145,8 @@ class HealthTrackerScreen extends StatelessWidget {
                                     const Text('Calories'),
                                     Text(
                                       '${state.totalCalories}kCal',
-                                      style: style.copyWith(color: secondColor),
+                                      style: style.copyWith(
+                                          color: Palette.secondColor),
                                     ),
                                   ],
                                 ),
@@ -192,7 +204,7 @@ class HealthTrackerScreen extends StatelessWidget {
                             },
                             child: DecoratedBox(
                               decoration: const BoxDecoration(
-                                color: emptyColor,
+                                color: Palette.emptyColor,
                               ),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -210,7 +222,7 @@ class HealthTrackerScreen extends StatelessWidget {
                                                 BorderRadius.circular(100),
                                             border: Border.all(
                                               width: 2,
-                                              color: pinkColor,
+                                              color: Palette.pinkColor,
                                             ),
                                           ),
                                           width: 55,
@@ -225,7 +237,7 @@ class HealthTrackerScreen extends StatelessWidget {
                                               Text(
                                                 '${data.distance?.toStringAsFixed(2) ?? '0'}km',
                                                 style: style.copyWith(
-                                                    color: orangeColor),
+                                                    color: Palette.orangeColor),
                                               ),
                                               Text(
                                                 '${hoursStr(data.totalSeconds ?? 0)}:${minutesStr(data.totalSeconds ?? 0)}:${secondsStr(data.totalSeconds ?? 0)}',
@@ -239,7 +251,7 @@ class HealthTrackerScreen extends StatelessWidget {
                                     Text(timeAgo(data.dateTime!)),
                                     const Icon(
                                       Icons.arrow_forward_ios_outlined,
-                                      color: redColor,
+                                      color: Palette.redColor,
                                     ),
                                   ],
                                 ),

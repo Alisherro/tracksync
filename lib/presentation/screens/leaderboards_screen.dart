@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracksync/config/constants.dart';
+import '../../../utils/helper/helper.dart';
 import 'package:tracksync/presentation/blocs/leaderboard_cubit/leaderboard_cubit.dart';
-
+import '../../core/resources/palette.dart';
 import '../widgets/leaderboard_user_widget.dart';
 
 class LeaderboardsScreen extends StatelessWidget {
@@ -35,7 +35,7 @@ class LeaderboardsScreen extends StatelessWidget {
                   child: DecoratedBox(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: emptyColor,
+                      color: Palette.emptyColor,
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
@@ -54,7 +54,7 @@ class LeaderboardsScreen extends StatelessWidget {
                                 style: TextStyle(
                                   color: (state is LeaderboardLoaded)
                                       ? state.leaderboardFilterIndex == index
-                                          ? redColor
+                                          ? Palette.redColor
                                           : Colors.white
                                       : Colors.white,
                                 ),

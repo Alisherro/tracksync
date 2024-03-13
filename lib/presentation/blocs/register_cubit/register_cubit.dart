@@ -2,15 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:tracksync/domain/repositories/user_repository.dart';
 
-import '../../../config/app_dependencies.dart';
+import '../../../dependencies_injection.dart';
+
 import '../../../data/models/user.dart';
 
 part 'register_state.dart';
 
 class RegisterCubit extends Cubit<RegisterState> {
-  RegisterCubit():
-        super(RegisterInitial());
-  UserRepository get _repo=>locator.get<UserRepository>();
+  RegisterCubit() : super(RegisterInitial());
+
+  UserRepository get _repo => locator.get<UserRepository>();
+
   Future<void> onLoginButtonTapped(
       String userName, String email, String password, bool remember) async {
     emit(RegisterLoading());

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../config/constants.dart';
+import '../../core/resources/palette.dart';
 
 class DiscoveryButtonWidget extends StatelessWidget {
   const DiscoveryButtonWidget(
@@ -21,7 +21,7 @@ class DiscoveryButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-          border: Border.all(color: redColor, width: 2),
+          border: Border.all(color: Palette.redColor, width: 2),
           borderRadius: BorderRadius.circular(8)),
       child: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -43,12 +43,12 @@ class DiscoveryButtonWidget extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodySmall
-                  ?.copyWith(color: greyColor),
             ),
             const SizedBox(height: 10),
             ElevatedButton(
               style: ButtonStyle(
-                backgroundColor: const MaterialStatePropertyAll(secondColor),
+                backgroundColor:
+                    const MaterialStatePropertyAll(Palette.secondColor),
                 padding: const MaterialStatePropertyAll(
                   EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                 ),

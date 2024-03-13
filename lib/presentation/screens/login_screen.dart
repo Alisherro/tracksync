@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tracksync/presentation/blocs/login_cubit/login_cubit.dart';
 import 'package:tracksync/presentation/providers/user_provider.dart';
-
-import '../../config/constants.dart';
+import '../../core/resources/palette.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -48,59 +47,34 @@ class _LoginScreenState extends State<LoginScreen> {
                 const Spacer(),
                 Text(
                   'Welcome Back',
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.headlineSmall,
                 ),
                 const SizedBox(height: 10),
-                const Text(
+                Text(
                   'Login to your account',
-                  style: TextStyle(
-                    color: greyColor,
-                    fontSize: 18,
-                  ),
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 const SizedBox(height: 30),
                 TextField(
                   controller: userNameController,
                   decoration: const InputDecoration(
-                    hintText: 'Username',
+                    hintText: 'example@email.com',
                   ),
                 ),
                 const SizedBox(height: 15),
                 TextField(
                   controller: passwordController,
                   decoration: const InputDecoration(
-                    hintText: 'Password',
+                    hintText: 'Your password',
                   ),
                 ),
-                const SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Checkbox(
-                          value: remember,
-                          onChanged: (val) {
-                            setState(() {
-                              remember = val ?? false;
-                            });
-                          },
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          'Remember Me',
-                          style: Theme.of(context).textTheme.titleSmall,
-                        )
-                      ],
-                    ),
-                    Text(
-                      'Forgot Password ?',
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(color: Colors.white),
-                    )
-                  ],
+                const SizedBox(height: 15),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text(
+                    'Forgot Password ?',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
                 ),
                 const Spacer(),
                 Column(
@@ -114,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             return ElevatedButton(
                               style: const ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
-                                      disabledButtonColor)),
+                                      Palette.disabledButtonColor)),
                               onPressed: () {},
                               child: const Text(
                                 'Login',
@@ -142,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const Text(
                           'Don\'t have an account?  ',
-                          style: TextStyle(color: greyColor),
+                          style: TextStyle(color: Palette.greyColor),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -150,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: const Text(
                             'Sign Up',
-                            style: TextStyle(color: secondColor),
+                            style: TextStyle(color: Palette.secondColor),
                           ),
                         )
                       ],

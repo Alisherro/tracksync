@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../config/constants.dart';
+import '../../core/resources/images.dart';
+import '../../core/resources/palette.dart';
 
 class AppBarWidget extends StatelessWidget {
-  const AppBarWidget({super.key,required this.onProfileTap});
+  const AppBarWidget({super.key, required this.onProfileTap});
 
   String gpsConnection(int connection) {
     return '''<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -27,7 +28,7 @@ class AppBarWidget extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: onProfileTap,
-            child: SvgPicture.asset(avatar),
+            child: SvgPicture.asset(Images.avatar),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -35,7 +36,7 @@ class AppBarWidget extends StatelessWidget {
               const Text(
                 'GPS',
                 style: TextStyle(
-                  color: greenColor,
+                  color: Palette.greenColor,
                   fontWeight: FontWeight.w700,
                   fontSize: 24,
                 ),
@@ -46,7 +47,7 @@ class AppBarWidget extends StatelessWidget {
           ),
           DecoratedBox(
             decoration: BoxDecoration(
-              color: secondColor,
+              color: Palette.secondColor,
               borderRadius: BorderRadius.circular(38),
             ),
             child: const Padding(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/config/constants.dart';
+
 import 'package:tracksync/presentation/widgets/app_bar_widget.dart';
+
+import '../../core/resources/images.dart';
 
 class ScaffoldWithBottomNavBar extends StatelessWidget {
   ScaffoldWithBottomNavBar({super.key, required this.navigationShell});
@@ -10,10 +12,10 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
   final List<String> tabsAssets = [
-    runningMapIcon,
-    heartIcon,
-    starIcon,
-    teamIcon,
+    Images.runningMapIcon,
+    Images.heartIcon,
+    Images.starIcon,
+    Images.teamIcon,
   ];
 
   static const double iconSize = 25;
@@ -59,7 +61,7 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
                           children: [
                             Center(
                               child: SvgPicture.asset(
-                                selectedTab,
+                                Images.selectedTab,
                               ),
                             ),
                             Center(

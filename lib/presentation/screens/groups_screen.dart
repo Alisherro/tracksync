@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/config/constants.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/resources/images.dart';
+import '../../core/resources/palette.dart';
 import '../widgets/discovery_button_widget.dart';
 
 class GroupsScreen extends StatelessWidget {
@@ -12,7 +14,7 @@ class GroupsScreen extends StatelessWidget {
   static const TextStyle style1 = TextStyle(
     fontWeight: FontWeight.w300,
     fontSize: 16,
-    color: greyColor,
+    color: Palette.greyColor,
   );
 
   @override
@@ -26,8 +28,8 @@ class GroupsScreen extends StatelessWidget {
               onTap: () => context.go('/groups/community'),
               child: DecoratedBox(
                 decoration: const BoxDecoration(
-                  color: emptyColor,
-                ),
+                  // color: Palette.emptyColor,
+                    ),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -48,15 +50,15 @@ class GroupsScreen extends StatelessWidget {
                             ),
                             const Icon(
                               Icons.arrow_forward_outlined,
-                              color: redColor,
+                              color: Palette.redColor,
                             )
                           ]),
                       const SizedBox(height: 20),
                       Row(
                         children: [
                           SvgPicture.asset(
-                            teamIcon,
-                            color: redColor,
+                            Images.teamIcon,
+                            color: Palette.redColor,
                             width: 44,
                             height: 44,
                           ),
@@ -83,8 +85,8 @@ class GroupsScreen extends StatelessWidget {
             const SizedBox(height: 10),
             DecoratedBox(
               decoration: const BoxDecoration(
-                color: emptyColor,
-              ),
+                // color: Palette.emptyColor,
+                  ),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
@@ -108,7 +110,7 @@ class GroupsScreen extends StatelessWidget {
                               title: 'TWITTER',
                               icon: SizedBox(
                                 height: 60,
-                                child: SvgPicture.asset(twitter),
+                                child: SvgPicture.asset(Images.twitter),
                               ),
                               subtitle: 'Follow friends from Twitter',
                               onTap: () async {
@@ -127,7 +129,7 @@ class GroupsScreen extends StatelessWidget {
                               title: 'DISCORD',
                               icon: SizedBox(
                                 height: 60,
-                                child: SvgPicture.asset(discord),
+                                child: SvgPicture.asset(Images.discord),
                               ),
                               subtitle: 'Follow friends from Discord',
                               onTap: () async {
@@ -154,8 +156,8 @@ class GroupsScreen extends StatelessWidget {
                   children: [
                     DecoratedBox(
                       decoration: const BoxDecoration(
-                        color: emptyColor,
-                      ),
+                        // color: Palette.emptyColor,
+                          ),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 40, vertical: 20),
@@ -197,12 +199,12 @@ class GroupsScreen extends StatelessWidget {
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(60),
-                            color: redColor),
+                            color: Palette.redColor),
                         child: Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              SvgPicture.asset(messageCircle),
+                              SvgPicture.asset(Images.messageCircle),
                               const SizedBox(height: 5),
                               const Text(
                                 'CREATE GROUP',

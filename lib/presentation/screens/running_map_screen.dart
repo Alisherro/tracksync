@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:tracksync/config/constants.dart';
-
+import '../../../utils/helper/helper.dart';
+import '../../core/localization/generated/strings.dart';
+import '../../core/resources/palette.dart';
 import '../blocs/running_map_bloc/running_map_bloc.dart';
 
 class RunningMapScreen extends StatelessWidget {
@@ -11,13 +12,13 @@ class RunningMapScreen extends StatelessWidget {
   static const _smallTextStyle = TextStyle(
     fontSize: 11,
     fontWeight: FontWeight.w400,
-    color: mainColor,
+    color: Palette.mainColor,
   );
 
   static const _mediumTextStyle = TextStyle(
     fontSize: 20,
     fontWeight: FontWeight.w900,
-    color: mainColor,
+    color: Palette.mainColor,
     fontFamily: 'EurostileRound',
   );
 
@@ -77,7 +78,7 @@ class RunningMapScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(
                           bottom: 30, top: 6, left: 50, right: 50),
                       decoration: BoxDecoration(
-                        color: secondColor,
+                        color: Palette.secondColor,
                         borderRadius: BorderRadius.circular(6),
                       ),
                       child: Column(
@@ -92,9 +93,9 @@ class RunningMapScreen extends StatelessWidget {
                                   fontFamily: 'EurostileRound'),
                             ),
                           ),
-                          const Text(
-                            'Duration',
-                            style: TextStyle(
+                          Text(
+                            Strings.of(context)!.dashboard,
+                            style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w400,
                               color: Colors.white,
@@ -180,7 +181,7 @@ class RunningMapScreen extends StatelessWidget {
                           .add(RunButtonTapped(context));
                     },
                     style: OutlinedButton.styleFrom(
-                      backgroundColor: redColor,
+                      backgroundColor: Palette.redColor,
                       padding: const EdgeInsets.symmetric(
                           vertical: 10, horizontal: 20),
                     ),
