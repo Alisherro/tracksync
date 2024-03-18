@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
+import 'package:tracksync/core/widgets/scaffold_with_bottom_nav_bar.dart';
+import 'package:tracksync/features/auth/auth.dart';
+import 'package:tracksync/features/run/presentation/run_result/cubit/run_result_cubit.dart';
+
 import '../dependencies_injection.dart';
-import '../features/auth/pages/login/login_page.dart';
-import '../features/auth/pages/profile/profile_page.dart';
-import '../features/auth/pages/register/cubit/register_cubit.dart';
-import '../features/auth/pages/register/register_page.dart';
-import '../features/leaderboard/pages/leaderboard/cubit/leaderboard_cubit.dart';
-import '../presentation/blocs/results_list_cubit/results_list_cubit.dart';
-import '../presentation/blocs/running_map_bloc/running_map_bloc.dart';
-import '../presentation/screens/community_screen.dart';
-import '../presentation/screens/create_group_screen.dart';
-import '../presentation/screens/group_screen.dart';
-import '../presentation/screens/groups_list_screen.dart';
-import '../presentation/screens/groups_screen.dart';
-import '../presentation/screens/health_tracker_screen.dart';
-import '../presentation/screens/invitation_screen.dart';
-import '../features/leaderboard/pages/leaderboard/leaderboards_screen.dart';
-import '../presentation/screens/run_result_screen.dart';
-import '../presentation/screens/running_map_screen.dart';
-import '../presentation/screens/scaffold_with_bottom_nav_bar.dart';
+import '../features/auth/presentation/profile/profile_screen.dart';
+import '../features/group/presentation/community_screen.dart';
+import '../features/group/presentation/create_group_screen.dart';
+import '../features/group/presentation/group_screen.dart';
+import '../features/group/presentation/groups_list_screen.dart';
+import '../features/group/presentation/groups_screen.dart';
+import '../features/group/presentation/invitation_screen.dart';
+import '../features/leaderboard/presentation/leaderboard/cubit/leaderboard_cubit.dart';
+import '../features/leaderboard/presentation/leaderboard/leaderboards_screen.dart';
+import '../features/run/presentation/run_history/cubit/results_list_cubit.dart';
+import '../features/run/presentation/run_history/health_tracker_screen.dart';
+import '../features/run/presentation/run_result/run_result_screen.dart';
+import '../features/run/presentation/running_map/bloc/running_map_bloc.dart';
+import '../features/run/presentation/running_map/running_map_screen.dart';
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -44,13 +43,13 @@ class AppRouter {
 
   static GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/',
+    initialLocation: '/run',
     routes: [
       GoRoute(
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,
           state: state,
-          child: const LoginPage(),
+          child: const LoginScreen(),
         ),
         path: '/',
       ),
@@ -60,7 +59,7 @@ class AppRouter {
           state: state,
           child: BlocProvider(
             create: (c) => sl<RegisterCubit>(),
-            child: const RegisterPage(),
+            child: const RegisterScreen(),
           ),
         ),
         path: '/registration',
@@ -72,9 +71,7 @@ class AppRouter {
             state: state,
             child: MultiBlocProvider(
               providers: [
-                BlocProvider(
-                  create: (_) => RunningMapBloc()..add(InitPermissions()),
-                )
+                BlocProvider(create: (_) => sl<RunningMapBloc>()),
               ],
               child: ScaffoldWithBottomNavBar(
                 navigationShell: navigationShell,
@@ -138,7 +135,7 @@ class AppRouter {
                   state: state,
                   child: BlocProvider<LeaderboardCubit>(
                     create: (_) => sl<LeaderboardCubit>(),
-                    child: const LeaderboardsPage(),
+                    child: const LeaderboardsScreen(),
                   ),
                 ),
               )
@@ -204,7 +201,7 @@ class AppRouter {
                 pageBuilder: (context, state) => buildPageWithDefaultTransition(
                   context: context,
                   state: state,
-                  child: const ProfilePage(),
+                  child: const ProfileScreen(),
                 ),
                 path: '/profile',
                 routes: [

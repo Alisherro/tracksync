@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,7 +12,7 @@ import 'core/localization/generated/strings.dart';
 import 'core/localization/l10n.dart';
 import 'core/resources/styles.dart';
 import 'dependencies_injection.dart';
-import 'features/auth/pages/login/cubit/auth_cubit.dart';
+import 'features/auth/presentation/login/cubit/auth_cubit.dart';
 
 class TrackSyncApp extends StatelessWidget {
   @override
