@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:tracksync/presentation/widgets/next_button_widget.dart';
-import 'package:tracksync/presentation/widgets/pop_button_widget.dart';
-
-import '../../core/resources/images.dart';
-import '../../core/resources/palette.dart';
+import '../../../../core/core.dart';
 
 class InvitationScreen extends StatelessWidget {
   const InvitationScreen({super.key});

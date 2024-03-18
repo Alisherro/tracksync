@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/presentation/widgets/next_button_widget.dart';
-import 'package:tracksync/presentation/widgets/pop_button_widget.dart';
-import '../../core/resources/images.dart';
-import '../../core/resources/palette.dart';
+
+import '../../../../core/core.dart';
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
@@ -18,7 +16,7 @@ class CommunityScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
           child: PopButtonWidget(
             title: 'COMMUNITIES',
-            onTap: () =>context.pop(),
+            onTap: () => context.pop(),
           ),
         ),
         DecoratedBox(

@@ -1,10 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tracksync/presentation/widgets/next_button_widget.dart';
-import 'dart:io';
-import '../../core/resources/palette.dart';
-import '../widgets/pop_button_widget.dart';
+
+import '../../../../core/core.dart';
 
 class CreateGroupScreen extends StatefulWidget {
   const CreateGroupScreen({super.key});

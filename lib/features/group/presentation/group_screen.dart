@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/presentation/widgets/next_button_widget.dart';
 
-import '../../core/resources/images.dart';
-import '../../core/resources/palette.dart';
+import '../../../../core/core.dart';
 
 class GroupScreen extends StatelessWidget {
   const GroupScreen({super.key});
@@ -229,7 +227,8 @@ class GroupScreen extends StatelessWidget {
                     width: double.infinity,
                     child: NextButtonWidget(
                       isEnable: true,
-                      enableCallback: () =>context.go('/groups/create/group/invitation'),
+                      enableCallback: () =>
+                          context.go('/groups/create/group/invitation'),
                       disableCallback: () {},
                       title: 'Invite +',
                     ),
