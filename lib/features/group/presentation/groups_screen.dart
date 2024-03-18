@@ -55,7 +55,7 @@ class GroupsScreen extends StatelessWidget {
                         children: [
                           SvgPicture.asset(
                             Images.teamIcon,
-                            color: Palette.redColor,
+                            // color: Palette.redColor,
                             width: 44,
                             height: 44,
                           ),
