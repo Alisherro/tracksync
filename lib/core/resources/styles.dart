@@ -129,16 +129,20 @@ ThemeData themeLight(BuildContext context) => ThemeData(
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(
-            width: 1,
-            style: BorderStyle.solid,
-            color: Palette.subText,
+              width: 1,
+              style: BorderStyle.solid,
+              color: Palette.subText,
+            ),
           ),
-        ),
-        hintStyle: TextStyle(
-            fontSize: Dimens.bodySmall,
-            fontWeight: FontWeight.w400,
-            color: Palette.subText,
-            height: 18 / Dimens.bodySmall),
+          hintStyle: TextStyle(
+              fontSize: Dimens.bodySmall,
+              fontWeight: FontWeight.w400,
+              color: Palette.subText,
+              height: 18 / Dimens.bodySmall),
+          prefixIconColor: Palette.formFieldIcon,
+          suffixIconColor: Palette.formFieldIcon),
+      iconButtonTheme: const IconButtonThemeData(
+        style: ButtonStyle(splashFactory: NoSplash.splashFactory),
       ),
       appBarTheme: const AppBarTheme().copyWith(
         titleTextStyle: Theme.of(context).textTheme.bodyLarge,
@@ -190,7 +194,7 @@ ThemeData themeLight(BuildContext context) => ThemeData(
           blue: Palette.blueLatte,
           lavender: Palette.lavenderLatte,
           red: Palette.redLatte,
-        ),
+            orange: Palette.sunsetOrange),
       ],
     );
 
@@ -359,17 +363,18 @@ class TracksyncColors extends ThemeExtension<TracksyncColors> {
   final Color? blue;
   final Color? lavender;
   final Color? red;
+  final Color? orange;
 
-  const TracksyncColors({
-    this.background,
-    this.card,
-    this.buttonText,
-    this.subtitle,
-    this.shadow,
-    this.green,
-    this.roseWater,
-    this.flamingo,
-    this.pink,
+  const TracksyncColors(
+      {this.background,
+      this.card,
+      this.buttonText,
+      this.subtitle,
+      this.shadow,
+      this.green,
+      this.roseWater,
+      this.flamingo,
+      this.pink,
     this.mauve,
     this.maroon,
     this.peach,
@@ -380,7 +385,7 @@ class TracksyncColors extends ThemeExtension<TracksyncColors> {
     this.blue,
     this.lavender,
     this.red,
-  });
+    this.orange});
 
   @override
   ThemeExtension<TracksyncColors> copyWith({
@@ -403,7 +408,7 @@ class TracksyncColors extends ThemeExtension<TracksyncColors> {
     Color? blue,
     Color? lavender,
     Color? red,
-  }) {
+    Color? orange}) {
     return TracksyncColors(
       background: background ?? this.background,
       card: card ?? this.card,
@@ -424,7 +429,7 @@ class TracksyncColors extends ThemeExtension<TracksyncColors> {
       blue: blue ?? this.blue,
       lavender: lavender ?? this.lavender,
       red: red ?? this.red,
-    );
+        orange: orange ?? this.orange);
   }
 
   @override
@@ -455,7 +460,7 @@ class TracksyncColors extends ThemeExtension<TracksyncColors> {
       lavender: Color.lerp(lavender, other.lavender, t),
       sky: Color.lerp(sky, other.sky, t),
       red: Color.lerp(red, other.red, t),
-    );
+        orange: Color.lerp(orange, other.orange, t));
   }
 }
 
@@ -464,11 +469,10 @@ class BoxDecorations {
 
   final BuildContext context;
 
-  BoxDecoration get button => BoxDecoration(
+  BoxDecoration get button => const BoxDecoration(
         color: Palette.primary,
-        borderRadius:
-            const BorderRadius.all(Radius.circular(Dimens.cornerRadius)),
-        boxShadow: [BoxShadows(context).button],
+        borderRadius: BorderRadius.all(Radius.circular(Dimens.cornerRadius)),
+        boxShadow: [],
       );
 
   BoxDecoration get card => BoxDecoration(

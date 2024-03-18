@@ -11,7 +11,7 @@ class RunResultCubit extends Cubit<RunResultState> {
   RunResultCubit(this.resultID) : super(RunResultInitial());
   final String resultID;
 
-  RunResultRepository get _repo => locator<RunResultRepository>();
+  RunResultRepository get _repo => sl<RunResultRepository>();
 
   Future<void> initState() async {
     final RunResult? result = await _repo.getRunResultById(resultID);

@@ -22,4 +22,8 @@ class Images {
   static const String xMenAvatar = 'assets/images/x-men.jpg';
   static const String logo = 'assets/images/logo.jpg';
   static const String runGroup = 'assets/images/run_group.jpg';
+  static const String eyeclosed = 'assets/images/eyeclosed.svg';
+  static const String lockon = 'assets/images/lockon.svg';
+  static const String mail = 'assets/images/mail.svg';
+  static const String user = 'assets/images/user.svg';
 }

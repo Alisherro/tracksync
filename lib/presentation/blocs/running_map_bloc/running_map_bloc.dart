@@ -33,7 +33,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     on<RunButtonTapped>(_runButtonTapped);
     on<TimerTicked>(_timerTicked);
   }
-  RunResultRepository get _repo=> locator.get<RunResultRepository>();
+  RunResultRepository get _repo => sl.get<RunResultRepository>();
   late Position position;
   late GoogleMapController controller;
   bool isRunning = false;

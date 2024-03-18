@@ -26,6 +26,7 @@ class Dimens {
   static double space8 = 8.w;
   static double space12 = 12.w;
   static double space16 = 16.w;
+  static double space22 = 22.w;
   static double space24 = 24.w;
   static double space30 = 30.w;
   static double space36 = 36.w;

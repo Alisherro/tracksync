@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tracksync/presentation/blocs/login_cubit/login_cubit.dart';
-import 'package:tracksync/presentation/blocs/register_cubit/register_cubit.dart';
 import 'package:tracksync/presentation/blocs/result_cubit/run_result_cubit.dart';
-import 'package:tracksync/presentation/screens/login_screen.dart';
-import 'package:tracksync/presentation/screens/profile_screen.dart';
-import '../presentation/blocs/leaderboard_cubit/leaderboard_cubit.dart';
+import '../dependencies_injection.dart';
+import '../features/auth/pages/login/login_page.dart';
+import '../features/auth/pages/profile/profile_page.dart';
+import '../features/auth/pages/register/cubit/register_cubit.dart';
+import '../features/auth/pages/register/register_page.dart';
+import '../features/leaderboard/pages/leaderboard/cubit/leaderboard_cubit.dart';
 import '../presentation/blocs/results_list_cubit/results_list_cubit.dart';
 import '../presentation/blocs/running_map_bloc/running_map_bloc.dart';
 import '../presentation/screens/community_screen.dart';
@@ -16,8 +17,7 @@ import '../presentation/screens/groups_list_screen.dart';
 import '../presentation/screens/groups_screen.dart';
 import '../presentation/screens/health_tracker_screen.dart';
 import '../presentation/screens/invitation_screen.dart';
-import '../presentation/screens/leaderboards_screen.dart';
-import '../presentation/screens/registration_screen.dart';
+import '../features/leaderboard/pages/leaderboard/leaderboards_screen.dart';
 import '../presentation/screens/run_result_screen.dart';
 import '../presentation/screens/running_map_screen.dart';
 import '../presentation/screens/scaffold_with_bottom_nav_bar.dart';
@@ -50,11 +50,7 @@ class AppRouter {
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,
           state: state,
-          child: BlocProvider(
-            child: const LoginScreen(),
-            create: (c) => LoginCubit(
-            ),
-          ),
+          child: const LoginPage(),
         ),
         path: '/',
       ),
@@ -63,8 +59,8 @@ class AppRouter {
           context: context,
           state: state,
           child: BlocProvider(
-            create: (c) => RegisterCubit(),
-            child: const RegistrationScreen(),
+            create: (c) => sl<RegisterCubit>(),
+            child: const RegisterPage(),
           ),
         ),
         path: '/registration',
@@ -141,8 +137,8 @@ class AppRouter {
                   context: context,
                   state: state,
                   child: BlocProvider<LeaderboardCubit>(
-                    create: (_) => LeaderboardCubit()..initData(),
-                    child: const LeaderboardsScreen(),
+                    create: (_) => sl<LeaderboardCubit>(),
+                    child: const LeaderboardsPage(),
                   ),
                 ),
               )
@@ -208,7 +204,7 @@ class AppRouter {
                 pageBuilder: (context, state) => buildPageWithDefaultTransition(
                   context: context,
                   state: state,
-                  child: const ProfileScreen(),
+                  child: const ProfilePage(),
                 ),
                 path: '/profile',
                 routes: [

@@ -31,13 +31,15 @@ class Button extends StatelessWidget {
       height: Dimens.buttonH,
       decoration: BoxDecorations(context).button.copyWith(
             color:
-                color ?? Theme.of(context).extension<TracksyncColors>()!.pink,
+                color ?? Theme.of(context).extension<TracksyncColors>()!.orange,
           ),
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
+          elevation: 0,
+          shadowColor: Colors.transparent,
           backgroundColor:
-              color ?? Theme.of(context).extension<TracksyncColors>()!.pink,
+              color ?? Theme.of(context).extension<TracksyncColors>()!.orange,
           foregroundColor:
               Theme.of(context).extension<TracksyncColors>()!.buttonText,
           padding: EdgeInsets.symmetric(horizontal: Dimens.space24),

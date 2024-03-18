@@ -12,7 +12,7 @@ part 'results_list_state.dart';
 class ResultsListCubit extends Cubit<ResultsListState> {
   ResultsListCubit() : super(ResultsListInitial());
 
-  RunResultRepository get _repo => locator.get<RunResultRepository>();
+  RunResultRepository get _repo => sl.get<RunResultRepository>();
 
   Future<void> initState([DateTimeRange? range]) async {
     final DateTime now = DateTime.now();

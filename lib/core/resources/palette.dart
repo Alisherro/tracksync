@@ -12,10 +12,11 @@ class Palette {
   static const Color cardDark = Color(0xff313244);
   static const Color text = Color(0xff333333);
   static const Color textDark = Color(0xffcdd6f4);
-  static const Color subText = Color(0xffE4DFDF);
+  static const Color subText = Color(0xff708090);
   static const Color subTextDark = Color(0xff6c7086);
   static const Color shadow = Color(0xff8c8fa1);
   static const Color shadowDark = Color(0xff7f849c);
+  static const Color formFieldIcon = Color(0xff708090);
 
   static const Color redMocha = Color(0xfff38ba8);
   static const Color greenMocha = Color(0xffa6e3a1);
@@ -41,6 +42,7 @@ class Palette {
   static const Color maroonLatte = Color(0xffe64553);
   static const Color peachLatte = Color(0xfffe640b);
   static const Color yellowLatte = Color(0xffdf8e1d);
+  static const Color sunsetOrange = Color(0xffFF6C36);
   static const Color tealLatte = Color(0xff179299);
   static const Color sapphireLatte = Color(0xff209fb5);
   static const Color skyLatte = Color(0xff04a5e5);

@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:tracksync/tracksync_app.dart';
 import 'dependencies_injection.dart';
+import 'dart:developer';
 
 void main() {
   runZonedGuarded(
@@ -23,6 +24,10 @@ void main() {
         ).then((_) => runApp(TrackSyncApp()));
       });
     },
-    (error, stackTrace) async {},
+    (error, stackTrace) async {
+      log(error.toString());
+      log(stackTrace.toString());
+      Sentry.captureException(error, stackTrace: stackTrace);
+    },
   );
 }

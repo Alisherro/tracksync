@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:provider/provider.dart';
-import 'package:tracksync/presentation/providers/user_provider.dart';
 import 'package:tracksync/utils/helper/common.dart';
 import 'package:tracksync/utils/helper/constant.dart';
 
@@ -13,6 +12,8 @@ import 'core/app_route.dart';
 import 'core/localization/generated/strings.dart';
 import 'core/localization/l10n.dart';
 import 'core/resources/styles.dart';
+import 'dependencies_injection.dart';
+import 'features/auth/pages/login/cubit/auth_cubit.dart';
 
 class TrackSyncApp extends StatelessWidget {
   @override
@@ -24,11 +25,10 @@ class TrackSyncApp extends StatelessWidget {
     );
 
     log.d(const String.fromEnvironment('ENV'));
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider())
         // BlocProvider(create: (_) => sl<SettingsCubit>()..getActiveTheme()),
-        // BlocProvider(create: (_) => sl<AuthCubit>()),
+        BlocProvider(create: (_) => sl<AuthCubit>()),
       ],
       child: OKToast(
         child: ScreenUtilInit(
