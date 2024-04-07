@@ -32,7 +32,9 @@ class ButtonText extends StatelessWidget {
         ),
         child: Text(
           title.toUpperCase(),
-          style: Theme.of(context).textTheme.labelLarge,
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+            color: titleColor
+          ),
           textAlign: TextAlign.center,
         ),
       ),

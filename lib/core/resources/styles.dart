@@ -26,9 +26,10 @@ ThemeData themeLight(BuildContext context) => ThemeData(
               color: Palette.text,
             ),
         displaySmall: Theme.of(context).textTheme.displaySmall?.copyWith(
-              fontSize: Dimens.displaySmall,
-              color: Palette.text,
-            ),
+              fontSize: 32,
+            color: Palette.text,
+            fontWeight: FontWeight.w700,
+            height: 36 / 32),
         headlineMedium: Theme.of(context).textTheme.headlineMedium?.copyWith(
               fontSize: Dimens.headlineMedium,
               color: Palette.text,
@@ -41,15 +42,15 @@ ThemeData themeLight(BuildContext context) => ThemeData(
             height: 30 / Dimens.headlineSmall,
             fontWeight: FontWeight.w600),
         titleLarge: Theme.of(context).textTheme.titleLarge?.copyWith(
-              fontSize: Dimens.titleLarge,
+          fontSize: 20,
               color: Palette.text,
-              height: 26 / Dimens.titleLarge,
+              height: 26 / 20,
             ),
         titleMedium: Theme.of(context).textTheme.titleMedium?.copyWith(
               fontSize: Dimens.titleMedium,
               color: Palette.text,
               height: 26 / Dimens.titleMedium,
-            ),
+            fontWeight: FontWeight.w500),
         titleSmall: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontSize: Dimens.titleSmall,
               color: Palette.text,
@@ -240,7 +241,7 @@ ThemeData themeDark(BuildContext context) => ThemeData(
               fontSize: Dimens.titleMedium,
               color: Palette.textDark,
               height: 26 / Dimens.titleMedium,
-            ),
+            fontWeight: FontWeight.w500),
         titleSmall: Theme.of(context).textTheme.titleSmall?.copyWith(
               fontSize: Dimens.titleSmall,
               color: Palette.textDark,

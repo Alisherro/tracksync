@@ -2,14 +2,21 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracksync/utils/utils.dart';
+
+import '../../dependencies_injection.dart';
 
 class DioInterceptor extends Interceptor with SentryCrashLogger {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     String headerMessage = "";
     options.headers.forEach((k, v) => headerMessage += '► $k: $v\n');
-
+    SharedPreferences preferences= sl<SharedPreferences>();
+    final String? token =preferences.getString('token');
+    if (token != null) {
+      options.headers['Authorization'] = 'Bearer $token';
+    }
     try {
       options.queryParameters.forEach(
         (k, v) => debugPrint(

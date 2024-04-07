@@ -44,6 +44,9 @@ class StringsKk extends Strings {
   String get errorInvalidEmail => 'Электрондық пошта жарамсыз';
 
   @override
+  String get errorInvalidName => 'Жарамсыз ат';
+
+  @override
   String get errorEmptyField => 'Бос болмауы керек';
 
   @override

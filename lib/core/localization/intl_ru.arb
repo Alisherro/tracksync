@@ -12,6 +12,7 @@
   "register": "Зарегистрироваться",
   "askRegister": "Нет аккаунта?",
   "errorInvalidEmail": "Электронная почта недействительна",
+  "errorInvalidName": "Некорректное имя",
   "errorEmptyField": "Не может быть пустым",
   "errorPasswordLength": "Пароль должен быть не менее 6 символов",
   "passwordRepeat": "Повторите пароль",

@@ -1,25 +1,47 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tracksync/core/widgets/scaffold_with_bottom_nav_bar.dart';
-import 'package:tracksync/features/auth/auth.dart';
 import 'package:tracksync/features/run/presentation/run_result/cubit/run_result_cubit.dart';
-
 import '../dependencies_injection.dart';
+import '../features/auth/presentation/login/login_screen.dart';
+import '../features/auth/presentation/profile/bloc/user_bloc.dart';
 import '../features/auth/presentation/profile/profile_screen.dart';
-import '../features/group/presentation/community_screen.dart';
-import '../features/group/presentation/create_group_screen.dart';
-import '../features/group/presentation/group_screen.dart';
-import '../features/group/presentation/groups_list_screen.dart';
-import '../features/group/presentation/groups_screen.dart';
-import '../features/group/presentation/invitation_screen.dart';
+import '../features/auth/presentation/register/cubit/register_cubit.dart';
+import '../features/auth/presentation/register/register_screen.dart';
+import '../features/auth/presentation/splash/splash_screen.dart';
 import '../features/leaderboard/presentation/leaderboard/cubit/leaderboard_cubit.dart';
 import '../features/leaderboard/presentation/leaderboard/leaderboards_screen.dart';
-import '../features/run/presentation/run_history/cubit/results_list_cubit.dart';
+import '../features/run/presentation/run_challenges/challenges_screen.dart';
 import '../features/run/presentation/run_history/health_tracker_screen.dart';
 import '../features/run/presentation/run_result/run_result_screen.dart';
 import '../features/run/presentation/running_map/bloc/running_map_bloc.dart';
 import '../features/run/presentation/running_map/running_map_screen.dart';
+
+class GoRouterRefreshStream extends ChangeNotifier {
+  UserState? state;
+
+  GoRouterRefreshStream(Bloc bloc) {
+    _subscription = bloc.stream.asBroadcastStream().listen(
+      (dynamic userState) {
+        if (state == userState) {
+        } else {
+          notifyListeners();
+        }
+        state = userState;
+      },
+    );
+  }
+
+  late final StreamSubscription<dynamic> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
 
 class AppRouter {
   static final _rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -43,15 +65,42 @@ class AppRouter {
 
   static GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/run',
+    refreshListenable: GoRouterRefreshStream(sl<UserBloc>()),
+    redirect: (context, state) {
+      UserState userState = context.read<UserBloc>().state;
+      if (userState is UserAuthenticated) {
+        if (['/run', '/health', '/leaderboard', '/challenges', '/profile']
+            .any((element) => state.matchedLocation.startsWith(element))) {
+          return null;
+        } else {
+          return '/run';
+        }
+      } else if (userState is UserUnauthenticated) {
+        if (['/login', '/registration'].contains(state.matchedLocation)) {
+          return null;
+        } else {
+          return '/login';
+        }
+      }
+      return null;
+    },
+    initialLocation: '/',
     routes: [
+      GoRoute(
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+          context: context,
+          state: state,
+          child: const SplashScreen(),
+        ),
+        path: '/',
+      ),
       GoRoute(
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,
           state: state,
           child: const LoginScreen(),
         ),
-        path: '/',
+        path: '/login',
       ),
       GoRoute(
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
@@ -97,15 +146,12 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: '/health',
-                pageBuilder: (context, state) => buildPageWithDefaultTransition(
-                  context: context,
-                  state: state,
-                  child: BlocProvider<ResultsListCubit>(
-                    key: UniqueKey(),
-                    child: const HealthTrackerScreen(),
-                    create: (_) => ResultsListCubit()..initState(),
-                  ),
-                ),
+                pageBuilder: (context, state) {
+                  return buildPageWithDefaultTransition(
+                      context: context,
+                      state: state,
+                      child: const HealthTrackerScreen());
+                },
                 routes: [
                   GoRoute(
                     path: 'result/:id',
@@ -144,55 +190,13 @@ class AppRouter {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/groups',
+                path: '/challenges',
                 pageBuilder: (context, state) => buildPageWithDefaultTransition(
                   context: context,
                   state: state,
-                  child: const GroupsScreen(),
+                  child: const ChallengesScreen(),
                 ),
-                routes: [
-                  GoRoute(
-                    path: 'create',
-                    pageBuilder: (context, state) =>
-                        buildPageWithDefaultTransition(
-                      context: context,
-                      state: state,
-                      child: const CreateGroupScreen(),
-                    ),
-                    routes: [
-                      GoRoute(
-                        path: 'group',
-                        pageBuilder: (context, state) =>
-                            buildPageWithDefaultTransition(
-                          context: context,
-                          state: state,
-                          child: const GroupScreen(),
-                        ),
-                        routes: [
-                          GoRoute(
-                            path: 'invitation',
-                            pageBuilder: (context, state) =>
-                                buildPageWithDefaultTransition(
-                              context: context,
-                              state: state,
-                              child: const InvitationScreen(),
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  GoRoute(
-                    path: 'community',
-                    pageBuilder: (context, state) =>
-                        buildPageWithDefaultTransition(
-                      context: context,
-                      state: state,
-                      child: const CommunityScreen(),
-                    ),
-                  )
-                ],
-              )
+              ),
             ],
           ),
           StatefulShellBranch(
@@ -204,17 +208,6 @@ class AppRouter {
                   child: const ProfileScreen(),
                 ),
                 path: '/profile',
-                routes: [
-                  GoRoute(
-                    pageBuilder: (context, state) =>
-                        buildPageWithDefaultTransition(
-                      context: context,
-                      state: state,
-                      child: const GroupsListScreen(),
-                    ),
-                    path: 'groups',
-                  ),
-                ],
               ),
             ],
           )

@@ -11,10 +11,10 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
   final List<String> tabsAssets = [
-    Images.runningMapIcon,
-    Images.heartIcon,
-    Images.starIcon,
-    Images.teamIcon,
+    Images.navigation,
+    Images.cardiology,
+    Images.chart,
+    Images.crown,
   ];
 
   static const double iconSize = 25;
@@ -25,6 +25,7 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        elevation: 0,
         title: AppBarWidget(
           onProfileTap: () {
             navigationShell.goBranch(4,
@@ -38,8 +39,8 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),
+            topRight: Radius.circular(12),
+            topLeft: Radius.circular(12),
           ),
         ),
         child: Padding(
@@ -53,37 +54,17 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
                   _onTap(index);
                 },
                 child: SizedBox(
-                  height: 40,
-                  width: 40,
-                  child: navigationShell.currentIndex == index
-                      ? Stack(
-                          children: [
-                            Center(
-                              child: SvgPicture.asset(
-                                Images.selectedTab,
-                              ),
-                            ),
-                            Center(
-                              child: SizedBox(
-                                height: 30,
-                                width: 30,
-                                child: SvgPicture.asset(
-                                  tabsAssets[index],
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      : Center(
-                          child: SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: SvgPicture.asset(
-                              tabsAssets[index],
-                            ),
-                          ),
+                    height: 40,
+                    width: 40,
+                    child: Center(
+                      child: SizedBox(
+                        height: 30,
+                        width: 30,
+                        child: SvgPicture.asset(
+                          tabsAssets[index],
                         ),
-                ),
+                      ),
+                    )),
               ),
             ),
           ),

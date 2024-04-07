@@ -1,98 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:tracksync/core/core.dart';
 
 import '../../../../../utils/helper/helper.dart';
-import '../../../../core/resources/resources.dart';
 import '../../domain/entities/leader.dart';
 import 'cubit/leaderboard_cubit.dart';
 
-class LeaderboardsScreen extends StatelessWidget {
+class LeaderboardsScreen extends StatefulWidget {
   const LeaderboardsScreen({super.key});
 
   @override
+  State<LeaderboardsScreen> createState() => _LeaderboardsScreenState();
+}
+
+class _LeaderboardsScreenState extends State<LeaderboardsScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TabController(length: 3, vsync: this);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 20,
-              horizontal: 40,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Leaderboards'.toUpperCase(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Palette.emptyColor,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 20),
-                      child: BlocBuilder<LeaderboardCubit, LeaderboardState>(
-                        builder: (context, state) => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: List.generate(
-                            3,
-                            (index) => GestureDetector(
-                              onTap: () =>
-                                  BlocProvider.of<LeaderboardCubit>(context)
-                                      .filterChanged(index),
-                              child: Text(
-                                leaderboardFilter[index],
-                                style: TextStyle(
-                                  color: (state is LeaderboardSuccess)
-                                      ? context
-                                                  .read<LeaderboardCubit>()
-                                                  .leaderboardFilterIndex ==
-                                              index
-                                          ? Palette.redColor
-                                          : Colors.white
-                                      : Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+          Text(
+            'Leaderboard',
+            style: Theme.of(context).textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 20),
+          Flexible(
+            child: TabBar(
+              indicatorColor: Palette.limeGreen,
+              splashBorderRadius: BorderRadius.zero,
+              padding: EdgeInsets.zero,
+              controller: _controller,
+              labelColor: Palette.limeGreen,
+              labelStyle: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.w400),
+              labelPadding: const EdgeInsets.all(10),
+              unselectedLabelColor: Palette.subText,
+              tabs: leaderboardFilter
+                  .map(
+                    (e) => Text(e),
+                  )
+                  .toList(),
+              onTap: (int index) {
+                BlocProvider.of<LeaderboardCubit>(context).filterChanged(index);
+              },
+              splashFactory: NoSplash.splashFactory,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorPadding: const EdgeInsets.symmetric(horizontal: 10),
             ),
           ),
           const SizedBox(height: 20),
           BlocBuilder<LeaderboardCubit, LeaderboardState>(
-              builder: (context, state) {
-                if (state is LeaderboardSuccess) {
-              return ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                separatorBuilder: (context, index) => const SizedBox(height: 5),
-                itemCount: state.leaderboard.leaders.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return LeaderboardUserWidget(
-                    leader: state.leaderboard.leaders[index],
-                    index: index,
-                  );
-                },
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          })
+            builder: (context, state) {
+              if (state is LeaderboardSuccess) {
+                return ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 10),
+                  itemCount: state.leaderboard.leaders.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return LeaderboardUserWidget(
+                      leader: state.leaderboard.leaders[index],
+                      index: index,
+                    );
+                  },
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          )
         ],
       ),
     );
@@ -108,77 +100,52 @@ class LeaderboardUserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: DecoratedBox(
-        decoration: const BoxDecoration(
-          color: Palette.emptyColor,
-        ),
+    return RoundedShadowContainer(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    (index + 1).toString(),
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w900,
-                        color: index == 0
-                            ? Palette.orangeColor
-                            : index == 1
-                                ? Palette.blueColor
-                                : index == 2
-                                    ? Palette.greenColor
-                                    : Colors.white,
-                        fontFamily: 'EurostileRound'),
-                  ),
-                  const SizedBox(width: 10),
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundImage: AssetImage(Images.xMenAvatar),
-                  ),
-                  const SizedBox(width: 15),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(leader.nickName ?? 'NoName'),
-                      const SizedBox(height: 5),
-                      Text(
-                        '${leader.totalKm ?? '0'}km',
-                        style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'EurostileRound',
-                            color: Palette.orangeColor),
-                      )
-                    ],
-                  ),
-                ],
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 15,
+            child: Center(
+              child: Text(
+                (index + 1).toString(),
+                style: Theme.of(context).textTheme.labelLarge,
               ),
-              Row(
-                children: [
-                  Text(
-                    '${leader.coins ?? 0}',
-                    style: const TextStyle(
-                        fontFamily: 'EurostileRound',
-                        fontSize: 15,
-                        fontWeight: FontWeight.w900,
-                        color: Palette.orangeColor),
-                  ),
-                  const SizedBox(width: 12),
-                  const CircleAvatar(
-                    radius: 11,
-                    backgroundImage: AssetImage(Images.logo),
-                  )
-                ],
-              )
+            ),
+          ),
+          const SizedBox(width: 10),
+          SvgPicture.asset(Images.avatar),
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                child: Text(
+                  leader.nickName ?? '',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ),
+              Text(
+                '${leader.totalKm} km',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodySmall
+                    ?.copyWith(color: Palette.electricBlue),
+              ),
             ],
           ),
-        ),
+          const Spacer(),
+          Text(
+            leader.coins.toString(),
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w500),
+          ),
+          SvgPicture.asset(Images.bolt),
+        ],
       ),
-    );
+    ));
   }
 }

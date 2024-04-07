@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tracksync/core/core.dart';
 
 class PopButtonWidget extends StatelessWidget {
   const PopButtonWidget({super.key, required this.title, required this.onTap});
@@ -16,17 +17,11 @@ class PopButtonWidget extends StatelessWidget {
         children: [
           const Icon(
             Icons.arrow_back_ios_new,
-            color: Colors.white,
             size: 24,
+            color: Palette.text,
           ),
-          const SizedBox(width: 10),
-          Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(fontWeight: FontWeight.w600),
-          ),
+          const SizedBox(width: 14),
+          Text(title, style: Theme.of(context).textTheme.bodyMedium),
         ],
       ),
     );

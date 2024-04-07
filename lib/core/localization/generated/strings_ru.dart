@@ -44,6 +44,9 @@ class StringsRu extends Strings {
   String get errorInvalidEmail => 'Электронная почта недействительна';
 
   @override
+  String get errorInvalidName => 'Некорректное имя';
+
+  @override
   String get errorEmptyField => 'Не может быть пустым';
 
   @override

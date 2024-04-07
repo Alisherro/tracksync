@@ -7,13 +7,15 @@ class Register {
 }
 
 class RegisterParams {
-  RegisterParams({required this.email, required this.password});
+  RegisterParams({required this.email, required this.password, required this.name});
 
+  final String name;
   final String email;
   final String password;
 
   Map<String, dynamic> toJson() {
     return {
+      "name": name,
       "email": email,
       "password": password,
     };

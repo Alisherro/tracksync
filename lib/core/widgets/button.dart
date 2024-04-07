@@ -25,10 +25,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints:
-          BoxConstraints(minWidth: width ?? context.widthInPercent(100)),
       margin: EdgeInsets.symmetric(vertical: Dimens.space8),
-      height: Dimens.buttonH,
       decoration: BoxDecorations(context).button.copyWith(
             color:
                 color ?? Theme.of(context).extension<TracksyncColors>()!.orange,
@@ -42,7 +39,8 @@ class Button extends StatelessWidget {
               color ?? Theme.of(context).extension<TracksyncColors>()!.orange,
           foregroundColor:
               Theme.of(context).extension<TracksyncColors>()!.buttonText,
-          padding: EdgeInsets.symmetric(horizontal: Dimens.space24),
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimens.space24, vertical: Dimens.space12),
           shape: const BeveledRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(Dimens.cornerRadius),

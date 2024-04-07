@@ -18,10 +18,12 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final _conName = TextEditingController();
   final _conEmail = TextEditingController();
   final _conPassword = TextEditingController();
   final _conPasswordRepeat = TextEditingController();
 
+  final _fnName = FocusNode();
   final _fnEmail = FocusNode();
   final _fnPassword = FocusNode();
   final _fnPasswordRepeat = FocusNode();
@@ -69,6 +71,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SpacerV(),
+                    TextF(
+                      key: const Key("name"),
+                      curFocusNode: _fnName,
+                      nextFocusNode: _fnEmail,
+                      textInputAction: TextInputAction.next,
+                      controller: _conName,
+                      keyboardType: TextInputType.name,
+                      prefixIcon: SvgPicture.asset(
+                        Images.user,
+                      ),
+                      hintText: 'John Doe',
+                      hint: Strings.of(context)!.errorInvalidName,
+                      validator: (String? value) => (value?.isNotEmpty??false)
+                          ? null
+                          : Strings.of(context)?.errorInvalidEmail
+                    ),
                     TextF(
                       key: const Key("email"),
                       curFocusNode: _fnEmail,
@@ -169,6 +187,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 RegisterParams(
                                   email: _conEmail.text,
                                   password: _conPassword.text,
+                                  name:_conName.text
                                 ),
                               );
                         }

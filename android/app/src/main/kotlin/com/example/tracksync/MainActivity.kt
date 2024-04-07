@@ -1,4 +1,4 @@
-package com.example.tracksync
+package com.alisher.tracksync
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -12,6 +12,7 @@
   "register": "Тіркелу",
   "askRegister": "Тіркелгіңіз жоқ па?",
   "errorInvalidEmail": "Электрондық пошта жарамсыз",
+  "errorInvalidName": "Жарамсыз ат",
   "errorEmptyField": "Бос болмауы керек",
   "errorPasswordLength": "Құпия сөз кемінде 6 таңбадан тұруы керек",
   "passwordRepeat": "Құпия сөзді қайталаңыз",

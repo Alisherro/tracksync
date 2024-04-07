@@ -9,9 +9,9 @@ class AuthLoading extends AuthState {
 }
 
 class AuthSuccess extends AuthState {
-  const AuthSuccess(this.data);
+  const AuthSuccess(this.login);
 
-  final String? data;
+  final Login? login;
 }
 
 class AuthFailure extends AuthState {

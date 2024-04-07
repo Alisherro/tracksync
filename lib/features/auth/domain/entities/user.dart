@@ -1,50 +1,58 @@
-import 'group.dart';
 
 class User {
+  int? id;
   bool? isMale;
-  List<int>? selectedGoalsIndexes;
-  List<int>? selectedSplitIndexes;
   String? dateOfBirth;
   int? weight;
   int? height;
   double? fitPercentage;
   int? coins;
-  String? nickName;
+  String? name;
+  String? email;
   String? location;
-  List<Group>? groups;
   double? totalKm;
 
   User(
-      {this.isMale,
-      this.selectedGoalsIndexes,
-      this.selectedSplitIndexes,
+      {this.id,
+      this.isMale,
       this.dateOfBirth,
       this.weight,
       this.height,
       this.fitPercentage,
       this.coins,
-      this.nickName,
+      this.name,
+      this.email,
       this.location,
-      this.groups,
       this.totalKm});
 
   User.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     isMale = json['isMale'];
-    selectedGoalsIndexes = json['selectedGoalsIndexes'].cast<int>();
-    selectedSplitIndexes = json['selectedSplitIndexes'].cast<int>();
     dateOfBirth = json['dateOfBirth'];
     weight = json['weight'];
     height = json['height'];
     fitPercentage = json['fitPercentage'];
     totalKm = json['totalKm'];
     coins = json['coins'];
-    nickName = json['nickName'];
+    name = json['name'];
+    email = json['email'];
     location = json['location'];
-    if (json['groups'] != null) {
-      groups = <Group>[];
-      json['groups'].forEach((v) {
-        groups!.add(Group.fromJson(v));
-      });
-    }
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'isMale': isMale,
+      'dateOfBirth': dateOfBirth,
+      'weight': weight,
+      'height': height,
+      'fitPercentage': fitPercentage,
+      'coins': coins,
+      'name': name,
+      'email': email,
+      'location': location,
+      'totalKm': totalKm,
+    };
+  }
+
 }

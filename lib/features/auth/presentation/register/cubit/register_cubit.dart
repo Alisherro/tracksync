@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracksync/features/auth/auth.dart';
-
 import '../../../../../core/error/failure.dart';
+import '../../../domain/entities/register.dart';
+import '../../../domain/repositories/auth_repository.dart';
 
 part 'register_state.dart';
 

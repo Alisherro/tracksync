@@ -61,8 +61,7 @@ import 'strings_ru.dart';
 /// be consistent with the languages listed in the Strings.supportedLocales
 /// property.
 abstract class Strings {
-  Strings(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  Strings(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -82,8 +81,7 @@ abstract class Strings {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -174,6 +172,12 @@ abstract class Strings {
   /// In en, this message translates to:
   /// **'Email is not valid'**
   String get errorInvalidEmail;
+
+  /// No description provided for @errorInvalidName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is not valid'**
+  String get errorInvalidName;
 
   /// No description provided for @errorEmptyField.
   ///
@@ -269,27 +273,26 @@ class _StringsDelegate extends LocalizationsDelegate<Strings> {
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en', 'kk', 'ru'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en', 'kk', 'ru'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_StringsDelegate old) => false;
 }
 
 Strings lookupStrings(Locale locale) {
+
+
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en':
-      return StringsEn();
-    case 'kk':
-      return StringsKk();
-    case 'ru':
-      return StringsRu();
+    case 'en': return StringsEn();
+    case 'kk': return StringsKk();
+    case 'ru': return StringsRu();
   }
 
   throw FlutterError(
-      'Strings.delegate failed to load unsupported locale "$locale". This is likely '
-      'an issue with the localizations generation tool. Please file an issue '
-      'on GitHub with a reproducible sample app and the gen-l10n configuration '
-      'that was used.');
+    'Strings.delegate failed to load unsupported locale "$locale". This is likely '
+    'an issue with the localizations generation tool. Please file an issue '
+    'on GitHub with a reproducible sample app and the gen-l10n configuration '
+    'that was used.'
+  );
 }

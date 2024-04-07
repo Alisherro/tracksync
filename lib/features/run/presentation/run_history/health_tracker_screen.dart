@@ -7,15 +7,18 @@ import 'package:intl/intl.dart';
 import 'package:tracksync/features/run/presentation/run_history/cubit/results_list_cubit.dart';
 
 import '../../../../../utils/helper/helper.dart';
-import '../../../../core/resources/palette.dart';
+import '../../../../core/core.dart';
 
 class HealthTrackerScreen extends StatelessWidget {
   const HealthTrackerScreen({super.key});
 
-  static const TextStyle style = TextStyle(
-    fontWeight: FontWeight.w900,
-    fontSize: 16,
-    fontFamily: 'EurostileRound',
+  static const TextStyle valuestyle = TextStyle(
+      fontWeight: FontWeight.w500, fontSize: 14, color: Palette.black);
+
+  static const TextStyle keystyle = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 14,
+    color: Palette.black,
   );
 
   @override
@@ -28,16 +31,14 @@ class HealthTrackerScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 40),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Health Tracker',
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(fontWeight: FontWeight.w600),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
                       ),
                       const SizedBox(height: 30),
                       Row(
@@ -46,8 +47,10 @@ class HealthTrackerScreen extends StatelessWidget {
                             'Total',
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.w600),
+                                .titleMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: Palette.black),
                           ),
                           const SizedBox(width: 17),
                           GestureDetector(
@@ -92,7 +95,7 @@ class HealthTrackerScreen extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
-                                  ?.copyWith(color: Palette.blueColor),
+                                  ?.copyWith(color: Palette.electricBlue),
                             ),
                           )
                         ],
@@ -109,11 +112,13 @@ class HealthTrackerScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Running'),
+                                    const Text(
+                                      'Running',
+                                      style: keystyle,
+                                    ),
                                     Text(
                                       '${state.totalKm > 10 ? state.totalKm.toInt() : state.totalKm.toStringAsFixed(2)}km',
-                                      style: style.copyWith(
-                                          color: Palette.secondColor),
+                                      style: valuestyle,
                                     ),
                                   ],
                                 ),
@@ -122,10 +127,13 @@ class HealthTrackerScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Time'),
+                                    const Text(
+                                      'Time',
+                                      style: keystyle,
+                                    ),
                                     Text(
                                       '${hoursStr(state.totalDuration.inSeconds)}:${minutesStr(state.totalDuration.inSeconds)}:${secondsStr(state.totalDuration.inSeconds)}',
-                                      style: style,
+                                      style: valuestyle,
                                     ),
                                   ],
                                 )
@@ -142,12 +150,12 @@ class HealthTrackerScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Calories'),
-                                    Text(
-                                      '${state.totalCalories}kCal',
-                                      style: style.copyWith(
-                                          color: Palette.secondColor),
+                                    const Text(
+                                      'Calories',
+                                      style: keystyle,
                                     ),
+                                    Text('${state.totalCalories}kCal',
+                                        style: valuestyle),
                                   ],
                                 ),
                                 const SizedBox(height: 5),
@@ -155,10 +163,13 @@ class HealthTrackerScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Workouts'),
+                                    const Text(
+                                      'Workouts',
+                                      style: keystyle,
+                                    ),
                                     Text(
                                       state.totalWorkouts.toString(),
-                                      style: style,
+                                      style: valuestyle,
                                     ),
                                   ],
                                 )
@@ -170,8 +181,9 @@ class HealthTrackerScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 25),
                 ListView.builder(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: state.results.length,
@@ -188,27 +200,36 @@ class HealthTrackerScreen extends StatelessWidget {
                       children: [
                         date != previousDate
                             ? Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 10, left: 40),
+                          padding:
+                                    const EdgeInsets.only(bottom: 10, top: 20),
                                 child: Text(
                                   date,
-                                  style: style,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
                                 ),
                               )
                             : const SizedBox(),
                         Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 2.5),
+                          padding: const EdgeInsets.symmetric(vertical: 4),
                           child: GestureDetector(
                             onTap: () {
                               context.go('/health/result/${data.id}');
                             },
                             child: DecoratedBox(
-                              decoration: const BoxDecoration(
-                                color: Palette.emptyColor,
-                              ),
+                              decoration: BoxDecoration(
+                                  color: Palette.background,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Palette.black.withAlpha(10),
+                                      spreadRadius: 0,
+                                      blurRadius: 16,
+                                      offset: const Offset(0, 8),
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.circular(12)),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 16, horizontal: 40),
+                                    vertical: 16, horizontal: 12),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -217,41 +238,36 @@ class HealthTrackerScreen extends StatelessWidget {
                                       children: [
                                         Container(
                                           padding: const EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(100),
-                                            border: Border.all(
-                                              width: 2,
-                                              color: Palette.pinkColor,
-                                            ),
-                                          ),
                                           width: 55,
                                           height: 55,
                                           child: SvgPicture.asset(
-                                              'assets/images/running_icon.svg'),
+                                              Images.runningGreen),
                                         ),
                                         const SizedBox(width: 15),
                                         FittedBox(
                                           child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                '${data.distance?.toStringAsFixed(2) ?? '0'}km',
-                                                style: style.copyWith(
-                                                    color: Palette.orangeColor),
-                                              ),
+                                                  '${data.distance?.toStringAsFixed(2) ?? '0'} km',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge),
                                               Text(
-                                                '${hoursStr(data.totalSeconds ?? 0)}:${minutesStr(data.totalSeconds ?? 0)}:${secondsStr(data.totalSeconds ?? 0)}',
-                                                style: style,
-                                              ),
+                                                  '${hoursStr(data.totalSeconds ?? 0)}:${minutesStr(data.totalSeconds ?? 0)}:${secondsStr(data.totalSeconds ?? 0)}',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge),
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Text(timeAgo(data.dateTime!)),
+                                    // Text(timeAgo(data.dateTime!)),
                                     const Icon(
                                       Icons.arrow_forward_ios_outlined,
-                                      color: Palette.redColor,
+                                      color: Palette.limeGreen,
                                     ),
                                   ],
                                 ),

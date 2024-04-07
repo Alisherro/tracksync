@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:tracksync/utils/helper/common.dart';
@@ -13,6 +12,8 @@ import 'core/localization/l10n.dart';
 import 'core/resources/styles.dart';
 import 'dependencies_injection.dart';
 import 'features/auth/presentation/login/cubit/auth_cubit.dart';
+import 'features/auth/presentation/profile/bloc/user_bloc.dart';
+import 'features/run/presentation/run_history/cubit/results_list_cubit.dart';
 
 class TrackSyncApp extends StatelessWidget {
   @override
@@ -26,8 +27,9 @@ class TrackSyncApp extends StatelessWidget {
     log.d(const String.fromEnvironment('ENV'));
     return MultiBlocProvider(
       providers: [
-        // BlocProvider(create: (_) => sl<SettingsCubit>()..getActiveTheme()),
         BlocProvider(create: (_) => sl<AuthCubit>()),
+        BlocProvider(create: (_) => sl<UserBloc>()..add(const UserFetch()),lazy: false,),
+        BlocProvider(create: (_) => ResultsListCubit()..initState()),
       ],
       child: OKToast(
         child: ScreenUtilInit(
@@ -37,12 +39,7 @@ class TrackSyncApp extends StatelessWidget {
           builder: (context, __) {
             return MaterialApp.router(
               routerConfig: AppRouter.router,
-              localizationsDelegates: const [
-                Strings.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
+              localizationsDelegates: Strings.localizationsDelegates,
               debugShowCheckedModeBanner: false,
               builder: (BuildContext context, Widget? child) {
                 final MediaQueryData data = MediaQuery.of(context);

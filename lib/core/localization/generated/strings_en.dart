@@ -44,6 +44,9 @@ class StringsEn extends Strings {
   String get errorInvalidEmail => 'Email is not valid';
 
   @override
+  String get errorInvalidName => 'Name is not valid';
+
+  @override
   String get errorEmptyField => 'Can\'t be empty';
 
   @override

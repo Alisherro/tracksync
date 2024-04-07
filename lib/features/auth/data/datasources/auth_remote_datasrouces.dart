@@ -1,6 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:tracksync/features/auth/auth.dart';
 import '../../../../core/core.dart';
+import '../../domain/entities/login.dart';
+import '../../domain/entities/register.dart';
+import '../models/login_response.dart';
+import '../models/register_response.dart';
 
 abstract interface class AuthRemoteDataSource {
   Future<Either<Failure, RegisterResponse>> register(

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tracksync/features/auth/auth.dart';
-
 import '../../../../../core/error/error.dart';
+import '../../../domain/entities/login.dart';
+import '../../../domain/repositories/auth_repository.dart';
 
 part 'auth_state.dart';
 
@@ -28,14 +28,8 @@ class AuthCubit extends Cubit<AuthState> {
           emit(AuthFailure(l.message ?? ""));
         }
       },
-      (r) => emit(AuthSuccess(r.token)),
+      (r) => emit(AuthSuccess(Login(r.token, r.user))),
     );
   }
 
-  Future<void> logout() async {
-    emit(const AuthLoading());
-    isPasswordHide = true;
-    // await MainBoxMixin().logoutBox();
-    emit(const AuthSuccess(null));
-  }
 }

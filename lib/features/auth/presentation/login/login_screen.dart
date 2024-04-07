@@ -6,6 +6,7 @@ import 'package:tracksync/utils/utils.dart';
 
 import '../../../../core/core.dart';
 import '../../domain/entities/login.dart';
+import '../profile/bloc/user_bloc.dart';
 import 'cubit/cubit.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -35,14 +36,13 @@ class _LoginScreenState extends State<LoginScreen> {
               break;
             case AuthSuccess():
               context.dismiss();
-              state.data.toString().toToastSuccess(context);
-              context.go('/run');
+              context.read<UserBloc>().add(UserLoggedIn(
+                  user: state.login!.user, token: state.login!.token));
               break;
             case AuthFailure():
               context.dismiss();
               state.message.toToastError(context);
-              context.go('/run');
-
+              // context.go('/run');
               break;
             case AuthState():
               null;
