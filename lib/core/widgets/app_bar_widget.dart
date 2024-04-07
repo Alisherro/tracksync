@@ -7,16 +7,6 @@ import '../resources/palette.dart';
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key, required this.onProfileTap});
 
-  String gpsConnection(int connection) {
-    return '''<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-  <path d="M2 20H2.01" stroke="#${connection >= 1 ? '2FDA9C' : 'E1E1E1'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M7 20V16" stroke="#${connection >= 2 ? '2FDA9C' : 'E1E1E1'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M12 20V12" stroke="#${connection >= 3 ? '2FDA9C' : 'E1E1E1'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M17 20V8" stroke="#${connection >= 4 ? '2FDA9C' : 'E1E1E1'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M22 4V20" stroke="#${connection >= 5 ? '2FDA9C' : 'E1E1E1'}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>''';
-  }
-
   final VoidCallback onProfileTap;
 
   @override
@@ -30,25 +20,10 @@ class AppBarWidget extends StatelessWidget {
             onTap: onProfileTap,
             child: SvgPicture.asset(Images.avatar),
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'GPS',
-                style: TextStyle(
-                  color: Palette.greenColor,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24,
-                ),
-              ),
-              const SizedBox(width: 10),
-              SvgPicture.string(gpsConnection(3)),
-            ],
-          ),
           DecoratedBox(
             decoration: BoxDecoration(
-              color: Palette.secondColor,
-              borderRadius: BorderRadius.circular(38),
+              color: Palette.orangeLight,
+              borderRadius: BorderRadius.circular(12),
             ),
             child: const Padding(
               padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),

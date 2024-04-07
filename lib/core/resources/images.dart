@@ -26,4 +26,12 @@ class Images {
   static const String lockon = 'assets/images/lockon.svg';
   static const String mail = 'assets/images/mail.svg';
   static const String user = 'assets/images/user.svg';
+  static const String cardiology = 'assets/images/cardiology.svg';
+  static const String chart = 'assets/images/chartvertical.svg';
+  static const String navigation = 'assets/images/navigation.svg';
+  static const String usersmore = 'assets/images/usersmore.svg';
+  static const String runningGreen = 'assets/images/running_green.svg';
+  static const String runningBlue = 'assets/images/running_blue.svg';
+  static const String bolt = 'assets/images/bolt.svg';
+  static const String groupChatGreen = 'assets/images/group_chat_green.svg';
 }

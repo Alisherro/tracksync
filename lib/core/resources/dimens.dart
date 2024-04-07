@@ -5,7 +5,7 @@ class Dimens {
 
   static double displayLarge = 96.sp;
   static double displayMedium = 60.sp;
-  static double displaySmall = 48.sp;
+  static double displaySmall = 32.sp;
   static double headlineMedium = 28.sp;
   static double headlineSmall = 24.sp;
   static double titleLarge = 20.sp;
@@ -49,9 +49,9 @@ class Dimens {
   static double profilePicture = 110.w;
   static double birthdayCalendar = 120.w;
 
-  static double buttonH = 40.w;
+  static double buttonH = 60.w;
   static double imageW = 110.w;
 
-  static const double cornerRadius = 15;
+  static const double cornerRadius = 12;
   static const double cornerRadiusBottomSheet = 30;
 }

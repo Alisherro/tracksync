@@ -17,6 +17,8 @@ class Palette {
   static const Color shadow = Color(0xff8c8fa1);
   static const Color shadowDark = Color(0xff7f849c);
   static const Color formFieldIcon = Color(0xff708090);
+  static const Color black = Color(0xff000000);
+  static const Color electricBlue = Color(0xff007BFF);
 
   static const Color redMocha = Color(0xfff38ba8);
   static const Color greenMocha = Color(0xffa6e3a1);
@@ -35,6 +37,7 @@ class Palette {
 
   static const Color redLatte = Color(0xffd20f39);
   static const Color greenLatte = Color(0xff40a02b);
+  static const Color limeGreen = Color(0xff32CD32);
   static const Color roseWaterLatte = Color(0xffdc8a78);
   static const Color flamingoLatte = Color(0xffdd7878);
   static const Color pinkLatte = Color(0xffea76cb);
@@ -43,6 +46,7 @@ class Palette {
   static const Color peachLatte = Color(0xfffe640b);
   static const Color yellowLatte = Color(0xffdf8e1d);
   static const Color sunsetOrange = Color(0xffFF6C36);
+  static const Color orangeLight = Color(0xffFFC9B5);
   static const Color tealLatte = Color(0xff179299);
   static const Color sapphireLatte = Color(0xff209fb5);
   static const Color skyLatte = Color(0xff04a5e5);

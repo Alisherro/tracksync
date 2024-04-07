@@ -15,6 +15,7 @@ import '../features/group/presentation/groups_screen.dart';
 import '../features/group/presentation/invitation_screen.dart';
 import '../features/leaderboard/presentation/leaderboard/cubit/leaderboard_cubit.dart';
 import '../features/leaderboard/presentation/leaderboard/leaderboards_screen.dart';
+import '../features/run/presentation/run_challenges/challenges_screen.dart';
 import '../features/run/presentation/run_history/cubit/results_list_cubit.dart';
 import '../features/run/presentation/run_history/health_tracker_screen.dart';
 import '../features/run/presentation/run_result/run_result_screen.dart';
@@ -101,7 +102,6 @@ class AppRouter {
                   context: context,
                   state: state,
                   child: BlocProvider<ResultsListCubit>(
-                    key: UniqueKey(),
                     child: const HealthTrackerScreen(),
                     create: (_) => ResultsListCubit()..initState(),
                   ),
@@ -143,6 +143,14 @@ class AppRouter {
           ),
           StatefulShellBranch(
             routes: [
+              // GoRoute(
+              //   path: '/challenges',
+              //   pageBuilder: (context, state) => buildPageWithDefaultTransition(
+              //     context: context,
+              //     state: state,
+              //     child: const ChallengesScreen(),
+              //   ),
+              // ),
               GoRoute(
                 path: '/groups',
                 pageBuilder: (context, state) => buildPageWithDefaultTransition(
