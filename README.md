@@ -11,11 +11,10 @@ Pet Project
 ## Feature
 
 - [x] BLoC, Provider, GoRouter, GetIt,
-- [x] Theme Configuration: `System, Light, Dark`
 - [x] Multi-Language: `English, Kazakh, Russian`
 
 ## TODO 📝
 
 - [x] Refactor ThemeData
-- [x] Implement UserAuth logic
 - [x] Diff appIcon, name, id and so on with flavors use
+- [x] Refactor run feature
