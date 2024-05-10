@@ -172,7 +172,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
         controller.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              zoom: 14.5,
+              zoom: 13.5,
               target: LatLng(event.latitude, event.longitude),
             ),
           ),

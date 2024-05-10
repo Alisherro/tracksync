@@ -36,4 +36,5 @@ class Images {
   static const String groupChatGreen = 'assets/images/group_chat_green.svg';
   static const String target = 'assets/images/target.svg';
   static const String crown = 'assets/images/crown.svg';
+  static const String userRunningIcon = 'assets/images/user_run_circle.svg';
 }

@@ -34,7 +34,7 @@ class RunningMapScreen extends StatelessWidget {
                 initialCameraPosition: CameraPosition(
                   target: LatLng(state.currentPosition.latitude,
                       state.currentPosition.longitude),
-                  zoom: 14.5,
+                  zoom: 13.5,
                 ),
                 onMapCreated: (GoogleMapController controller) {
                   context.read<RunningMapBloc>().add(
@@ -43,7 +43,7 @@ class RunningMapScreen extends StatelessWidget {
                 },
                 markers: {
                   Marker(
-                    markerId: MarkerId('current'),
+                    markerId:const MarkerId('me'),
                     position: LatLng(
                       state.currentPosition.latitude,
                       state.currentPosition.longitude,

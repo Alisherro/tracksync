@@ -326,7 +326,7 @@ class RunResultScreen extends StatelessWidget {
                       mapType: MapType.normal,
                       initialCameraPosition: const CameraPosition(
                         target: LatLng(51.1478, 71.3571),
-                        zoom: 14.5,
+                        zoom: 13.5,
                       ),
                       markers: {
                         const Marker(
