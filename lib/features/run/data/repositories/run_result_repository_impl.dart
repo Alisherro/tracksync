@@ -23,7 +23,7 @@ class RunResultRepositoryImpl implements RunResultRepository {
 
   @override
   Future<int?> saveRunResult(RunResult runResult) async {
-    resultRemoteDataProvider.saveRunResult(runResult);
+    // await resultRemoteDataProvider.saveRunResult(runResult);
     return await resultDataProvider.saveRunResult(runResult);
   }
 }

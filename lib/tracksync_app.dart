@@ -29,9 +29,13 @@ class TrackSyncApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<AuthCubit>()),
-        BlocProvider(create: (_) => sl<ChallengesBloc>()..add(ChallengesFetchEvent())),
-        BlocProvider(create: (_) => sl<UserBloc>()..add(const UserFetch()),lazy: false,),
-        BlocProvider(create: (_) => ResultsListCubit()..initState()),
+        BlocProvider(
+            create: (_) => sl<ChallengesBloc>()..add(ChallengesFetchEvent())),
+        BlocProvider(
+          create: (_) => sl<UserBloc>()..add(const UserFetch()),
+          lazy: false,
+        ),
+        BlocProvider(create: (_) => sl<ResultsListCubit>()..initState()),
       ],
       child: OKToast(
         child: ScreenUtilInit(

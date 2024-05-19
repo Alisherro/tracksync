@@ -8,14 +8,19 @@ import '../../../domain/repositories/run_result_repository.dart';
 part 'results_list_state.dart';
 
 class ResultsListCubit extends Cubit<ResultsListState> {
-  ResultsListCubit() : super(ResultsListInitial());
+  ResultsListCubit(this._repo) : super(ResultsListInitial());
 
-  RunResultRepository get _repo => sl.get<RunResultRepository>();
+  final RunResultRepository _repo;
+
+  DateTimeRange? currentDateTimeRange;
 
   Future<void> initState([DateTimeRange? range]) async {
+    if (range != null) {
+      currentDateTimeRange = range;
+    }
     final DateTime now = DateTime.now();
     final List<RunResult> results = await _repo.getAllResults(
-      range ??
+      currentDateTimeRange ??
           DateTimeRange(
             start: DateTime(now.year, now.month, 0),
             end: DateTime(now.year, now.month + 1, 1),
@@ -30,12 +35,13 @@ class ResultsListCubit extends Cubit<ResultsListState> {
     final totalWorkouts = results.length;
     emit(
       ResultsListSuccess(
-          totalKm: totalKm,
-          totalDuration: Duration(seconds: totalSeconds),
-          totalCalories: totalCalories.toInt(),
-          totalWorkouts: totalWorkouts,
-          results: results,
-          dateRange: range?.start ?? DateTime.now()),
+        totalKm: totalKm,
+        totalDuration: Duration(seconds: totalSeconds),
+        totalCalories: totalCalories.toInt(),
+        totalWorkouts: totalWorkouts,
+        results: results,
+        dateRange: currentDateTimeRange?.start ?? DateTime.now(),
+      ),
     );
   }
 
@@ -43,5 +49,11 @@ class ResultsListCubit extends Cubit<ResultsListState> {
     final DateTime dateTimeEnd =
         DateTime(dateTimeStart.year, dateTimeStart.month + 1, 1);
     initState(DateTimeRange(start: dateTimeStart, end: dateTimeEnd));
+  }
+
+  Future<int> saveRunResult(RunResult data) async {
+    int? id = await _repo.saveRunResult(data);
+    initState();
+    return id ?? 0;
   }
 }

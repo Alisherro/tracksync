@@ -201,143 +201,143 @@ class RunResultScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 25),
-                  AspectRatio(
-                    aspectRatio: 2.5,
-                    child: LineChart(
-                      LineChartData(
-                        gridData: FlGridData(
-                          show: true,
-                          drawVerticalLine: true,
-                          drawHorizontalLine: false,
-                          horizontalInterval: 1,
-                          verticalInterval: 1,
-                          getDrawingVerticalLine: (value) {
-                            return const FlLine(
-                              color: Color(0xff120A27),
-                              strokeWidth: 1,
-                            );
-                          },
-                        ),
-                        titlesData: const FlTitlesData(
-                          show: true,
-                          leftTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          topTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          rightTitles: AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          bottomTitles: AxisTitles(
-                            axisNameWidget: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  '8:42 AM',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff715BA7),
-                                  ),
-                                ),
-                                Text(
-                                  '9:42 AM',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff715BA7),
-                                  ),
-                                ),
-                                Text(
-                                  '10:42 AM',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff715BA7),
-                                  ),
-                                ),
-                                Text(
-                                  '11:42 AM',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xff715BA7),
-                                  ),
-                                )
-                              ],
-                            ),
-                            axisNameSize: 30,
-                          ),
-                        ),
-                        borderData: FlBorderData(
-                          show: false,
-                        ),
-                        minX: 0,
-                        maxX: 11,
-                        minY: 0,
-                        maxY: 6,
-                        lineBarsData: [
-                          LineChartBarData(
-                            spots: const [
-                              FlSpot(0, 3),
-                              FlSpot(2.6, 2),
-                              FlSpot(4.9, 5),
-                              FlSpot(6.8, 3.1),
-                              FlSpot(8, 4),
-                              FlSpot(9.5, 3),
-                              FlSpot(11, 4),
-                            ],
-                            isCurved: true,
-                            gradient: const LinearGradient(
-                              colors: [
-                                Palette.secondColor,
-                                Palette.secondColor
-                              ],
-                            ),
-                            barWidth: 2,
-                            isStrokeCapRound: true,
-                            dotData: const FlDotData(
-                              show: false,
-                            ),
-                            belowBarData: BarAreaData(
-                              show: true,
-                              color: const Color(0xff11BB8D).withOpacity(0.1),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                  // AspectRatio(
+                  //   aspectRatio: 2.5,
+                  //   child: LineChart(
+                  //     LineChartData(
+                  //       gridData: FlGridData(
+                  //         show: true,
+                  //         drawVerticalLine: true,
+                  //         drawHorizontalLine: false,
+                  //         horizontalInterval: 1,
+                  //         verticalInterval: 1,
+                  //         getDrawingVerticalLine: (value) {
+                  //           return const FlLine(
+                  //             color: Color(0xff120A27),
+                  //             strokeWidth: 1,
+                  //           );
+                  //         },
+                  //       ),
+                  //       titlesData: const FlTitlesData(
+                  //         show: true,
+                  //         leftTitles: AxisTitles(
+                  //             sideTitles: SideTitles(showTitles: false)),
+                  //         topTitles: AxisTitles(
+                  //             sideTitles: SideTitles(showTitles: false)),
+                  //         rightTitles: AxisTitles(
+                  //             sideTitles: SideTitles(showTitles: false)),
+                  //         bottomTitles: AxisTitles(
+                  //           axisNameWidget: Row(
+                  //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //             children: [
+                  //               Text(
+                  //                 '8:42 AM',
+                  //                 style: TextStyle(
+                  //                   fontSize: 11,
+                  //                   fontWeight: FontWeight.w400,
+                  //                   color: Color(0xff715BA7),
+                  //                 ),
+                  //               ),
+                  //               Text(
+                  //                 '9:42 AM',
+                  //                 style: TextStyle(
+                  //                   fontSize: 11,
+                  //                   fontWeight: FontWeight.w400,
+                  //                   color: Color(0xff715BA7),
+                  //                 ),
+                  //               ),
+                  //               Text(
+                  //                 '10:42 AM',
+                  //                 style: TextStyle(
+                  //                   fontSize: 11,
+                  //                   fontWeight: FontWeight.w400,
+                  //                   color: Color(0xff715BA7),
+                  //                 ),
+                  //               ),
+                  //               Text(
+                  //                 '11:42 AM',
+                  //                 style: TextStyle(
+                  //                   fontSize: 11,
+                  //                   fontWeight: FontWeight.w400,
+                  //                   color: Color(0xff715BA7),
+                  //                 ),
+                  //               )
+                  //             ],
+                  //           ),
+                  //           axisNameSize: 30,
+                  //         ),
+                  //       ),
+                  //       borderData: FlBorderData(
+                  //         show: false,
+                  //       ),
+                  //       minX: 0,
+                  //       maxX: 11,
+                  //       minY: 0,
+                  //       maxY: 6,
+                  //       lineBarsData: [
+                  //         LineChartBarData(
+                  //           spots: const [
+                  //             FlSpot(0, 3),
+                  //             FlSpot(2.6, 2),
+                  //             FlSpot(4.9, 5),
+                  //             FlSpot(6.8, 3.1),
+                  //             FlSpot(8, 4),
+                  //             FlSpot(9.5, 3),
+                  //             FlSpot(11, 4),
+                  //           ],
+                  //           isCurved: true,
+                  //           gradient: const LinearGradient(
+                  //             colors: [
+                  //               Palette.secondColor,
+                  //               Palette.secondColor
+                  //             ],
+                  //           ),
+                  //           barWidth: 2,
+                  //           isStrokeCapRound: true,
+                  //           dotData: const FlDotData(
+                  //             show: false,
+                  //           ),
+                  //           belowBarData: BarAreaData(
+                  //             show: true,
+                  //             color: const Color(0xff11BB8D).withOpacity(0.1),
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   const SizedBox(height: 30),
                   Text(
                     'Route map',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   const SizedBox(height: 15),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 180,
-                    child: GoogleMap(
-                      gestureRecognizers: <Factory<
-                          OneSequenceGestureRecognizer>>{
-                        Factory<OneSequenceGestureRecognizer>(
-                          () => EagerGestureRecognizer(),
-                        ),
-                      },
-                      zoomControlsEnabled: false,
-                      mapType: MapType.normal,
-                      initialCameraPosition: const CameraPosition(
-                        target: LatLng(51.1478, 71.3571),
-                        zoom: 13.5,
-                      ),
-                      markers: {
-                        const Marker(
-                            markerId: MarkerId('a'),
-                            position: LatLng(51.1504, 71.5679)),
-                        const Marker(
-                            markerId: MarkerId('b'),
-                            position: LatLng(51.1698, 71.3711)),
-                      },
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   height: 180,
+                  //   child: GoogleMap(
+                  //     gestureRecognizers: <Factory<
+                  //         OneSequenceGestureRecognizer>>{
+                  //       Factory<OneSequenceGestureRecognizer>(
+                  //         () => EagerGestureRecognizer(),
+                  //       ),
+                  //     },
+                  //     zoomControlsEnabled: false,
+                  //     mapType: MapType.normal,
+                  //     initialCameraPosition: const CameraPosition(
+                  //       target: LatLng(51.1478, 71.3571),
+                  //       zoom: 13.5,
+                  //     ),
+                  //     markers: {
+                  //       const Marker(
+                  //           markerId: MarkerId('a'),
+                  //           position: LatLng(51.1504, 71.5679)),
+                  //       const Marker(
+                  //           markerId: MarkerId('b'),
+                  //           position: LatLng(51.1698, 71.3711)),
+                  //     },
+                  //   ),
+                  // ),
                   const SizedBox(height: 90),
                 ],
               ),

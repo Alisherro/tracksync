@@ -10,6 +10,7 @@ import 'package:tracksync/features/challenges/presentation/challenges/bloc/chall
 import 'package:tracksync/features/leaderboard/data/repositories/leaderboard_repository_impl.dart';
 import 'package:tracksync/features/leaderboard/domain/repositories/leaderboard_repository.dart';
 import 'package:tracksync/features/run/data/datasources/run_result_remote_datasource.dart';
+import 'package:tracksync/features/run/presentation/run_result/cubit/run_result_cubit.dart';
 
 import 'core/api/dio_client.dart';
 import 'features/auth/data/datasources/auth_remote_datasrouces.dart';
@@ -24,6 +25,7 @@ import 'features/leaderboard/presentation/leaderboard/cubit/leaderboard_cubit.da
 import 'features/run/data/datasources/run_result_local_datasource.dart';
 import 'features/run/data/repositories/run_result_repository_impl.dart';
 import 'features/run/domain/repositories/run_result_repository.dart';
+import 'features/run/presentation/run_history/cubit/results_list_cubit.dart';
 import 'features/run/presentation/running_map/bloc/running_map_bloc.dart';
 
 GetIt sl = GetIt.I;
@@ -65,7 +67,7 @@ Future<void> setupLocator() async {
     );
 
     sl.registerLazySingleton<LeaderboardRemoteDataSource>(
-            () => LeaderboardRemoteDataSourceImpl(sl()));
+        () => LeaderboardRemoteDataSourceImpl(sl()));
 
     sl.registerLazySingleton<RunResultDatasource>(
         () => RunResultDatasourceIsar());
@@ -89,7 +91,8 @@ Future<void> setupLocator() async {
     sl.registerFactory(() => RegisterCubit(sl()));
     sl.registerFactory(() => AuthCubit(sl()));
     sl.registerFactory(() => LeaderboardCubit(sl()));
-    sl.registerFactory(() => RunningMapBloc(sl()));
+    sl.registerFactory(() => ResultsListCubit(sl()));
+    sl.registerFactory(() => RunningMapBloc(sl(), sl()));
   }
 
   void _bloc() {

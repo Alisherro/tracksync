@@ -13,6 +13,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracksync/core/core.dart';
+import 'package:tracksync/features/run/presentation/run_history/cubit/results_list_cubit.dart';
 import 'package:tracksync/features/run/presentation/running_map/bloc/running_map_event.dart';
 
 import '../../../domain/entities/run_result.dart';
@@ -29,7 +30,8 @@ class Ticker {
 }
 
 class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
-  RunningMapBloc(this._repo) : super(RunningMapInitial()) {
+  RunningMapBloc(this._repo, this.resultsListCubit)
+      : super(RunningMapInitial()) {
     on<InitPermissions>(_onInitPermissions);
     on<MapCreated>(_mapCreated);
     on<PositionChanged>(_positionChanged);
@@ -38,6 +40,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
   }
 
   final RunResultRepository _repo;
+  final ResultsListCubit resultsListCubit;
   late Position position;
   late GoogleMapController controller;
   bool isRunning = false;
@@ -71,9 +74,9 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
       });
     } else {
       _tickerSubscription?.cancel();
-      final currentState = (state as RunningMapAvailableState);
+      final currentState = state as RunningMapAvailableState;
       int? id;
-      id = await _repo.saveRunResult(
+      id = await resultsListCubit.saveRunResult(
         RunResult()
           ..totalSeconds = currentState.duration.inSeconds
           ..points = currentState.points
@@ -86,7 +89,9 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           ..distance = currentState.distance
           ..avgPaceSeconds = currentState.avgPace.inSeconds,
       );
-      event.context.go('/health/result/$id');
+      if (event.context.mounted) {
+        event.context.go('/health/result/$id');
+      }
       emit(
         (state as RunningMapAvailableState).copyWith(
           isRunning: isRunning,
@@ -171,14 +176,17 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
 
   Future<Uint8List> getBytesFromAsset(String path, int width) async {
     ByteData data = await rootBundle.load(path);
-    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
     FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ImageByteFormat.png))!.buffer.asUint8List();
+    return (await fi.image.toByteData(format: ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   _mapCreated(MapCreated event, Emitter<RunningMapState> emit) async {
-    final Uint8List markerIcon = await getBytesFromAsset(Images.runningBluePng, 100);
-    // icon= await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(100, 100)), Images.runningBluePng);
+    final Uint8List markerIcon =
+        await getBytesFromAsset(Images.runningBluePng, 100);
     icon = BitmapDescriptor.fromBytes(markerIcon);
     mapController.complete(event.controller);
     GoogleMapController googleMapController = await mapController.future;
@@ -224,13 +232,16 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     }
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
-      try{
-        position = await Geolocator.getCurrentPosition(timeLimit: const Duration(seconds: 10));
+      try {
+        position = await Geolocator.getCurrentPosition(
+            timeLimit: const Duration(seconds: 10));
         emit(RunningMapAvailableState(currentPosition: position));
-      }on LocationServiceDisabledException{
-        emit(RunningMapErrorState(error: 'location services of the device are disabled'));
-      } on TimeoutException{
-        emit(RunningMapErrorState(error: 'Some errors with your geolocator service'));
+      } on LocationServiceDisabledException {
+        emit(RunningMapErrorState(
+            error: 'location services of the device are disabled'));
+      } on TimeoutException {
+        emit(RunningMapErrorState(
+            error: 'Some errors with your geolocator service'));
       }
     }
   }

@@ -25,7 +25,6 @@ class _RunningMapScreenState extends State<RunningMapScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<RunningMapBloc, RunningMapState>(
       builder: (context, state) {
-        print('fvcaw: ${state.runtimeType}');
         if (state is RunningMapErrorState) {
           return Center(
             child: Text(state.error),
