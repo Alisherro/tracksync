@@ -7,6 +7,7 @@ import '../../../../../utils/helper/helper.dart';
 import '../../domain/entities/leader.dart';
 import 'cubit/leaderboard_cubit.dart';
 
+
 class LeaderboardsScreen extends StatefulWidget {
   const LeaderboardsScreen({super.key});
 
@@ -22,6 +23,15 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen>
   void initState() {
     super.initState();
     _controller = TabController(length: 3, vsync: this);
+  }
+
+  String getPeriodName(TimePeriod period){
+     switch(period){
+       case TimePeriod.day :return 'Today';
+       case TimePeriod.week :return 'Week';
+       case TimePeriod.month :return 'Month';
+       case TimePeriod.all :return 'All time';
+    }
   }
 
   @override
@@ -50,9 +60,9 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen>
                   ?.copyWith(fontWeight: FontWeight.w400),
               labelPadding: const EdgeInsets.all(10),
               unselectedLabelColor: Palette.subText,
-              tabs: leaderboardFilter
+              tabs: context.read<LeaderboardCubit>().tabs
                   .map(
-                    (e) => Text(e),
+                    (e) => Text(getPeriodName(e)),
                   )
                   .toList(),
               onTap: (int index) {
@@ -122,7 +132,7 @@ class LeaderboardUserWidget extends StatelessWidget {
             children: [
               FittedBox(
                 child: Text(
-                  leader.nickName ?? '',
+                  leader.user.name ?? 'Unknown',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ),
@@ -137,7 +147,7 @@ class LeaderboardUserWidget extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            leader.coins.toString(),
+            leader.totalPoints,
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge

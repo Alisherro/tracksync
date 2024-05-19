@@ -1,8 +1,10 @@
+import '../../../auth/domain/entities/user.dart';
+
 class Leader {
   const Leader(
-      {required this.nickName, required this.totalKm, required this.coins});
+      {required this.user, required this.totalKm, required this.totalPoints});
 
-  final String? nickName;
-  final double? totalKm;
-  final int? coins;
+  final User user;
+  final String totalKm;
+  final String totalPoints;
 }

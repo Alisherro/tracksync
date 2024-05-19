@@ -7,17 +7,24 @@ import '../../../domain/repositories/leaderboard_repository.dart';
 
 part 'leaderboard_state.dart';
 
+enum TimePeriod { day, week, month, all }
+
+
 class LeaderboardCubit extends Cubit<LeaderboardState> {
+  final LeaderboardRepository repo;
   LeaderboardCubit(this.repo) : super(LeaderboardInitial()) {
     initData();
   }
-
-  final LeaderboardRepository repo;
+  List<TimePeriod> tabs=[
+    TimePeriod.day,
+    TimePeriod.week,
+    TimePeriod.month,
+  ];
   int leaderboardFilterIndex = 0;
 
   Future<void> initData() async {
     emit(LeaderboardLoading());
-    final response = await repo.getLeaderboard(const LeaderboardParams(''));
+    final response = await repo.getLeaderboard( LeaderboardParams(tabs[0].name));
     response.fold((l) {
       emit(LeaderboardFailed(l));
     }, (r) {
@@ -28,7 +35,8 @@ class LeaderboardCubit extends Cubit<LeaderboardState> {
   Future<void> filterChanged(int index) async {
     emit(LeaderboardLoading());
     leaderboardFilterIndex = index;
-    final response = await repo.getLeaderboard(LeaderboardParams('$index'));
+    final String query = tabs[leaderboardFilterIndex].name;
+    final response = await repo.getLeaderboard(LeaderboardParams(query));
     response.fold((l) {
       emit(LeaderboardFailed(l));
     }, (r) {
@@ -36,3 +44,4 @@ class LeaderboardCubit extends Cubit<LeaderboardState> {
     });
   }
 }
+

@@ -11,6 +11,21 @@ abstract interface class LeaderboardRemoteDataSource {
       LeaderboardParams params);
 }
 
+class LeaderboardRemoteDataSourceImpl implements LeaderboardRemoteDataSource {
+  LeaderboardRemoteDataSourceImpl(this._client);
+
+  final DioClient _client;
+
+  @override
+  Future<Either<Failure, LeaderboardResponse>> getLeaderboard(
+      LeaderboardParams params) async {
+    return await _client.getRequest(ListAPI.leaderboard,
+        queryParameters: {"value": params.filter}, converter: (response) {
+      return LeaderboardResponse.fromMap(response);
+    });
+  }
+}
+
 class LeaderboardRemoteDataSourceMockImpl
     implements LeaderboardRemoteDataSource {
   @override
@@ -19,7 +34,7 @@ class LeaderboardRemoteDataSourceMockImpl
     final String jsonString =
         await rootBundle.loadString('assets/mock_json/mock_users.json');
     final jsonData = jsonDecode(jsonString);
-    LeaderboardResponse response = LeaderboardResponse.fromJson(jsonData);
+    LeaderboardResponse response = LeaderboardResponse.fromMap(jsonData);
     return Right(response);
   }
 }

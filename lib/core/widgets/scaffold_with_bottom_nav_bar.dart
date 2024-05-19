@@ -33,7 +33,7 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
           },
         ),
       ),
-      extendBody: true,
+      extendBody: false,
       body: navigationShell,
       bottomNavigationBar: DecoratedBox(
         decoration: const BoxDecoration(

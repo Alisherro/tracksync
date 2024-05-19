@@ -13,7 +13,7 @@ class RoundedShadowContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return DecoratedBox(
         decoration: BoxDecoration(
-            color: Palette.background,
+            color: backgroundColor?? Palette.background,
             boxShadow: [
               BoxShadow(
                 color: Palette.black.withAlpha(10),

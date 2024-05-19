@@ -39,7 +39,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final resNewUser = await userRepository.getRemoteUser();
       if (state is UserAuthenticated) {
         resNewUser.fold((l) => null,
-            (r) => emitter((state as UserAuthenticated).copyWith(user: r)));
+            (r) => emitter((state as UserAuthenticated)..copyWith(user: r)));
       }
     } else {
       emitter(UserUnauthenticated());

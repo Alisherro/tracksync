@@ -103,7 +103,7 @@ class DioClient with SentryCrashLogger {
 
       return Left(
         ServerFailure(
-          e.response?.data['error'] as String? ?? e.message,
+          e.response?.data['message'] as String? ?? e.message,
         ),
       );
     }

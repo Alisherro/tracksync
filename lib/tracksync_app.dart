@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:tracksync/features/challenges/presentation/challenges/bloc/challenges_bloc.dart';
 import 'package:tracksync/utils/helper/common.dart';
 import 'package:tracksync/utils/helper/constant.dart';
 
@@ -28,6 +29,7 @@ class TrackSyncApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => sl<AuthCubit>()),
+        BlocProvider(create: (_) => sl<ChallengesBloc>()..add(ChallengesFetchEvent())),
         BlocProvider(create: (_) => sl<UserBloc>()..add(const UserFetch()),lazy: false,),
         BlocProvider(create: (_) => ResultsListCubit()..initState()),
       ],

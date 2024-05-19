@@ -3,8 +3,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracksync/features/auth/data/datasources/user_local_datasource.dart';
 import 'package:tracksync/features/auth/data/datasources/user_remote_datasource.dart';
 import 'package:tracksync/features/auth/data/repositories/user_repository_impl.dart';
+import 'package:tracksync/features/challenges/data/datasources/challenges_remote_datasource.dart';
+import 'package:tracksync/features/challenges/data/repositories/challenges_repository_impl.dart';
+import 'package:tracksync/features/challenges/domain/repositories/challenges_repository.dart';
+import 'package:tracksync/features/challenges/presentation/challenges/bloc/challenges_bloc.dart';
 import 'package:tracksync/features/leaderboard/data/repositories/leaderboard_repository_impl.dart';
 import 'package:tracksync/features/leaderboard/domain/repositories/leaderboard_repository.dart';
+import 'package:tracksync/features/run/data/datasources/run_result_remote_datasource.dart';
 
 import 'core/api/dio_client.dart';
 import 'features/auth/data/datasources/auth_remote_datasrouces.dart';
@@ -17,7 +22,7 @@ import 'features/auth/presentation/register/cubit/register_cubit.dart';
 import 'features/leaderboard/data/datasources/leaderboard_remote_datasource.dart';
 import 'features/leaderboard/presentation/leaderboard/cubit/leaderboard_cubit.dart';
 import 'features/run/data/datasources/run_result_local_datasource.dart';
-import 'features/run/data/repositories/run_result_data_repository.dart';
+import 'features/run/data/repositories/run_result_repository_impl.dart';
 import 'features/run/domain/repositories/run_result_repository.dart';
 import 'features/run/presentation/running_map/bloc/running_map_bloc.dart';
 
@@ -34,38 +39,48 @@ Future<void> setupLocator() async {
   /// Register repositories
   void _repositories() {
     sl.registerLazySingleton<AuthRepository>(
-          () => AuthRepositoryImpl(sl()),
+      () => AuthRepositoryImpl(sl()),
     );
     sl.registerLazySingleton<LeaderboardRepository>(
-          () => LeaderboardRepositoryImpl(sl()),
+      () => LeaderboardRepositoryImpl(sl()),
     );
 
     sl.registerLazySingleton<RunResultRepository>(
-          () => RunResultRepositoryImpl(sl()),
+      () => RunResultRepositoryImpl(sl(), sl()),
     );
 
     sl.registerLazySingleton<UserRepository>(
-          () => UserRepositoryImpl(sl(), sl()),
+      () => UserRepositoryImpl(sl(), sl()),
+    );
+
+    sl.registerLazySingleton<ChallengesRepository>(
+      () => ChallengesRepositoryImpl(sl()),
     );
   }
 
   /// Register dataSources
   void _dataSources() {
     sl.registerLazySingleton<AuthRemoteDataSource>(
-          () => AuthRemoteDataSourceImpl(sl()),
+      () => AuthRemoteDataSourceImpl(sl()),
     );
 
     sl.registerLazySingleton<LeaderboardRemoteDataSource>(
-            () => LeaderboardRemoteDataSourceMockImpl());
+            () => LeaderboardRemoteDataSourceImpl(sl()));
 
     sl.registerLazySingleton<RunResultDatasource>(
-            () => RunResultDatasourceIsar());
+        () => RunResultDatasourceIsar());
+
+    sl.registerLazySingleton<RunResultRemoteDatasource>(
+        () => RunResultRemoteDatasourceImpl(sl()));
 
     sl.registerLazySingleton<UserRemoteDataSource>(
-            () => UserRemoteDataSourceImpl(sl()));
+        () => UserRemoteDataSourceImpl(sl()));
 
     sl.registerLazySingleton<UserLocalDataSource>(
-            () => UserLocalDataSourceImpl(sharedPreferences));
+        () => UserLocalDataSourceImpl(sharedPreferences));
+
+    sl.registerLazySingleton<ChallengesRemoteDataSource>(
+        () => ChallengesRemoteDataSourceImpl(sl()));
   }
 
   /// Register cubits/blocs
@@ -79,14 +94,11 @@ Future<void> setupLocator() async {
 
   void _bloc() {
     sl.registerSingleton<UserBloc>(UserBloc(sl()));
+    sl.registerSingleton<ChallengesBloc>(ChallengesBloc(sl()));
   }
 
   _dataSources();
   _repositories();
   _cubit();
   _bloc();
-
-
 }
-
-

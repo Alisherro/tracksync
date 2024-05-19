@@ -32,6 +32,7 @@ class Images {
   static const String usersmore = 'assets/images/usersmore.svg';
   static const String runningGreen = 'assets/images/running_green.svg';
   static const String runningBlue = 'assets/images/running_blue.svg';
+  static const String runningBluePng = 'assets/images/running_icon_blue.png';
   static const String bolt = 'assets/images/bolt.svg';
   static const String groupChatGreen = 'assets/images/group_chat_green.svg';
   static const String target = 'assets/images/target.svg';

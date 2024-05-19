@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tracksync/core/core.dart';
 import 'package:tracksync/features/run/presentation/running_map/bloc/running_map_event.dart';
 
 import '../../../domain/entities/run_result.dart';
@@ -31,7 +35,6 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     on<PositionChanged>(_positionChanged);
     on<RunButtonTapped>(_runButtonTapped);
     on<TimerTicked>(_timerTicked);
-    add(InitPermissions());
   }
 
   final RunResultRepository _repo;
@@ -39,6 +42,9 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
   late GoogleMapController controller;
   bool isRunning = false;
   final Ticker _ticker = const Ticker();
+  Completer<GoogleMapController> mapController =
+      Completer<GoogleMapController>();
+  BitmapDescriptor? icon;
   final geolocatorStreamProvider = Geolocator.getPositionStream(
     locationSettings: const LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -120,6 +126,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     if (isRunning) {
       emit(
         (state as RunningMapAvailableState).copyWith(
+          icon: icon,
           currentPosition: event.position,
           points: List.from((state as RunningMapAvailableState).points)
             ..add(
@@ -156,14 +163,23 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           currentPosition: event.position,
           distance: 0,
           kcal: 0,
+          icon: icon,
         ),
       );
     }
   }
 
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    Codec codec = await instantiateImageCodec(data.buffer.asUint8List(), targetWidth: width);
+    FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ImageByteFormat.png))!.buffer.asUint8List();
+  }
+
   _mapCreated(MapCreated event, Emitter<RunningMapState> emit) async {
-    Completer<GoogleMapController> mapController =
-        Completer<GoogleMapController>();
+    final Uint8List markerIcon = await getBytesFromAsset(Images.runningBluePng, 100);
+    // icon= await BitmapDescriptor.fromAssetImage(ImageConfiguration(size: Size(100, 100)), Images.runningBluePng);
+    icon = BitmapDescriptor.fromBytes(markerIcon);
     mapController.complete(event.controller);
     GoogleMapController googleMapController = await mapController.future;
     controller = googleMapController;
@@ -208,8 +224,14 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     }
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
-      position = await Geolocator.getCurrentPosition();
-      emit(RunningMapAvailableState(currentPosition: position));
+      try{
+        position = await Geolocator.getCurrentPosition(timeLimit: const Duration(seconds: 10));
+        emit(RunningMapAvailableState(currentPosition: position));
+      }on LocationServiceDisabledException{
+        emit(RunningMapErrorState(error: 'location services of the device are disabled'));
+      } on TimeoutException{
+        emit(RunningMapErrorState(error: 'Some errors with your geolocator service'));
+      }
     }
   }
 

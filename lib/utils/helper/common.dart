@@ -42,4 +42,3 @@ String timeAgo(DateTime d) {
   return "just now";
 }
 
-List leaderboardFilter = ['Today', 'This week', 'All time'];

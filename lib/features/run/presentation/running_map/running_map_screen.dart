@@ -6,13 +6,26 @@ import '../../../../core/core.dart';
 import 'bloc/running_map_bloc.dart';
 import 'bloc/running_map_event.dart';
 
-class RunningMapScreen extends StatelessWidget {
+class RunningMapScreen extends StatefulWidget {
   const RunningMapScreen({super.key});
+
+  @override
+  State<RunningMapScreen> createState() => _RunningMapScreenState();
+}
+
+class _RunningMapScreenState extends State<RunningMapScreen> {
+
+@override
+  void initState() {
+  context.read<RunningMapBloc>().add(InitPermissions());
+  super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RunningMapBloc, RunningMapState>(
       builder: (context, state) {
+        print('fvcaw: ${state.runtimeType}');
         if (state is RunningMapErrorState) {
           return Center(
             child: Text(state.error),
@@ -26,7 +39,7 @@ class RunningMapScreen extends StatelessWidget {
                   Polyline(
                     width: 6,
                     points: state.points,
-                    polylineId: PolylineId('runningRoute'),
+                    polylineId: const PolylineId('runningRoute'),
                     visible: true,
                   )
                 },
@@ -42,14 +55,19 @@ class RunningMapScreen extends StatelessWidget {
                       );
                 },
                 markers: {
-                  Marker(
+                 if(state.icon!=null) Marker(
                     markerId:const MarkerId('me'),
                     position: LatLng(
                       state.currentPosition.latitude,
                       state.currentPosition.longitude,
                     ),
+                    icon: state.icon?? BitmapDescriptor.defaultMarker,
+                   anchor: const Offset(0.5, 0.5)
                   ),
                 },
+                mapToolbarEnabled: false,
+                zoomGesturesEnabled: false,
+                compassEnabled: false,
               ),
               Positioned(
                 left: 40,
@@ -84,13 +102,13 @@ class RunningMapScreen extends StatelessWidget {
                                         .textTheme
                                         .displaySmall,
                                     textAlign: TextAlign.center),
-                                const SizedBox(height: 15),
-                                Text('128 Bpm',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(color: Palette.limeGreen),
-                                    textAlign: TextAlign.center),
+                                // const SizedBox(height: 15),
+                                // Text('128 Bpm',
+                                //     style: Theme.of(context)
+                                //         .textTheme
+                                //         .titleLarge
+                                //         ?.copyWith(color: Palette.limeGreen),
+                                //     textAlign: TextAlign.center),
                               ],
                             ),
                           ),

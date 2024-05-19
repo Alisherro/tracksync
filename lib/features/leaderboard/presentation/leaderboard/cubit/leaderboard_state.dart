@@ -1,7 +1,7 @@
 part of 'leaderboard_cubit.dart';
 
 @immutable
-abstract class LeaderboardState {}
+sealed class LeaderboardState {}
 
 class LeaderboardInitial extends LeaderboardState {}
 

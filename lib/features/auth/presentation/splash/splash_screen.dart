@@ -13,7 +13,10 @@ class SplashScreen extends StatelessWidget {
       listener: (context, state) {
         switch (state){
           case UserLoading():print('loading');
-          case UserAuthenticated():context.go('/run');
+          case UserAuthenticated():{
+            print('gfdsasd');
+            context.go('/run');
+          }
           case UserUnauthenticated():context.go('/login');
         }
       },

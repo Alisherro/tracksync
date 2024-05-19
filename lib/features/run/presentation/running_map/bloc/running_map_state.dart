@@ -27,6 +27,7 @@ class RunningMapAvailableState extends RunningMapState {
     this.distance = 0,
     this.avgPace = const Duration(),
     this.kcal = 0,
+    this.icon,
   });
 
   final Position currentPosition;
@@ -36,6 +37,7 @@ class RunningMapAvailableState extends RunningMapState {
   final double distance;
   final Duration avgPace;
   final double kcal;
+  final BitmapDescriptor? icon;
 
   @override
   List<Object?> get props =>
@@ -49,6 +51,7 @@ class RunningMapAvailableState extends RunningMapState {
     double? distance,
     Duration? avgPace,
     double? kcal,
+    BitmapDescriptor? icon,
   }) {
     return RunningMapAvailableState(
       currentPosition: currentPosition ?? this.currentPosition,
@@ -58,6 +61,7 @@ class RunningMapAvailableState extends RunningMapState {
       distance: distance ?? this.distance,
       avgPace: avgPace ?? this.avgPace,
       kcal: kcal ?? this.kcal,
+      icon: icon ?? this.icon,
     );
   }
 }
