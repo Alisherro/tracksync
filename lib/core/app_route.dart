@@ -137,7 +137,7 @@ class AppRouter {
                 pageBuilder: (context, state) => buildPageWithDefaultTransition(
                   context: context,
                   state: state,
-                  child: RunningMapScreen(),
+                  child: const RunningMapScreen(),
                 ),
               )
             ],

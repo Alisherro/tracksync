@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tracksync/features/challenges/domain/entities/challenge.dart';
 
 import '../../../../core/core.dart';
@@ -46,7 +47,8 @@ class ChallengesScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           return ChallengeDescription(
-                              challenge: challenges[index]);
+                            challenge: challenges[index],
+                          );
                         },
                       )
                     ],
@@ -61,58 +63,62 @@ class ChallengesScreen extends StatelessWidget {
 }
 
 class ChallengeDescription extends StatelessWidget {
-  const ChallengeDescription({super.key, required this.challenge});
+  const ChallengeDescription({super.key, required this.challenge, this.onTap});
 
   final Challenge challenge;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return RoundedShadowContainer(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 15,
-              child: Center(
-                child: FittedBox(
-                  child: Text(
-                    challenge.id.toString(),
-                    style: Theme.of(context).textTheme.labelLarge,
+    return InkWell(
+      onTap: onTap,
+      child: RoundedShadowContainer(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 15,
+                child: Center(
+                  child: FittedBox(
+                    child: Text(
+                      challenge.id.toString(),
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    challenge.title,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Text(
-                    challenge.description,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.copyWith(color: Palette.electricBlue),
-                  ),
-                ],
+              const SizedBox(width: 10),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      challenge.title,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      challenge.description,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall
+                          ?.copyWith(color: Palette.electricBlue),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(width: 15),
-            Text(
-              challenge.points.toString(),
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.w500),
-            ),
-            SvgPicture.asset(Images.bolt),
-          ],
+              const SizedBox(width: 15),
+              Text(
+                challenge.points.toString(),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(fontWeight: FontWeight.w500),
+              ),
+              SvgPicture.asset(Images.bolt),
+            ],
+          ),
         ),
       ),
     );
