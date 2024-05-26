@@ -6,40 +6,40 @@ import 'package:tracksync/features/auth/domain/entities/user.dart';
 import 'package:tracksync/features/auth/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
-  UserRepositoryImpl(this.localDataSource, this.remoteDataSource);
+  UserRepositoryImpl(this.local, this.remote);
 
-  final UserRemoteDataSource remoteDataSource;
-  final UserLocalDataSource localDataSource;
+  final UserRemoteDataSource remote;
+  final UserLocalDataSource local;
 
   @override
   Future<Either<Failure, User>> getRemoteUser() async {
-    return await remoteDataSource.getUser();
+    return await remote.getUser();
   }
 
   @override
   Future<Either<Failure, User>> getSavedUser() async {
-    return await localDataSource.getUser();
+    return await local.getUser();
   }
 
   @override
   Future<Either<Failure, bool>> saveUser(User user) async {
-    return await localDataSource.saveUser(user);
+    return await local.saveUser(user);
   }
 
   @override
   Future<Either<Failure, String>> getSavedToken() async {
-    return await localDataSource.getToken();
+    return await local.getToken();
   }
 
   @override
   Future<Either<Failure, bool>> saveUserToken(String token) async {
-    return await localDataSource.saveToken(token);
+    return await local.saveToken(token);
   }
 
   @override
   Future<Either<Failure, bool>> logout() async{
-    await remoteDataSource.logout();
-    localDataSource.deleteUserInfo();
+    await remote.logout();
+    local.deleteUserInfo();
     return const Right(true);
   }
 }

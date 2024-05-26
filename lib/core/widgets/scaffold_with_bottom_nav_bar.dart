@@ -25,7 +25,9 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        surfaceTintColor: Colors.transparent,
         elevation: 0,
+        shadowColor: Colors.transparent,
         title: AppBarWidget(
           onProfileTap: () {
             navigationShell.goBranch(4,
@@ -35,6 +37,7 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
       ),
       extendBody: false,
       body: navigationShell,
+
       bottomNavigationBar: DecoratedBox(
         decoration: const BoxDecoration(
           color: Colors.white,

@@ -6,24 +6,25 @@ import '../../domain/repositories/run_result_repository.dart';
 import '../datasources/run_result_local_datasource.dart';
 
 class RunResultRepositoryImpl implements RunResultRepository {
-  RunResultRepositoryImpl(this.resultDataProvider, this.resultRemoteDataProvider);
+  RunResultRepositoryImpl(this.local, this.remote);
 
-  final RunResultDatasource resultDataProvider;
-  final RunResultRemoteDatasource resultRemoteDataProvider;
+  final RunResultLocalDatasource local;
+  final RunResultRemoteDatasource remote;
 
   @override
   Future<List<RunResult>> getAllResults([DateTimeRange? range]) async {
-    return await resultDataProvider.getRunResultsList(range);
+    return await local.getRunResultsList(range);
   }
 
   @override
   Future<RunResult?> getRunResultById(String id) async {
-    return await resultDataProvider.getRunResultById(id);
+    return await local.getRunResultById(id);
   }
 
   @override
   Future<int?> saveRunResult(RunResult runResult) async {
-    // await resultRemoteDataProvider.saveRunResult(runResult);
-    return await resultDataProvider.saveRunResult(runResult);
+    int? id = await local.saveRunResult(runResult);
+    await remote.saveRunResult(runResult);
+    return id;
   }
 }

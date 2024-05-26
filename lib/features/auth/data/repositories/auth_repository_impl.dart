@@ -5,13 +5,13 @@ import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasrouces.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl(this.authRemoteDataSource);
+  AuthRepositoryImpl(this.remote);
 
-  final AuthRemoteDataSource authRemoteDataSource;
+  final AuthRemoteDataSource remote;
 
   @override
   Future<Either<Failure, Login>> login(LoginParams loginParams) async {
-    final response = await authRemoteDataSource.login(loginParams);
+    final response = await remote.login(loginParams);
 
     return response.fold(
       (l) => Left(l),
@@ -22,7 +22,7 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, Register>> register(
       RegisterParams registerParams) async {
-    final response = await authRemoteDataSource.register(registerParams);
+    final response = await remote.register(registerParams);
 
     return response.fold(
       (l) => Left(l),

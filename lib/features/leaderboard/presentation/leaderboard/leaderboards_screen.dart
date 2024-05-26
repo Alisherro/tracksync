@@ -77,7 +77,7 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen>
           BlocBuilder<LeaderboardCubit, LeaderboardState>(
             builder: (context, state) {
               if (state is LeaderboardSuccess) {
-                return ListView.separated(
+                return state.leaderboard.leaders.isNotEmpty? ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
                   separatorBuilder: (context, index) =>
                       const SizedBox(height: 10),
@@ -89,7 +89,7 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen>
                       index: index,
                     );
                   },
-                );
+                ):const Center(child: Text("Empty"));
               } else {
                 return const Center(child: CircularProgressIndicator());
               }

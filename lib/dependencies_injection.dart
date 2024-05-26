@@ -1,4 +1,6 @@
 import 'package:get_it/get_it.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracksync/features/auth/data/datasources/user_local_datasource.dart';
 import 'package:tracksync/features/auth/data/datasources/user_remote_datasource.dart';
@@ -10,7 +12,6 @@ import 'package:tracksync/features/challenges/presentation/challenges/bloc/chall
 import 'package:tracksync/features/leaderboard/data/repositories/leaderboard_repository_impl.dart';
 import 'package:tracksync/features/leaderboard/domain/repositories/leaderboard_repository.dart';
 import 'package:tracksync/features/run/data/datasources/run_result_remote_datasource.dart';
-import 'package:tracksync/features/run/presentation/run_result/cubit/run_result_cubit.dart';
 
 import 'core/api/dio_client.dart';
 import 'features/auth/data/datasources/auth_remote_datasrouces.dart';
@@ -24,6 +25,7 @@ import 'features/leaderboard/data/datasources/leaderboard_remote_datasource.dart
 import 'features/leaderboard/presentation/leaderboard/cubit/leaderboard_cubit.dart';
 import 'features/run/data/datasources/run_result_local_datasource.dart';
 import 'features/run/data/repositories/run_result_repository_impl.dart';
+import 'features/run/domain/entities/run_result.dart';
 import 'features/run/domain/repositories/run_result_repository.dart';
 import 'features/run/presentation/run_history/cubit/results_list_cubit.dart';
 import 'features/run/presentation/running_map/bloc/running_map_bloc.dart';
@@ -33,10 +35,13 @@ GetIt sl = GetIt.I;
 Future<void> setupLocator() async {
   final SharedPreferences sharedPreferences =
       await SharedPreferences.getInstance();
+  final Isar isar = await _openDB();
 
   sl.registerSingleton<DioClient>(DioClient(sharedPreferences));
 
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
+
+  sl.registerSingleton<Isar>(isar);
 
   /// Register repositories
   void _repositories() {
@@ -69,8 +74,8 @@ Future<void> setupLocator() async {
     sl.registerLazySingleton<LeaderboardRemoteDataSource>(
         () => LeaderboardRemoteDataSourceImpl(sl()));
 
-    sl.registerLazySingleton<RunResultDatasource>(
-        () => RunResultDatasourceIsar());
+    sl.registerLazySingleton<RunResultLocalDatasource>(
+        () => RunResultDatasourceIsar(sl()));
 
     sl.registerLazySingleton<RunResultRemoteDatasource>(
         () => RunResultRemoteDatasourceImpl(sl()));
@@ -104,4 +109,11 @@ Future<void> setupLocator() async {
   _repositories();
   _cubit();
   _bloc();
+}
+Future<Isar> _openDB() async {
+  if (Isar.instanceNames.isEmpty) {
+    final dir = await getApplicationDocumentsDirectory();
+    return await Isar.open([RunResultSchema], directory: dir.path);
+  }
+  return await Future.value(Isar.getInstance());
 }

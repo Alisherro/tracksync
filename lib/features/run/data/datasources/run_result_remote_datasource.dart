@@ -1,21 +1,22 @@
-import 'package:tracksync/core/api/api.dart';
+import 'package:dartz/dartz.dart';
+import 'package:tracksync/core/core.dart';
 import 'package:tracksync/features/run/domain/entities/run_result.dart';
 
-abstract interface class RunResultRemoteDatasource{
-  Future<void> saveRunResult(RunResult data);
+abstract interface class RunResultRemoteDatasource {
+  Future<Either<Failure,void>> saveRunResult(RunResult data);
 }
 
-class RunResultRemoteDatasourceImpl implements RunResultRemoteDatasource{
+class RunResultRemoteDatasourceImpl implements RunResultRemoteDatasource {
   RunResultRemoteDatasourceImpl(this.dioClient);
+
   DioClient dioClient;
 
   @override
-  Future<void> saveRunResult(RunResult data) async {
-    try{
-      dioClient.postRequest(ListAPI.storeSession, converter: (_){}, data: data.toMap());
-    } catch (e){
-      print('oopsipoopsie');
-    }
+  Future<Either<Failure,void>> saveRunResult(RunResult data) async {
+    return dioClient.postRequest<void>(
+      ListAPI.storeSession,
+      converter: (_) {},
+      data: data.toMap(),
+    );
   }
-
 }

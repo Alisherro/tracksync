@@ -20,23 +20,23 @@ class AppBarWidget extends StatelessWidget {
             onTap: onProfileTap,
             child: SvgPicture.asset(Images.avatar),
           ),
-          DecoratedBox(
-            decoration: BoxDecoration(
-              color: Palette.orangeLight,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-              child: Text(
-                '234',
-                style: TextStyle(
-                  fontFamily: 'EurostileRound',
-                  fontWeight: FontWeight.w900,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-          ),
+          // DecoratedBox(
+          //   decoration: BoxDecoration(
+          //     color: Palette.orangeLight,
+          //     borderRadius: BorderRadius.circular(12),
+          //   ),
+          //   child: const Padding(
+          //     padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+          //     child: Text(
+          //       '234',
+          //       style: TextStyle(
+          //         fontFamily: 'EurostileRound',
+          //         fontWeight: FontWeight.w900,
+          //         fontSize: 20,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );

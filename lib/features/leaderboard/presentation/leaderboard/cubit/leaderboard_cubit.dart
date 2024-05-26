@@ -18,7 +18,7 @@ class LeaderboardCubit extends Cubit<LeaderboardState> {
   List<TimePeriod> tabs=[
     TimePeriod.day,
     TimePeriod.week,
-    TimePeriod.month,
+    TimePeriod.all,
   ];
   int leaderboardFilterIndex = 0;
 

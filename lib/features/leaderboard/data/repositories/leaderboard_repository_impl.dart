@@ -5,14 +5,14 @@ import '../../domain/repositories/leaderboard_repository.dart';
 import '../datasources/leaderboard_remote_datasource.dart';
 
 class LeaderboardRepositoryImpl implements LeaderboardRepository {
-  const LeaderboardRepositoryImpl(this.dataSource);
+  const LeaderboardRepositoryImpl(this.remote);
 
-  final LeaderboardRemoteDataSource dataSource;
+  final LeaderboardRemoteDataSource remote;
 
   @override
   Future<Either<Failure, Leaderboard>> getLeaderboard(
       LeaderboardParams params) async {
-    final response = await dataSource.getLeaderboard(params);
+    final response = await remote.getLeaderboard(params);
     return response.fold(
       (l) => Left(l),
       (r) => Right(r.toEntity()),

@@ -6,13 +6,13 @@ import 'package:tracksync/features/challenges/domain/repositories/challenges_rep
 import '../datasources/challenges_remote_datasource.dart';
 
 class ChallengesRepositoryImpl implements ChallengesRepository {
-  ChallengesRepositoryImpl(this.remoteDatasource);
+  ChallengesRepositoryImpl(this.remote);
 
-  final ChallengesRemoteDataSource remoteDatasource;
+  final ChallengesRemoteDataSource remote;
 
   @override
   Future<Either<Failure, List<Challenge>>> getChallenges() async {
-    final response = await remoteDatasource.getChallenges();
+    final response = await remote.getChallenges();
     return response.fold(
       (l) => Left(l),
       (r) {
