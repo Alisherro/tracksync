@@ -40,3 +40,11 @@ class FormatFailure extends Failure {
   int get hashCode => 0;
 }
 
+
+class UnauthenticatedFailure extends Failure {
+  @override
+  bool operator ==(Object other) => other is CacheFailure;
+
+  @override
+  int get hashCode => 0;
+}

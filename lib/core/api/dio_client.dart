@@ -6,9 +6,9 @@ import '../../utils/services/services.dart';
 
 class DioClient with SentryCrashLogger {
   DioClient(this.sharedPreferences);
+
   String? _token;
   final SharedPreferences sharedPreferences;
-
 
   Dio get _dio {
     _token = sharedPreferences.getString('token');
@@ -65,10 +65,16 @@ class DioClient with SentryCrashLogger {
       return Right(result);
     } on DioException catch (e, stackTrace) {
       nonFatalError(error: e, stackTrace: stackTrace);
+      Failure? failure;
+
+      if (e.response?.statusCode == 401) {
+        failure = UnauthenticatedFailure();
+      }
       return Left(
-        ServerFailure(
-          e.response?.data['error'] as String? ?? e.message,
-        ),
+        failure ??
+            ServerFailure(
+              e.response?.data['error'] as String? ?? e.message,
+            ),
       );
     }
   }

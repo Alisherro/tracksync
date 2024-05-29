@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:tracksync/core/core.dart';
 import '../../../domain/entities/user.dart';
 import '../../../domain/repositories/user_repository.dart';
 
@@ -38,11 +39,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emitter(UserAuthenticated(user: user!, token: token!));
       final resNewUser = await userRepository.getRemoteUser();
       if (state is UserAuthenticated) {
-        resNewUser.fold((l) => null,
-            (r) => emitter((state as UserAuthenticated)..copyWith(user: r)));
+        resNewUser.fold((l) {
+          if (l is UnauthenticatedFailure) {
+            add(const UserLogOut());
+          }
+        }, (r) => emitter((state as UserAuthenticated)..copyWith(user: r)));
       }
     } else {
-      emitter(UserUnauthenticated());
+      add(const UserLogOut());
     }
   }
 
