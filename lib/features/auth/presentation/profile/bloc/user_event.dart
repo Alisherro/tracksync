@@ -11,10 +11,15 @@ class UserFetch extends UserEvent {
 
 class UserLoggedIn extends UserEvent {
   const UserLoggedIn({required this.user, required this.token});
+
   final String token;
   final User user;
 }
 
-class UserLogOut extends UserEvent{
+class UserLogOut extends UserEvent {
   const UserLogOut();
+}
+
+class UserChangeProfilePicture extends UserEvent {
+  const UserChangeProfilePicture();
 }

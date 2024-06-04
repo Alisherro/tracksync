@@ -1,9 +1,15 @@
+import 'dart:developer';
+
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tracksync/core/core.dart';
 import '../../../domain/entities/user.dart';
 import '../../../domain/repositories/user_repository.dart';
+import 'dart:io' as io;
+import 'dart:convert';
 
 part 'user_event.dart';
 
@@ -22,6 +28,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             await onUserLoggedIn(event, emit);
           case UserLogOut():
             await onUserLogOut(emit);
+          case UserChangeProfilePicture():
+            await onUserChangeProfilePicture(emit);
         }
       },
     );
@@ -36,14 +44,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     resToken.fold((l) {}, (r) => token = r);
 
     if (user != null && token != null) {
-      emitter(UserAuthenticated(user: user!, token: token!));
+      emitter(UserAuthenticated(user: user!));
       final resNewUser = await userRepository.getRemoteUser();
       if (state is UserAuthenticated) {
         resNewUser.fold((l) {
           if (l is UnauthenticatedFailure) {
             add(const UserLogOut());
           }
-        }, (r) => emitter((state as UserAuthenticated)..copyWith(user: r)));
+        }, (r) => emitter(UserAuthenticated(user: r)));
       }
     } else {
       add(const UserLogOut());
@@ -56,11 +64,29 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     userRes.fold((l) => null, (r) => null);
     tokenRes.fold((l) => null, (r) => null);
 
-    emitter(UserAuthenticated(user: event.user, token: event.token));
+    emitter(UserAuthenticated(user: event.user));
   }
 
   Future<void> onUserLogOut(Emitter emitter) async {
     userRepository.logout();
     emitter(UserUnauthenticated());
+  }
+
+  Future<void> onUserChangeProfilePicture(Emitter emitter) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      emitter(SLoading());
+      String fileName = image.path.split('/').last;
+      final res = await userRepository.changeProfilePicture(image.path, fileName);
+      res.fold((l) {
+        emitter(SFailed(l.message ?? 'error'));
+      }, (r) {
+        emitter(SSuccess("Profile picture successfully changed"));
+        if (r != null) {
+          emitter(UserAuthenticated(user: r));
+        }
+      });
+    }
   }
 }

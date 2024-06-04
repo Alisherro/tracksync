@@ -9,6 +9,8 @@ abstract interface class UserRemoteDataSource {
   Future<Either<Failure, User>> getUser();
 
   Future<Either<Failure, String?>> logout();
+
+  Future<Either<Failure, User?>> updateUser(Object data);
 }
 
 class UserRemoteDataSourceImpl implements UserRemoteDataSource {
@@ -20,7 +22,7 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<Either<Failure, User>> getUser() async {
     final response = await _client.getRequest(
       ListAPI.user,
-      converter: (response) => User.fromJson(response as Map<String, dynamic>),
+      converter: (json) => User.fromJson(json["data"]),
     );
 
     return response;
@@ -30,9 +32,19 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   Future<Either<Failure, String?>> logout() async {
     final response = await _client.postRequest<String>(
       ListAPI.logout,
-      converter: (json)=>json['message'],
+      converter: (json) => json['message'],
     );
 
+    return response;
+  }
+
+  @override
+  Future<Either<Failure, User?>> updateUser(Object data) async {
+    final response = await _client.postRequest<User?>(
+      ListAPI.user,
+      converter: (json) => User.fromJson(json["data"]),
+      data: data
+    );
     return response;
   }
 }

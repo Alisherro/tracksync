@@ -11,6 +11,7 @@ class User {
   String? email;
   String? location;
   double? totalKm;
+  String? profilePicture;
 
   User(
       {this.id,
@@ -23,7 +24,9 @@ class User {
       this.name,
       this.email,
       this.location,
-      this.totalKm});
+      this.totalKm,
+        this.profilePicture
+      });
 
   User.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -37,6 +40,7 @@ class User {
     name = json['name'];
     email = json['email'];
     location = json['location'];
+    profilePicture = json['profile_picture'];
   }
 
   Map<String, dynamic> toMap() {
@@ -52,6 +56,7 @@ class User {
       'email': email,
       'location': location,
       'totalKm': totalKm,
+      'profile_picture': profilePicture,
     };
   }
 

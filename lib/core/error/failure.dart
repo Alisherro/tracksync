@@ -1,12 +1,11 @@
 abstract class Failure {
-  /// ignore: avoid_unused_constructor_parameters
-  const Failure([List properties = const <dynamic>[]]);
+  final String? message;
+
+  const Failure(this.message);
 }
 
 class ServerFailure extends Failure {
-  final String? message;
-
-  const ServerFailure(this.message);
+  const ServerFailure([super.message]);
 
   @override
   bool operator ==(Object other) =>
@@ -17,6 +16,8 @@ class ServerFailure extends Failure {
 }
 
 class NoDataFailure extends Failure {
+  const NoDataFailure([super.message]);
+
   @override
   bool operator ==(Object other) => other is NoDataFailure;
 
@@ -25,6 +26,8 @@ class NoDataFailure extends Failure {
 }
 
 class CacheFailure extends Failure {
+  const CacheFailure([super.message]);
+
   @override
   bool operator ==(Object other) => other is CacheFailure;
 
@@ -33,6 +36,8 @@ class CacheFailure extends Failure {
 }
 
 class FormatFailure extends Failure {
+  const FormatFailure([super.message]);
+
   @override
   bool operator ==(Object other) => other is CacheFailure;
 
@@ -40,8 +45,9 @@ class FormatFailure extends Failure {
   int get hashCode => 0;
 }
 
-
 class UnauthenticatedFailure extends Failure {
+  const UnauthenticatedFailure([super.message]);
+
   @override
   bool operator ==(Object other) => other is CacheFailure;
 

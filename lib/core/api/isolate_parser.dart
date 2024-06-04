@@ -1,5 +1,7 @@
 import 'dart:isolate';
 
+import 'package:tracksync/core/core.dart';
+
 class IsolateParser<T> {
   final Map<String, dynamic> json;
   final T Function(dynamic response) converter;
@@ -15,7 +17,7 @@ class IsolateParser<T> {
   }
 
   Future<void> _parseListOfJson(SendPort sendPort) async {
-    final result = converter(json);
-    Isolate.exit(sendPort, result);
+      final result = converter(json);
+      Isolate.exit(sendPort, result);
   }
 }

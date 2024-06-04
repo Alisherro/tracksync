@@ -7,7 +7,7 @@ import 'package:tracksync/utils/utils.dart';
 import '../../../../core/core.dart';
 import '../../domain/entities/login.dart';
 import '../profile/bloc/user_bloc.dart';
-import 'cubit/cubit.dart';
+import 'cubit/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,23 +28,23 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Parent(
-      child: BlocListener<AuthCubit, AuthState>(
+      child: BlocListener<LoginCubit, LoginState>(
         listener: (_, state) {
           switch (state) {
-            case AuthLoading():
+            case LoginLoading():
               context.show();
               break;
-            case AuthSuccess():
+            case LoginSuccess():
               context.dismiss();
               context.read<UserBloc>().add(UserLoggedIn(
                   user: state.login!.user, token: state.login!.token));
               break;
-            case AuthFailure():
+            case LoginFailure():
               context.dismiss();
               state.message.toToastError(context);
               // context.go('/run');
               break;
-            case AuthState():
+            case LoginState():
               null;
           }
         },
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 : null)
                             : null,
                       ),
-                      BlocBuilder<AuthCubit, AuthState>(
+                      BlocBuilder<LoginCubit, LoginState>(
                         builder: (_, state) {
                           return TextF(
                             autofillHints: const [AutofillHints.password],
@@ -98,16 +98,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             keyboardType: TextInputType.text,
                             prefixIcon: SvgPicture.asset(Images.lockon),
                             obscureText:
-                                context.read<AuthCubit>().isPasswordHide ??
+                                context.read<LoginCubit>().isPasswordHide ??
                                     false,
                             hintText: 'Your password',
                             maxLine: 1,
                             hint: Strings.of(context)!.password,
                             suffixIcon: GestureDetector(
                               onTap: () =>
-                                  context.read<AuthCubit>().showHidePassword(),
+                                  context.read<LoginCubit>().showHidePassword(),
                               child:
-                                  (context.read<AuthCubit>().isPasswordHide ??
+                                  (context.read<LoginCubit>().isPasswordHide ??
                                           false)
                                       ? SvgPicture.asset(Images.eyeclosed)
                                       : const Icon(Icons.visibility),
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         title: Strings.of(context)!.login,
                         onPressed: () {
                           if (_keyForm.currentState?.validate() ?? false) {
-                            context.read<AuthCubit>().login(
+                            context.read<LoginCubit>().login(
                                   LoginParams(
                                     email: _conEmail.text,
                                     password: _conPassword.text,

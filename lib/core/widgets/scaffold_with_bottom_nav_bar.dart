@@ -24,7 +24,7 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(
+      appBar:navigationShell.currentIndex!=4? AppBar(
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         shadowColor: Colors.transparent,
@@ -34,10 +34,9 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
                 initialLocation: 4 == navigationShell.currentIndex);
           },
         ),
-      ),
+      ):null,
       extendBody: false,
       body: navigationShell,
-
       bottomNavigationBar: DecoratedBox(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -57,17 +56,18 @@ class ScaffoldWithBottomNavBar extends StatelessWidget {
                   _onTap(index);
                 },
                 child: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: Center(
-                      child: SizedBox(
-                        height: 30,
-                        width: 30,
-                        child: SvgPicture.asset(
-                          tabsAssets[index],
-                        ),
+                  height: 40,
+                  width: 40,
+                  child: Center(
+                    child: SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: SvgPicture.asset(
+                        tabsAssets[index],
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

@@ -27,13 +27,13 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<Either<Failure, User>> getUser() async {
     String? jsonString = sharedPreferences.getString('user');
     if (jsonString == null) {
-      return Left(NoDataFailure());
+      return const Left(NoDataFailure());
     } else {
       try {
         User user = User.fromJson(jsonDecode(jsonString));
         return Right(user);
       } on Exception {
-        return Left(CacheFailure());
+        return const Left(CacheFailure());
       }
     }
   }
@@ -45,7 +45,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     if (success) {
       return Right(success);
     } else {
-      return Left(FormatFailure());
+      return const Left(FormatFailure());
     }
   }
 
@@ -56,7 +56,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     if (token != null) {
       return Right(token);
     } else {
-      return Left(NoDataFailure());
+      return const Left(NoDataFailure());
     }
   }
 
@@ -66,7 +66,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     if (success) {
       return Right(success);
     } else {
-      return Left(FormatFailure());
+      return const Left(FormatFailure());
     }
   }
 
@@ -77,7 +77,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     if (successUser && successUser) {
       return const Right(true);
     } else {
-      return Left(CacheFailure());
+      return const Left(CacheFailure());
     }
   }
 }

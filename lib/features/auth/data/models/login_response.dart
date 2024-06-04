@@ -10,17 +10,12 @@ class LoginResponse {
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      token: json["token"],
-      user: User.fromJson(json["data"]),
+      token: json["access_token"],
+      user: User.fromJson(json["data"],
+      ),
     );
   }
 
   Login toEntity() => Login(token, user);
 
-  Map<String, dynamic> toJson() {
-    return {
-      "token": token,
-      "user": user,
-    };
-  }
 }

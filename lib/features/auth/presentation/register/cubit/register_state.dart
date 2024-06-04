@@ -9,7 +9,7 @@ class RegisterLoading extends RegisterState {
 }
 
 class RegisterSuccess extends RegisterState {
-  final Register? data;
+  final Register data;
 
   const RegisterSuccess(this.data);
 }

@@ -30,9 +30,7 @@ class RegisterCubit extends Cubit<RegisterState> {
     final data = await repo.register(params);
     data.fold(
       (l) {
-        if (l is ServerFailure) {
           emit(RegisterFailure(l.message ?? ""));
-        }
       },
       (r) => emit(RegisterSuccess(r)),
     );

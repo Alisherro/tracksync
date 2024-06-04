@@ -11,16 +11,18 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        switch (state){
-          case UserLoading():print('loading');
-          case UserAuthenticated():{
-            print('gfdsasd');
+        switch (state) {
+          case UserLoading():
+          case UserAuthenticated():
             context.go('/run');
-          }
-          case UserUnauthenticated():context.go('/login');
+          case UserUnauthenticated():
+            context.go('/login');
+          case SLoading():
+          case SFailed():
+          case SSuccess():
         }
       },
-      child:const Scaffold(
+      child: const Scaffold(
         body: DecoratedBox(
           decoration: BoxDecoration(color: Colors.green),
           child: Center(

@@ -1,6 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tracksync/utils/ext/ext.dart';
 import '../../../../core/core.dart';
 import '../../domain/entities/user.dart';
 import 'bloc/user_bloc.dart';
@@ -11,7 +13,28 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: BlocBuilder<UserBloc, UserState>(
+      child: BlocConsumer<UserBloc, UserState>(
+        listener: (_, state) {
+          switch (state) {
+            case SLoading():
+              context.show();
+              break;
+            case SFailed():
+              context.dismiss();
+              state.error?.toToastError(context);
+              break;
+            case SSuccess():
+              context.dismiss();
+              state.message?.toToastSuccess(context);
+            case UserLoading():
+            case UserAuthenticated():
+            case UserUnauthenticated():
+          }
+        },
+        buildWhen: (prev, cur) {
+          return [UserLoading, UserAuthenticated, UserUnauthenticated]
+              .contains(cur.runtimeType);
+        },
         builder: (context, state) {
           if (state is UserAuthenticated) {
             final User user = state.user;
@@ -21,6 +44,7 @@ class ProfileScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: kToolbarHeight),
                     const Padding(
                       padding:
                           EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -34,11 +58,25 @@ class ProfileScreen extends StatelessWidget {
                           vertical: 20, horizontal: 20),
                       child: Row(
                         children: [
-                          SvgPicture.asset(
-                            Images.avatar,
-                            width: 100,
-                            height: 100,
-                          ),
+                          SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: user.profilePicture != null
+                                  ? CachedNetworkImage(
+                                      imageUrl:
+                                          "http://77.91.75.55/storage/${user.profilePicture!}",
+                                      fit: BoxFit.contain,
+                                      imageBuilder: (context, imageProvider) =>
+                                          DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                    )
+                                  : SvgPicture.asset(Images.avatar)),
                           const SizedBox(width: 40),
                           Expanded(
                             child: Column(
@@ -60,13 +98,21 @@ class ProfileScreen extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis),
                                   ),
                                 ),
-                                Text(user.isMale ?? false ? 'Female' : 'Male',
-                                    style:
-                                        Theme.of(context).textTheme.titleSmall),
+                                Text(
+                                  user.isMale ?? false ? 'Female' : 'Male',
+                                  style: Theme.of(context).textTheme.titleSmall,
+                                ),
                               ],
                             ),
                           ),
-                          SvgPicture.asset(Images.edit),
+                          InkWell(
+                            child: SvgPicture.asset(Images.edit),
+                            onTap: () {
+                              context
+                                  .read<UserBloc>()
+                                  .add(const UserChangeProfilePicture());
+                            },
+                          ),
                         ],
                       ),
                     ),
@@ -83,78 +129,78 @@ class ProfileScreen extends StatelessWidget {
                           'tracksync',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        DecoratedBox(
-                          decoration: BoxDecoration(
-                            color: Palette.secondColor,
-                            borderRadius: BorderRadius.circular(38),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 25, vertical: 5),
-                            child: Text(
-                              '234',
-                              style: TextStyle(
-                                  fontFamily: 'EurostileRound',
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 20,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
+                        // DecoratedBox(
+                        //   decoration: BoxDecoration(
+                        //     color: Palette.secondColor,
+                        //     borderRadius: BorderRadius.circular(38),
+                        //   ),
+                        //   child: const Padding(
+                        //     padding: EdgeInsets.symmetric(
+                        //         horizontal: 25, vertical: 5),
+                        //     child: Text(
+                        //       '234',
+                        //       style: TextStyle(
+                        //           fontFamily: 'EurostileRound',
+                        //           fontWeight: FontWeight.w900,
+                        //           fontSize: 20,
+                        //           color: Colors.white),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 5),
-                RoundedShadowContainer(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 33, horizontal: 40),
-                    child: Row(
-                      children: [
-                        Text(
-                          '1',
-                          style:
-                              Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                    fontWeight: FontWeight.w900,
-                                    fontFamily: 'EurostileRound',
-                                    color: Palette.orangeColor,
-                                  ),
-                        ),
-                        const SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'TurBo777',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall
-                                  ?.copyWith(fontWeight: FontWeight.w600),
-                            ),
-                            const Text(
-                              '99 level',
-                              style: TextStyle(
-                                color: Palette.orangeColor,
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12,
-                              ),
-                            )
-                          ],
-                        ),
-                        const Spacer(),
-                        const Text(
-                          '1 456 643',
-                          style: TextStyle(
-                              color: Palette.orangeColor,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 15,
-                              fontFamily: 'EurostileRound'),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                // RoundedShadowContainer(
+                //   child: Padding(
+                //     padding: const EdgeInsets.symmetric(
+                //         vertical: 33, horizontal: 40),
+                //     child: Row(
+                //       children: [
+                //         Text(
+                //           '1',
+                //           style:
+                //               Theme.of(context).textTheme.bodyLarge?.copyWith(
+                //                     fontWeight: FontWeight.w900,
+                //                     fontFamily: 'EurostileRound',
+                //                     color: Palette.orangeColor,
+                //                   ),
+                //         ),
+                //         const SizedBox(width: 20),
+                //         Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: [
+                //             Text(
+                //               'TurBo777',
+                //               style: Theme.of(context)
+                //                   .textTheme
+                //                   .bodySmall
+                //                   ?.copyWith(fontWeight: FontWeight.w600),
+                //             ),
+                //             const Text(
+                //               '99 level',
+                //               style: TextStyle(
+                //                 color: Palette.orangeColor,
+                //                 fontWeight: FontWeight.w300,
+                //                 fontSize: 12,
+                //               ),
+                //             )
+                //           ],
+                //         ),
+                //         const Spacer(),
+                //         const Text(
+                //           '1 456 643',
+                //           style: TextStyle(
+                //               color: Palette.orangeColor,
+                //               fontWeight: FontWeight.w900,
+                //               fontSize: 15,
+                //               fontFamily: 'EurostileRound'),
+                //         )
+                //       ],
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 5),
                 const InfoSectionWidget(
                   title: 'LOCATION',

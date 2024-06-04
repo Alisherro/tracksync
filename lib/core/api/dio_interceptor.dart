@@ -10,30 +10,36 @@ import '../../dependencies_injection.dart';
 class DioInterceptor extends Interceptor with SentryCrashLogger {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    String headerMessage = "";
-    options.headers.forEach((k, v) => headerMessage += '► $k: $v\n');
-    SharedPreferences preferences= sl<SharedPreferences>();
-    final String? token =preferences.getString('token');
+    StringBuffer headerMessage = StringBuffer();
+    SharedPreferences preferences = sl<SharedPreferences>();
+    final String? token = preferences.getString('token');
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     }
+
+
     try {
-      options.queryParameters.forEach(
-        (k, v) => debugPrint(
-          '► $k: $v',
-        ),
-      );
-    } catch (_) {}
-    try {
-      const JsonEncoder encoder = JsonEncoder.withIndent('  ');
-      final String prettyJson = encoder.convert(options.data);
+      String bodyMessage = '';
+      if (options.data is FormData) {
+        options.headers["Content-Type"]="multipart/form-data";
+        FormData formData = options.data as FormData;
+        StringBuffer formDataFields = StringBuffer();
+        formData.fields.forEach((element) => formDataFields.writeln('Field: ${element.key} Value: ${element.value}'));
+        formData.files.forEach((element) => formDataFields.writeln('File: ${element.key} Filename: ${element.value.filename}'));
+        bodyMessage = 'FormData with fields: \n$formDataFields';
+      } else {
+        const JsonEncoder encoder = JsonEncoder.withIndent('  ');
+        bodyMessage = encoder.convert(options.data);
+      }
+      options.headers.forEach((k, v) => headerMessage.writeln('► $k: $v'));
+      StringBuffer queryParamsMessage = StringBuffer();
+      options.queryParameters.forEach((k, v) => queryParamsMessage.writeln('► $k: $v'));
+
       log.d(
-        // ignore: unnecessary_null_comparison
-        "REQUEST ► ︎ ${options.method != null ? options.method.toUpperCase() : 'METHOD'} ${"${options.baseUrl}${options.path}"}\n\n"
-        "Headers:\n"
-        "$headerMessage\n"
-        "❖ QueryParameters : \n"
-        "Body: $prettyJson",
+          "REQUEST ► ︎ ${options.method.toUpperCase()} ${options.baseUrl}${options.path}\n\n"
+              "Headers:\n$headerMessage\n"
+              "QueryParameters:\n$queryParamsMessage\n"
+              "Body:\n$bodyMessage"
       );
     } catch (e, stackTrace) {
       log.e("Failed to extract json request $e");

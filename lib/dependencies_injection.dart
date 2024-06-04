@@ -18,7 +18,7 @@ import 'features/auth/data/datasources/auth_remote_datasrouces.dart';
 import 'features/auth/data/repositories/auth_repository_impl.dart';
 import 'features/auth/domain/repositories/auth_repository.dart';
 import 'features/auth/domain/repositories/user_repository.dart';
-import 'features/auth/presentation/login/cubit/auth_cubit.dart';
+import 'features/auth/presentation/login/cubit/login_cubit.dart';
 import 'features/auth/presentation/profile/bloc/user_bloc.dart';
 import 'features/auth/presentation/register/cubit/register_cubit.dart';
 import 'features/leaderboard/data/datasources/leaderboard_remote_datasource.dart';
@@ -37,7 +37,7 @@ Future<void> setupLocator() async {
       await SharedPreferences.getInstance();
   final Isar isar = await _openDB();
 
-  sl.registerSingleton<DioClient>(DioClient(sharedPreferences));
+  sl.registerSingleton<DioClient>(DioClient());
 
   sl.registerSingleton<SharedPreferences>(sharedPreferences);
 
@@ -94,7 +94,7 @@ Future<void> setupLocator() async {
 
   void _cubit() {
     sl.registerFactory(() => RegisterCubit(sl()));
-    sl.registerFactory(() => AuthCubit(sl()));
+    sl.registerFactory(() => LoginCubit(sl()));
     sl.registerFactory(() => LeaderboardCubit(sl()));
     sl.registerFactory(() => ResultsListCubit(sl()));
     sl.registerFactory(() => RunningMapBloc(sl(), sl()));

@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../features/auth/presentation/profile/bloc/user_bloc.dart';
 import '../resources/images.dart';
-import '../resources/palette.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key, required this.onProfileTap});
@@ -18,7 +20,30 @@ class AppBarWidget extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: onProfileTap,
-            child: SvgPicture.asset(Images.avatar),
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserAuthenticated &&
+                    state.user.profilePicture != null) {
+                  return CachedNetworkImage(
+                    imageUrl:
+                        "http://77.91.75.55/storage/${state.user.profilePicture!}",
+                    fit: BoxFit.contain,
+                    imageBuilder: (context, imageProvider) => SizedBox(
+                      height: kToolbarHeight-5,
+                      width: kToolbarHeight-5,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return SvgPicture.asset(Images.avatar);
+              },
+            ),
           ),
           // DecoratedBox(
           //   decoration: BoxDecoration(

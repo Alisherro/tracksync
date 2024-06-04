@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:tracksync/core/error/failure.dart';
 import 'package:tracksync/features/auth/data/datasources/user_local_datasource.dart';
 import 'package:tracksync/features/auth/data/datasources/user_remote_datasource.dart';
@@ -37,9 +40,20 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> logout() async{
+  Future<Either<Failure, bool>> logout() async {
     await remote.logout();
     local.deleteUserInfo();
     return const Right(true);
+  }
+
+  @override
+  Future<Either<Failure, User?>> changeProfilePicture(
+      String path, String name) async {
+    return await remote.updateUser(FormData.fromMap(
+      {
+        "profile_picture": await MultipartFile.fromFile(path,filename: name),
+        "_method":"PATCH"
+      },
+    ));
   }
 }

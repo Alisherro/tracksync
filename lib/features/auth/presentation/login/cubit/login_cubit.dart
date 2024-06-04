@@ -3,32 +3,30 @@ import '../../../../../core/error/error.dart';
 import '../../../domain/entities/login.dart';
 import '../../../domain/repositories/auth_repository.dart';
 
-part 'auth_state.dart';
+part 'login_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._repo) : super(const AuthLoading());
+class LoginCubit extends Cubit<LoginState> {
+  LoginCubit(this._repo) : super(const LoginLoading());
 
   final AuthRepository _repo;
 
   bool? isPasswordHide = true;
 
   void showHidePassword() {
-    emit(const AuthInit());
+    emit(const LoginInit());
     isPasswordHide = !(isPasswordHide ?? false);
-    emit(const AuthShowHide());
+    emit(const LoginShowHide());
   }
 
   Future<void> login(LoginParams params) async {
-    emit(const AuthLoading());
+    emit(const LoginLoading());
     final data = await _repo.login(params);
 
     data.fold(
       (l) {
-        if (l is ServerFailure) {
-          emit(AuthFailure(l.message ?? ""));
-        }
+          emit(LoginFailure(l.message ?? ""));
       },
-      (r) => emit(AuthSuccess(Login(r.token, r.user))),
+      (r) => emit(LoginSuccess(Login(r.token, r.user))),
     );
   }
 

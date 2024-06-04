@@ -1,9 +1,15 @@
+import 'package:tracksync/features/auth/domain/entities/user.dart';
+
 class Register {
-  Register(this._token);
+  Register(this._token, this._user);
 
   final String _token;
+  final User _user;
 
   String get token => _token;
+
+  User get user =>_user;
+
 }
 
 class RegisterParams {

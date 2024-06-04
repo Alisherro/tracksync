@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tracksync/features/auth/presentation/profile/bloc/user_bloc.dart';
 import 'package:tracksync/utils/utils.dart';
 
 import '../../../../core/localization/generated/strings.dart';
 import '../../../../core/resources/resources.dart';
 import '../../../../core/widgets/widgets.dart';
 import '../../domain/entities/register.dart';
-import 'cubit/cubit.dart';
+import 'cubit/register_cubit.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -42,7 +43,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               break;
             case RegisterSuccess():
               context.dismiss();
-              context.pop();
+              context.read<UserBloc>().add(
+                  UserLoggedIn(user: state.data.user, token: state.data.token));
               break;
             case RegisterFailure():
               context.dismiss();
@@ -72,21 +74,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     const SpacerV(),
                     TextF(
-                      key: const Key("name"),
-                      curFocusNode: _fnName,
-                      nextFocusNode: _fnEmail,
-                      textInputAction: TextInputAction.next,
-                      controller: _conName,
-                      keyboardType: TextInputType.name,
-                      prefixIcon: SvgPicture.asset(
-                        Images.user,
-                      ),
-                      hintText: 'John Doe',
-                      hint: Strings.of(context)!.errorInvalidName,
-                      validator: (String? value) => (value?.isNotEmpty??false)
-                          ? null
-                          : Strings.of(context)?.errorInvalidEmail
-                    ),
+                        key: const Key("name"),
+                        curFocusNode: _fnName,
+                        nextFocusNode: _fnEmail,
+                        textInputAction: TextInputAction.next,
+                        controller: _conName,
+                        keyboardType: TextInputType.name,
+                        prefixIcon: SvgPicture.asset(
+                          Images.user,
+                        ),
+                        hintText: 'John Doe',
+                        hint: Strings.of(context)!.errorInvalidName,
+                        validator: (String? value) =>
+                            (value?.isNotEmpty ?? false)
+                                ? null
+                                : Strings.of(context)?.errorInvalidEmail),
                     TextF(
                       key: const Key("email"),
                       curFocusNode: _fnEmail,
@@ -185,10 +187,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         if (_keyForm.currentState?.validate() ?? false) {
                           context.read<RegisterCubit>().register(
                                 RegisterParams(
-                                  email: _conEmail.text,
-                                  password: _conPassword.text,
-                                  name:_conName.text
-                                ),
+                                    email: _conEmail.text,
+                                    password: _conPassword.text,
+                                    name: _conName.text),
                               );
                         }
                       },

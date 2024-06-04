@@ -12,7 +12,7 @@ import 'core/localization/generated/strings.dart';
 import 'core/localization/l10n.dart';
 import 'core/resources/styles.dart';
 import 'dependencies_injection.dart';
-import 'features/auth/presentation/login/cubit/auth_cubit.dart';
+import 'features/auth/presentation/login/cubit/login_cubit.dart';
 import 'features/auth/presentation/profile/bloc/user_bloc.dart';
 import 'features/run/presentation/run_history/cubit/results_list_cubit.dart';
 
@@ -28,7 +28,7 @@ class TrackSyncApp extends StatelessWidget {
     log.d(const String.fromEnvironment('ENV'));
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => sl<AuthCubit>()),
+        BlocProvider(create: (_) => sl<LoginCubit>()),
         BlocProvider(
             create: (_) => sl<ChallengesBloc>()..add(ChallengesFetchEvent())),
         BlocProvider(
