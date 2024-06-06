@@ -12,6 +12,7 @@ import 'core/localization/generated/strings.dart';
 import 'core/localization/l10n.dart';
 import 'core/resources/styles.dart';
 import 'dependencies_injection.dart';
+import 'features/auth/presentation/configuration/bloc/user_config_bloc.dart';
 import 'features/auth/presentation/login/cubit/login_cubit.dart';
 import 'features/auth/presentation/profile/bloc/user_bloc.dart';
 import 'features/run/presentation/run_history/cubit/results_list_cubit.dart';

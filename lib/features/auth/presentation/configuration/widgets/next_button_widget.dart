@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../resources/palette.dart';
 
 class NextButtonWidget extends StatelessWidget {
   const NextButtonWidget({
@@ -19,10 +18,10 @@ class NextButtonWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
+      style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
         backgroundColor: MaterialStatePropertyAll(
-                isEnable ? Palette.secondColor : Palette.disabledButtonColor),
-          ),
+            isEnable ? Colors.blue : Colors.grey),
+      ),
       onPressed: isEnable ? enableCallback : disableCallback,
       child: Text(
         title ?? 'Next',

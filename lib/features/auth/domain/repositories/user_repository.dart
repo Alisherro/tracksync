@@ -14,7 +14,9 @@ abstract interface class UserRepository {
 
   Future<Either<Failure, bool>> saveUserToken(String token);
 
-  Future<Either<Failure,bool>> logout();
+  Future<Either<Failure, bool>> logout();
 
-  Future<Either<Failure,User?>> changeProfilePicture(String path, String name);
+  Future<Either<Failure, User?>> changeProfilePicture(String path, String name);
+
+  Future<Either<Failure, User?>> configureInformation(Map<String, dynamic> data);
 }

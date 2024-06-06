@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:tracksync/core/widgets/avatar_circle_widget.dart';
 import 'package:tracksync/utils/ext/ext.dart';
 import '../../../../core/core.dart';
 import '../../domain/entities/user.dart';
@@ -58,25 +59,10 @@ class ProfileScreen extends StatelessWidget {
                           vertical: 20, horizontal: 20),
                       child: Row(
                         children: [
-                          SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: user.profilePicture != null
-                                  ? CachedNetworkImage(
-                                      imageUrl:
-                                          "http://77.91.75.55/storage/${user.profilePicture!}",
-                                      fit: BoxFit.contain,
-                                      imageBuilder: (context, imageProvider) =>
-                                          DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                    )
-                                  : SvgPicture.asset(Images.avatar)),
+                          AvatarCircleWidget(
+                            diameter: 100,
+                            imageUrl: user.profilePicture,
+                          ),
                           const SizedBox(width: 40),
                           Expanded(
                             child: Column(
@@ -210,22 +196,33 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
-                const InfoSectionWidget(
+                 InfoSectionWidget(
                   title: 'WEIGHT',
                   subtitle: Text(
-                    '182 lb.',
-                    style: TextStyle(
+                    user.weight!=null?'${user.weight} kg':'unknown',
+                    style:const  TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 16,
                         fontFamily: 'EurostileRound'),
                   ),
                 ),
                 const SizedBox(height: 5),
-                const InfoSectionWidget(
+                InfoSectionWidget(
                   title: 'HEIGHT',
                   subtitle: Text(
-                    '5\'11\'\'',
-                    style: TextStyle(
+                    user.height!=null?'${user.height} cm':'unknown',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 16,
+                        fontFamily: 'EurostileRound'),
+                  ),
+                ),
+                const SizedBox(height: 5),
+                InfoSectionWidget(
+                  title: 'BIRTH DATE',
+                  subtitle: Text(
+                    user.birthDate??'unknown',
+                    style: const TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 16,
                         fontFamily: 'EurostileRound'),

@@ -4,7 +4,7 @@ import 'package:tracksync/utils/utils.dart';
 
 class Button extends StatelessWidget {
   final String title;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double? width;
   final Color? color;
   final Color? titleColor;

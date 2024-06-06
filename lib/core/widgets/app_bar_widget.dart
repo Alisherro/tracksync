@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../features/auth/presentation/profile/bloc/user_bloc.dart';
 import '../resources/images.dart';
+import 'avatar_circle_widget.dart';
 
 class AppBarWidget extends StatelessWidget {
   const AppBarWidget({super.key, required this.onProfileTap});
@@ -22,26 +23,13 @@ class AppBarWidget extends StatelessWidget {
             onTap: onProfileTap,
             child: BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
-                if (state is UserAuthenticated &&
-                    state.user.profilePicture != null) {
-                  return CachedNetworkImage(
-                    imageUrl:
-                        "http://77.91.75.55/storage/${state.user.profilePicture!}",
-                    fit: BoxFit.contain,
-                    imageBuilder: (context, imageProvider) => SizedBox(
-                      height: kToolbarHeight-5,
-                      width: kToolbarHeight-5,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                              image: imageProvider, fit: BoxFit.cover),
-                        ),
-                      ),
-                    ),
+                if(state is UserAuthenticated){
+                  return AvatarCircleWidget(
+                    diameter: kToolbarHeight-5,
+                    imageUrl: state.user.profilePicture,
                   );
                 }
-                return SvgPicture.asset(Images.avatar);
+                return const SizedBox.shrink();
               },
             ),
           ),

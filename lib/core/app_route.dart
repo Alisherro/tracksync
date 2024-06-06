@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tracksync/core/widgets/scaffold_with_bottom_nav_bar.dart';
+import 'package:tracksync/features/auth/domain/repositories/user_repository.dart';
 import 'package:tracksync/features/run/presentation/run_result/cubit/run_result_cubit.dart';
 import '../dependencies_injection.dart';
+import '../features/auth/presentation/configuration/bloc/user_config_bloc.dart';
+import '../features/auth/presentation/configuration/configuration_screen.dart';
 import '../features/auth/presentation/login/login_screen.dart';
 import '../features/auth/presentation/profile/bloc/user_bloc.dart';
 import '../features/auth/presentation/profile/profile_screen.dart';
@@ -66,14 +69,23 @@ class AppRouter {
   static GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     refreshListenable: GoRouterRefreshStream(sl<UserBloc>()),
-    redirect: (context, state) {
+    redirect: (context, state) async {
       UserState userState = context.read<UserBloc>().state;
       if (userState is UserAuthenticated) {
-        if (['/run', '/health', '/leaderboard', '/challenges', '/profile']
-            .any((element) => state.matchedLocation.startsWith(element))) {
+        if ([
+          '/run',
+          '/health',
+          '/leaderboard',
+          '/challenges',
+          '/profile',
+        ].any((element) => state.matchedLocation.startsWith(element))) {
+          if (userState.user.height == null) {
+            return '/configuration';
+          }
+
           return null;
         } else {
-          return '/run';
+          return userState.user.height == null ? '/configuration' : '/run';
         }
       } else if (userState is UserUnauthenticated) {
         if (['/login', '/registration'].contains(state.matchedLocation)) {
@@ -86,6 +98,17 @@ class AppRouter {
     },
     initialLocation: '/',
     routes: [
+      GoRoute(
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+          context: context,
+          state: state,
+          child: BlocProvider(
+            child: const ConfigurationPagesScreen(),
+            create: (_) => UserConfigBloc(sl<UserRepository>()),
+          ),
+        ),
+        path: '/configuration',
+      ),
       GoRoute(
         pageBuilder: (context, state) => buildPageWithDefaultTransition(
           context: context,

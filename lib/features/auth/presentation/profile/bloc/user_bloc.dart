@@ -1,15 +1,10 @@
-import 'dart:developer';
-
-import 'package:dio/dio.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tracksync/core/core.dart';
 import '../../../domain/entities/user.dart';
 import '../../../domain/repositories/user_repository.dart';
-import 'dart:io' as io;
-import 'dart:convert';
+import '../../configuration/bloc/user_config_bloc.dart';
 
 part 'user_event.dart';
 
@@ -30,6 +25,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             await onUserLogOut(emit);
           case UserChangeProfilePicture():
             await onUserChangeProfilePicture(emit);
+          case UserUpdateInformation():
+            await onUserUpdateInformation(event, emit);
         }
       },
     );
@@ -51,7 +48,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           if (l is UnauthenticatedFailure) {
             add(const UserLogOut());
           }
-        }, (r) => emitter(UserAuthenticated(user: r)));
+        }, (r) {
+          userRepository.saveUser(r);
+          emitter(UserAuthenticated(user: r));
+        });
       }
     } else {
       add(const UserLogOut());
@@ -78,7 +78,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (image != null) {
       emitter(SLoading());
       String fileName = image.path.split('/').last;
-      final res = await userRepository.changeProfilePicture(image.path, fileName);
+      final res =
+          await userRepository.changeProfilePicture(image.path, fileName);
       res.fold((l) {
         emitter(SFailed(l.message ?? 'error'));
       }, (r) {
@@ -88,5 +89,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         }
       });
     }
+  }
+
+  Future<void> onUserUpdateInformation(
+      UserUpdateInformation event, Emitter emitter) async {
+    userRepository.saveUser(event.user);
+    emitter(UserAuthenticated(user: event.user));
   }
 }

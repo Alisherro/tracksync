@@ -12,7 +12,8 @@ class Images {
   static const String heartIcon = 'assets/images/heart.svg';
   static const String dashboardIcon = 'assets/images/dashboard.svg';
   static const String selectedTab = 'assets/images/selected_tab.svg';
-  static const String avatar = 'assets/images/avatar.svg';
+  static const String maleAvatar = 'assets/images/male_avatar.svg';
+  static const String femaleAvatar = 'assets/images/female_avatar.svg';
   static const String idk = 'assets/images/idkWhatItIs.svg';
   static const String twitter = 'assets/images/twitter.svg';
   static const String discord = 'assets/images/discord.svg';

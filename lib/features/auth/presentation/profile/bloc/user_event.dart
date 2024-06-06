@@ -23,3 +23,8 @@ class UserLogOut extends UserEvent {
 class UserChangeProfilePicture extends UserEvent {
   const UserChangeProfilePicture();
 }
+
+class UserUpdateInformation extends UserEvent{
+  const UserUpdateInformation(this.user);
+  final User user;
+}

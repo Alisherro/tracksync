@@ -51,9 +51,16 @@ class UserRepositoryImpl implements UserRepository {
       String path, String name) async {
     return await remote.updateUser(FormData.fromMap(
       {
-        "profile_picture": await MultipartFile.fromFile(path,filename: name),
-        "_method":"PATCH"
+        "profile_picture": await MultipartFile.fromFile(path, filename: name),
+        "_method": "PATCH"
       },
     ));
+  }
+
+  @override
+  Future<Either<Failure, User?>> configureInformation(
+      Map<String, dynamic> data) async {
+    data["_method"] = "PATCH";
+    return await remote.updateUser(data);
   }
 }

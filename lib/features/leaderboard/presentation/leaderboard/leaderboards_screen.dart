@@ -4,9 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:tracksync/core/core.dart';
 
 import '../../../../../utils/helper/helper.dart';
+import '../../../../core/widgets/avatar_circle_widget.dart';
 import '../../domain/entities/leader.dart';
 import 'cubit/leaderboard_cubit.dart';
-
 
 class LeaderboardsScreen extends StatefulWidget {
   const LeaderboardsScreen({super.key});
@@ -25,12 +25,16 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen>
     _controller = TabController(length: 3, vsync: this);
   }
 
-  String getPeriodName(TimePeriod period){
-     switch(period){
-       case TimePeriod.day :return 'Today';
-       case TimePeriod.week :return 'Week';
-       case TimePeriod.month :return 'Month';
-       case TimePeriod.all :return 'All time';
+  String getPeriodName(TimePeriod period) {
+    switch (period) {
+      case TimePeriod.day:
+        return 'Today';
+      case TimePeriod.week:
+        return 'Week';
+      case TimePeriod.month:
+        return 'Month';
+      case TimePeriod.all:
+        return 'All time';
     }
   }
 
@@ -60,7 +64,9 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen>
                   ?.copyWith(fontWeight: FontWeight.w400),
               labelPadding: const EdgeInsets.all(10),
               unselectedLabelColor: Palette.subText,
-              tabs: context.read<LeaderboardCubit>().tabs
+              tabs: context
+                  .read<LeaderboardCubit>()
+                  .tabs
                   .map(
                     (e) => Text(getPeriodName(e)),
                   )
@@ -77,19 +83,21 @@ class _LeaderboardsScreenState extends State<LeaderboardsScreen>
           BlocBuilder<LeaderboardCubit, LeaderboardState>(
             builder: (context, state) {
               if (state is LeaderboardSuccess) {
-                return state.leaderboard.leaders.isNotEmpty? ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 10),
-                  itemCount: state.leaderboard.leaders.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return LeaderboardUserWidget(
-                      leader: state.leaderboard.leaders[index],
-                      index: index,
-                    );
-                  },
-                ):const Center(child: Text("Empty"));
+                return state.leaderboard.leaders.isNotEmpty
+                    ? ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 10),
+                        itemCount: state.leaderboard.leaders.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return LeaderboardUserWidget(
+                            leader: state.leaderboard.leaders[index],
+                            index: index,
+                          );
+                        },
+                      )
+                    : const Center(child: Text("Empty"));
               } else {
                 return const Center(child: CircularProgressIndicator());
               }
@@ -125,7 +133,10 @@ class LeaderboardUserWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          SvgPicture.asset(Images.avatar),
+          AvatarCircleWidget(
+            diameter: kToolbarHeight - 5,
+            imageUrl: leader.user.profilePicture,
+          ),
           const SizedBox(width: 10),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
