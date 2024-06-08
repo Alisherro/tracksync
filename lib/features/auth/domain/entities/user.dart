@@ -34,7 +34,7 @@ class User {
     birthDate = json['birthDate'];
     weight = json['weight_kg'];
     height = json['height_cm'];
-    fitPercentage = json['fitPercentage'];
+    fitPercentage = double.tryParse(json["fitPercentage"]??'0');
     totalKm = json['totalKm'];
     coins = json['coins'];
     name = json['name'];
