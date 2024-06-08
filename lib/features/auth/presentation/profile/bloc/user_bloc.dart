@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tracksync/core/core.dart';
 import '../../../domain/entities/user.dart';
 import '../../../domain/repositories/user_repository.dart';
-import '../../configuration/bloc/user_config_bloc.dart';
 
 part 'user_event.dart';
 
