@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:tracksync/core/error/failure.dart';
@@ -62,5 +60,19 @@ class UserRepositoryImpl implements UserRepository {
       Map<String, dynamic> data) async {
     data["_method"] = "PATCH";
     return await remote.updateUser(data);
+  }
+
+  @override
+  Future<Either<Failure, String?>> delete() async {
+    final res = await remote.delete();
+    return res.fold(
+      (l) {
+        return Left(l);
+      },
+      (r) async {
+        await local.deleteUserInfo();
+        return Right(r);
+      },
+    );
   }
 }

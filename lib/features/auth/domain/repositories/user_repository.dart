@@ -19,4 +19,7 @@ abstract interface class UserRepository {
   Future<Either<Failure, User?>> changeProfilePicture(String path, String name);
 
   Future<Either<Failure, User?>> configureInformation(Map<String, dynamic> data);
+
+  Future<Either<Failure, String?>> delete();
+
 }

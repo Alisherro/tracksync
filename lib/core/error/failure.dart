@@ -54,3 +54,13 @@ class UnauthenticatedFailure extends Failure {
   @override
   int get hashCode => 0;
 }
+
+class UnexpectedFailure extends Failure {
+  const UnexpectedFailure([super.message]);
+
+  @override
+  bool operator ==(Object other) => other is CacheFailure;
+
+  @override
+  int get hashCode => 0;
+}

@@ -33,9 +33,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Parent(
+    return Scaffold(
       appBar: const MyAppBar().call(),
-      child: BlocListener<RegisterCubit, RegisterState>(
+      body: BlocListener<RegisterCubit, RegisterState>(
         listener: (_, state) {
           switch (state) {
             case RegisterLoading():

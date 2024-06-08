@@ -27,8 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Parent(
-      child: BlocListener<LoginCubit, LoginState>(
+    return Scaffold(
+      body: BlocListener<LoginCubit, LoginState>(
         listener: (_, state) {
           switch (state) {
             case LoginLoading():

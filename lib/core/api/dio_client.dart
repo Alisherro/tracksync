@@ -190,4 +190,54 @@ class DioClient with SentryCrashLogger {
       return  Left(FormatFailure(e.toString()));
     }
   }
+
+
+
+  Future<Either<Failure, T>> deleteRequest<T>(
+      String url, {
+        Object? data,
+        required T Function(dynamic response) converter,
+        bool isIsolate = true,
+      }) async {
+    try {
+      final response = await _dio.delete(url, data: data);
+      if ((response.statusCode ?? 0) < 200 ||
+          (response.statusCode ?? 0) > 201) {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+
+      if (!isIsolate) {
+        return Right(converter(response.data));
+      }
+      final isolateParse = IsolateParser<T>(
+        response.data as Map<String, dynamic>,
+        converter,
+      );
+      final result = await isolateParse.parseInBackground();
+      return Right(result);
+    } on DioException catch (e, stackTrace) {
+      String? errorMessage = e.message;
+      if (e.response?.data['error'] != null) {
+        errorMessage = e.response?.data['error'] as String? ?? e.message;
+      }
+      else if (e.response?.data['errors'] != null) {
+        var errors = e.response?.data['errors'] as Map<String, dynamic>;
+        var errorMessages = <String>[];
+        errors.forEach((key, value) {
+          value.forEach((msg) {
+            errorMessages.add(msg as String);
+          });
+        });
+        errorMessage = errorMessages.join('\n');
+      }
+      return Left(
+        ServerFailure(
+          errorMessage,
+        ),
+      );
+    }
+  }
 }

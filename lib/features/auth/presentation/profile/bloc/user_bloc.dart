@@ -20,12 +20,14 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             await fetchUserData(emit);
           case UserLoggedIn():
             await onUserLoggedIn(event, emit);
-          case UserLogOut():
+          case UserLogout():
             await onUserLogOut(emit);
           case UserChangeProfilePicture():
             await onUserChangeProfilePicture(emit);
           case UserUpdateInformation():
             await onUserUpdateInformation(event, emit);
+          case UserDelete():
+            await onUserDelete(event, emit);
         }
       },
     );
@@ -45,7 +47,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if (state is UserAuthenticated) {
         resNewUser.fold((l) {
           if (l is UnauthenticatedFailure) {
-            add(const UserLogOut());
+            add(const UserLogout());
           }
         }, (r) {
           userRepository.saveUser(r);
@@ -53,7 +55,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         });
       }
     } else {
-      add(const UserLogOut());
+      add(const UserLogout());
     }
   }
 
@@ -69,6 +71,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   Future<void> onUserLogOut(Emitter emitter) async {
     userRepository.logout();
     emitter(UserUnauthenticated());
+  }
+
+  Future<void> onUserDelete(UserDelete event, Emitter emitter) async {
+    emitter(SLoading());
+    final response = await userRepository.delete();
+    response.fold(
+      (l) {
+        emitter(SFailed(l.message ?? 'Unexpected error'));
+      },
+      (r) {
+        emitter(UserUnauthenticated());
+        emitter(SSuccess(r??'Account deleted successfully'));
+      },
+    );
   }
 
   Future<void> onUserChangeProfilePicture(Emitter emitter) async {

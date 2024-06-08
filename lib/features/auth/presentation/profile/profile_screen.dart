@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tracksync/core/widgets/avatar_circle_widget.dart';
 import 'package:tracksync/utils/ext/ext.dart';
 import '../../../../core/core.dart';
+import '../../../../core/widgets/confirmation_dialog.dart';
 import '../../domain/entities/user.dart';
 import 'bloc/user_bloc.dart';
 
@@ -196,11 +198,11 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 5),
-                 InfoSectionWidget(
+                InfoSectionWidget(
                   title: 'WEIGHT',
                   subtitle: Text(
-                    user.weight!=null?'${user.weight} kg':'unknown',
-                    style:const  TextStyle(
+                    user.weight != null ? '${user.weight} kg' : 'unknown',
+                    style: const TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 16,
                         fontFamily: 'EurostileRound'),
@@ -210,7 +212,7 @@ class ProfileScreen extends StatelessWidget {
                 InfoSectionWidget(
                   title: 'HEIGHT',
                   subtitle: Text(
-                    user.height!=null?'${user.height} cm':'unknown',
+                    user.height != null ? '${user.height} cm' : 'unknown',
                     style: const TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 16,
@@ -221,7 +223,7 @@ class ProfileScreen extends StatelessWidget {
                 InfoSectionWidget(
                   title: 'BIRTH DATE',
                   subtitle: Text(
-                    user.birthDate??'unknown',
+                    user.birthDate ?? 'unknown',
                     style: const TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 16,
@@ -230,14 +232,35 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 15),
                 Center(
-                  child: ButtonText(
+                  child: Button(
+                    color: Palette.redLatte,
                     onPressed: () {
-                      context.read<UserBloc>().add(const UserLogOut());
+                      context.read<UserBloc>().add(const UserLogout());
                     },
                     title: 'Logout',
                     titleColor: Palette.redLatte,
                   ),
-                )
+                ),
+                const SizedBox(height: 15),
+                Center(
+                  child: ButtonText(
+                    titleColor: Palette.redLatte,
+                    onPressed: () async {
+                      await showConfirmationDialog(
+                        context,
+                        confirm: () {
+                          context.read<UserBloc>().add(const UserDelete());
+                          context.pop();
+                        },
+                        deny: () {
+                          context.pop();
+                        },
+                        title: 'Are you sure you want to delete your account?',
+                      );
+                    },
+                    title: 'Delete account',
+                  ),
+                ),
               ],
             );
           } else {

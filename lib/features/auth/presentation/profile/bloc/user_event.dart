@@ -16,8 +16,12 @@ class UserLoggedIn extends UserEvent {
   final User user;
 }
 
-class UserLogOut extends UserEvent {
-  const UserLogOut();
+class UserLogout extends UserEvent {
+  const UserLogout();
+}
+
+class UserDelete extends UserEvent {
+  const UserDelete();
 }
 
 class UserChangeProfilePicture extends UserEvent {

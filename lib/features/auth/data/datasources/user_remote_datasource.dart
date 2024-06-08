@@ -10,6 +10,8 @@ abstract interface class UserRemoteDataSource {
 
   Future<Either<Failure, String?>> logout();
 
+  Future<Either<Failure, String?>> delete();
+
   Future<Either<Failure, User?>> updateUser(Object data);
 }
 
@@ -40,11 +42,16 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
 
   @override
   Future<Either<Failure, User?>> updateUser(Object data) async {
-    final response = await _client.postRequest<User?>(
-      ListAPI.user,
-      converter: (json) => User.fromJson(json["data"]),
-      data: data
-    );
+    final response = await _client.postRequest<User?>(ListAPI.user,
+        converter: (json) => User.fromJson(json["data"]), data: data);
     return response;
+  }
+
+  @override
+  Future<Either<Failure, String?>> delete() async {
+    return await _client.deleteRequest(
+      ListAPI.user,
+      converter: (json) => json['message'],
+    );
   }
 }
