@@ -14,9 +14,11 @@ import '../features/auth/presentation/profile/profile_screen.dart';
 import '../features/auth/presentation/register/cubit/register_cubit.dart';
 import '../features/auth/presentation/register/register_screen.dart';
 import '../features/auth/presentation/splash/splash_screen.dart';
+import '../features/challenges/presentation/challenges/bloc/challenges_bloc.dart';
 import '../features/challenges/presentation/challenges/challenges_screen.dart';
 import '../features/leaderboard/presentation/leaderboard/cubit/leaderboard_cubit.dart';
 import '../features/leaderboard/presentation/leaderboard/leaderboards_screen.dart';
+import '../features/run/presentation/run_history/cubit/results_list_cubit.dart';
 import '../features/run/presentation/run_history/health_tracker_screen.dart';
 import '../features/run/presentation/run_result/run_result_screen.dart';
 import '../features/run/presentation/running_map/bloc/running_map_bloc.dart';
@@ -144,6 +146,11 @@ class AppRouter {
             child: MultiBlocProvider(
               providers: [
                 BlocProvider(create: (_) => sl<RunningMapBloc>()),
+                BlocProvider(
+                    create: (_) => sl<ChallengesBloc>()..add(ChallengesFetchEvent())),
+                BlocProvider(create: (_) => sl<ResultsListCubit>()..initState()),
+
+
               ],
               child: ScaffoldWithBottomNavBar(
                 navigationShell: navigationShell,

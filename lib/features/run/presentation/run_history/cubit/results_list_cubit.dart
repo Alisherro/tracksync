@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:tracksync/features/challenges/presentation/challenges/bloc/challenges_bloc.dart';
 import '../../../domain/entities/run_result.dart';
 import '../../../domain/repositories/run_result_repository.dart';
 
 part 'results_list_state.dart';
 
 class ResultsListCubit extends Cubit<ResultsListState> {
-  ResultsListCubit(this._repo) : super(ResultsListInitial());
+  ResultsListCubit(this._repo, this.challengesBloc)
+      : super(ResultsListInitial());
 
   final RunResultRepository _repo;
-
+  final ChallengesBloc challengesBloc;
   DateTimeRange? currentDateTimeRange;
 
   Future<void> initState([DateTimeRange? range]) async {
@@ -51,6 +53,7 @@ class ResultsListCubit extends Cubit<ResultsListState> {
 
   Future<int> saveRunResult(RunResult data) async {
     int? id = await _repo.saveRunResult(data);
+    challengesBloc.add(CheckChallenges());
     initState();
     return id ?? 0;
   }

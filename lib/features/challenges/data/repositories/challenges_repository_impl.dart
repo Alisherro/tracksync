@@ -14,14 +14,24 @@ class ChallengesRepositoryImpl implements ChallengesRepository {
   Future<Either<Failure, Challenges>> getChallenges() async {
     final response = await remote.getChallenges();
     return response.fold(
-      (l) => Left(l),
-      (r) {
+          (l) => Left(l),
+          (r) {
         return Right(Challenges(
-          daily: r.daily?.map((e) => e.toEntity()).where((element) => element!=null).cast<Challenge>().toList()??[],
-          weekly: r.weekly?.map((e) => e.toEntity()).where((element) => element!=null).cast<Challenge>().toList()??[],
-          monthly: r.monthly?.map((e) => e.toEntity()).where((element) => element!=null).cast<Challenge>().toList()??[],
-        ));
+          daily: r.daily?.map((e) => e.toEntity()).where((element) =>
+          element != null).cast<Challenge>().toList() ?? [],
+          weekly: r.weekly?.map((e) => e.toEntity()).where((
+              element) => element != null).cast<Challenge>().toList() ?? [],
+          monthly: r.monthly?.map((e) => e.toEntity()).where((
+              element) => element != null).cast<Challenge>().toList() ?? [],
+        ),);
       },
     );
+  }
+
+
+  @override
+  Future<Either<Failure, bool?>> checkChallenges() async {
+    return await remote.checkChallenges();
+
   }
 }

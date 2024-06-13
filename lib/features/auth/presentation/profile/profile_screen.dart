@@ -87,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  user.isMale ?? false ? 'Female' : 'Male',
+                                  user.isMale ?? false ? 'Male' : 'Female',
                                   style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ],

@@ -100,7 +100,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           result.totalSeconds, result.avgPaceSeconds, result.distance);
       result.coins=coins;
       id = await resultsListCubit.saveRunResult(result);
-      userBloc.add(const UserGetUpdate());
+      // userBloc.add(const UserGetUpdate());
       if (event.context.mounted) {
         event.context.go('/health/result/$id');
       }

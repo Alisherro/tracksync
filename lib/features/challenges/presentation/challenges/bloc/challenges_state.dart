@@ -12,3 +12,7 @@ final class ChallengesLoaded extends ChallengesState {
 }
 
 final class ChallengesError extends ChallengesState {}
+
+final class SChallengeSuccess extends ChallengesState {
+  SChallengeSuccess();
+}

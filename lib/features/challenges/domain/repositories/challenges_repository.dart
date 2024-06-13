@@ -6,5 +6,6 @@ import '../../../../core/error/failure.dart';
 
 abstract interface class ChallengesRepository{
   Future<Either<Failure, Challenges>> getChallenges();
+  Future<Either<Failure, bool?>> checkChallenges();
 
 }

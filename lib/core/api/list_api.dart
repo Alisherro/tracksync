@@ -18,6 +18,7 @@ class ListAPI {
 
 
   static const String challenges = "/api/user/challenges";
+  static const String checkChallenges = "/api/challenges/check";
 
   static const String leaderboard = "/api/leaderboard";
 }

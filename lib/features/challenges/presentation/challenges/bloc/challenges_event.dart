@@ -4,5 +4,6 @@ part of 'challenges_bloc.dart';
 sealed class ChallengesEvent {}
 
 class ChallengesFetchEvent extends ChallengesEvent{}
+class CheckChallenges extends ChallengesEvent{}
 
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:tracksync/features/challenges/domain/entities/challenge.dart';
+import 'package:tracksync/utils/ext/ext.dart';
 
 import '../../../../core/core.dart';
 import 'bloc/challenges_bloc.dart';
@@ -11,50 +12,50 @@ class ChallengesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChallengesBloc, ChallengesState>(
+    return BlocConsumer<ChallengesBloc, ChallengesState>(
+      listener: (context, state) {
+        if (state is SChallengeSuccess) {
+          'You completed challenge!'.toToastSuccess(context);
+        }
+      },
+      buildWhen: (prev, cur) {
+        return [ChallengesLoading, ChallengesLoaded, ChallengesError]
+            .contains(cur.runtimeType);
+      },
       builder: (context, state) {
-        switch (state) {
-          case ChallengesError():
-            {
-              return const Center(child: Text('Error'));
-            }
-          case ChallengesLoading():
-            {
-              return const Center(child: CircularProgressIndicator());
-            }
-
-          case ChallengesLoaded():
-            {
-              final List<Challenge> challenges = state.challenges.allChallenges;
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Challenges for today',
-                        style: Theme.of(context).textTheme.titleLarge,
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 20),
-                      ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (context, index) =>
-                            const SizedBox(height: 10),
-                        itemCount: 6,
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          return ChallengeDescription(
-                            challenge: challenges[index],
-                          );
-                        },
-                      )
-                    ],
+        if (state is ChallengesLoaded) {
+          final List<Challenge> challenges = state.challenges.allChallenges;
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Challenges for today',
+                    style: Theme.of(context).textTheme.titleLarge,
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              );
-            }
+                  const SizedBox(height: 20),
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 10),
+                    itemCount: 6,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return ChallengeDescription(
+                          challenge: challenges[index], index: index);
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        } else if (state is ChallengesLoading) {
+          return const Center(child: CircularProgressIndicator());
+        } else {
+          return const Center(child: Text('Error'));
         }
       },
     );
@@ -62,12 +63,16 @@ class ChallengesScreen extends StatelessWidget {
 }
 
 class ChallengeDescription extends StatelessWidget {
-  const ChallengeDescription({super.key, required this.challenge, this.onTap});
+  const ChallengeDescription(
+      {super.key, required this.challenge, this.onTap, required this.index});
 
   final Challenge challenge;
   final Function()? onTap;
+  final int index;
 
   bool get isFinished => challenge.isFinished;
+
+  int get _index => index + 1;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +88,7 @@ class ChallengeDescription extends StatelessWidget {
                 child: Center(
                   child: FittedBox(
                     child: Text(
-                      challenge.id.toString(),
+                      _index.toString(),
                       style: Theme.of(context).textTheme.labelLarge,
                     ),
                   ),

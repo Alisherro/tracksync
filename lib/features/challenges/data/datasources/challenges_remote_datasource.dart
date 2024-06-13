@@ -5,6 +5,7 @@ import 'package:tracksync/features/challenges/data/models/challenge_response.dar
 
 abstract interface class ChallengesRemoteDataSource {
   Future<Either<Failure, ChallengesResponse>> getChallenges();
+  Future<Either<Failure, bool?>> checkChallenges();
 }
 
 class ChallengesRemoteDataSourceImpl implements ChallengesRemoteDataSource {
@@ -18,6 +19,16 @@ class ChallengesRemoteDataSourceImpl implements ChallengesRemoteDataSource {
       ListAPI.challenges,
       converter: (response) {
         return ChallengesResponse.fromJson(response);
+      },
+    );
+  }
+
+  @override
+  Future<Either<Failure, bool?>> checkChallenges()async {
+    return await _client.getRequest(
+      ListAPI.checkChallenges,
+      converter: (response) {
+        return response["status"];
       },
     );
   }
