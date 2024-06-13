@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:tracksync/features/challenges/domain/entities/challenge.dart';
 
 import '../../../../core/core.dart';
@@ -26,7 +25,7 @@ class ChallengesScreen extends StatelessWidget {
 
           case ChallengesLoaded():
             {
-              final List<Challenge> challenges = state.challenges;
+              final List<Challenge> challenges = state.challenges.allChallenges;
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 child: SingleChildScrollView(
@@ -67,6 +66,8 @@ class ChallengeDescription extends StatelessWidget {
 
   final Challenge challenge;
   final Function()? onTap;
+
+  bool get isFinished => challenge.isFinished;
 
   @override
   Widget build(BuildContext context) {
@@ -109,14 +110,21 @@ class ChallengeDescription extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 15),
-              Text(
-                challenge.points.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(fontWeight: FontWeight.w500),
-              ),
-              SvgPicture.asset(Images.bolt),
+              if (!isFinished) ...[
+                Text(
+                  challenge.points.toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.w500),
+                ),
+                SvgPicture.asset(Images.bolt),
+              ],
+              if (isFinished)
+                Icon(
+                  Icons.check,
+                  color: Palette.limeGreen,
+                )
             ],
           ),
         ),

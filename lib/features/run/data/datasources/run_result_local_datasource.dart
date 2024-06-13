@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
-
 import '../../domain/entities/run_result.dart';
 
 abstract class RunResultLocalDatasource {
@@ -10,6 +8,10 @@ abstract class RunResultLocalDatasource {
   Future<int?> saveRunResult(RunResult runResult);
 
   Future<List<RunResult>> getRunResultsList([DateTimeRange? range]);
+
+  Future<void> saveRunResultList(List<RunResult> runResultList);
+
+  Future<void> clear() ;
 }
 
 class RunResultDatasourceIsar extends RunResultLocalDatasource {
@@ -43,5 +45,19 @@ class RunResultDatasourceIsar extends RunResultLocalDatasource {
           .sortByDateTimeDesc()
           .findAll();
     }
+  }
+
+  @override
+  Future<void> saveRunResultList(List<RunResult> runResultList) async {
+    isar.writeTxn(() async {
+      isar.runResults.putAll(runResultList);
+    });
+  }
+
+  @override
+  Future<void> clear() async{
+    return await isar.writeTxn(()async{
+      await isar.runResults.clear();
+    });
   }
 }

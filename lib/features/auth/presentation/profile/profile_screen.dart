@@ -117,78 +117,10 @@ class ProfileScreen extends StatelessWidget {
                           'tracksync',
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
-                        // DecoratedBox(
-                        //   decoration: BoxDecoration(
-                        //     color: Palette.secondColor,
-                        //     borderRadius: BorderRadius.circular(38),
-                        //   ),
-                        //   child: const Padding(
-                        //     padding: EdgeInsets.symmetric(
-                        //         horizontal: 25, vertical: 5),
-                        //     child: Text(
-                        //       '234',
-                        //       style: TextStyle(
-                        //           fontFamily: 'EurostileRound',
-                        //           fontWeight: FontWeight.w900,
-                        //           fontSize: 20,
-                        //           color: Colors.white),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 5),
-                // RoundedShadowContainer(
-                //   child: Padding(
-                //     padding: const EdgeInsets.symmetric(
-                //         vertical: 33, horizontal: 40),
-                //     child: Row(
-                //       children: [
-                //         Text(
-                //           '1',
-                //           style:
-                //               Theme.of(context).textTheme.bodyLarge?.copyWith(
-                //                     fontWeight: FontWeight.w900,
-                //                     fontFamily: 'EurostileRound',
-                //                     color: Palette.orangeColor,
-                //                   ),
-                //         ),
-                //         const SizedBox(width: 20),
-                //         Column(
-                //           crossAxisAlignment: CrossAxisAlignment.start,
-                //           children: [
-                //             Text(
-                //               'TurBo777',
-                //               style: Theme.of(context)
-                //                   .textTheme
-                //                   .bodySmall
-                //                   ?.copyWith(fontWeight: FontWeight.w600),
-                //             ),
-                //             const Text(
-                //               '99 level',
-                //               style: TextStyle(
-                //                 color: Palette.orangeColor,
-                //                 fontWeight: FontWeight.w300,
-                //                 fontSize: 12,
-                //               ),
-                //             )
-                //           ],
-                //         ),
-                //         const Spacer(),
-                //         const Text(
-                //           '1 456 643',
-                //           style: TextStyle(
-                //               color: Palette.orangeColor,
-                //               fontWeight: FontWeight.w900,
-                //               fontSize: 15,
-                //               fontFamily: 'EurostileRound'),
-                //         )
-                //       ],
-                //     ),
-                //   ),
-                // ),
                 const SizedBox(height: 5),
                 const InfoSectionWidget(
                   title: 'LOCATION',

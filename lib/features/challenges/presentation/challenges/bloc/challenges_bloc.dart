@@ -13,11 +13,10 @@ class ChallengesBloc extends Bloc<ChallengesEvent, ChallengesState> {
 
   ChallengesBloc(this.repository) : super(ChallengesLoading()) {
     on<ChallengesEvent>(
-      (event, emit) async{
+      (event, emit) async {
         switch (event) {
           case ChallengesFetchEvent():
             await onFetch(emit);
-
         }
       },
     );

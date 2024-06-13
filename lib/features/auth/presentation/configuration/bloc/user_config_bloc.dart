@@ -11,11 +11,11 @@ part 'user_config_event.dart';
 part 'user_config_state.dart';
 
 const List goals = [
-  'Eat better',
-  'Improve mental strength',
-  'Build muscle',
-  'Burn fat',
-  'Relieve stress'
+  'Increase running distance',
+  'Improve run times',
+  'Consistent daily running',
+  'Enhance endurance',
+  'Trail running exploration'
 ];
 
 class UserConfigBloc extends Bloc<UserConfigEvent, UserConfigState> {

@@ -13,7 +13,27 @@ class RunResultRepositoryImpl implements RunResultRepository {
 
   @override
   Future<List<RunResult>> getAllResults([DateTimeRange? range]) async {
-    return await local.getRunResultsList(range);
+    List<RunResult> list = await local.getRunResultsList(range);
+    if (list.isEmpty) {
+      final response = await remote.getRunResults();
+      return response.fold(
+        (l) async {
+          return [];
+        },
+        (r) {
+          final List<RunResult> list = r
+              .map((e) => e.toEntity())
+              .where((element) => element != null)
+              .cast<RunResult>()
+              .toList();
+
+          local.saveRunResultList(list);
+          return list;
+        },
+      );
+    }else{
+      return list;
+    }
   }
 
   @override
@@ -26,5 +46,10 @@ class RunResultRepositoryImpl implements RunResultRepository {
     int? id = await local.saveRunResult(runResult);
     await remote.saveRunResult(runResult);
     return id;
+  }
+
+  @override
+  Future<void> clear() async {
+    await local.clear();
   }
 }

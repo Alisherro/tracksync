@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../features/auth/presentation/profile/bloc/user_bloc.dart';
 import '../resources/images.dart';
+import '../resources/palette.dart';
 import 'avatar_circle_widget.dart';
 
 class AppBarWidget extends StatelessWidget {
@@ -16,41 +17,40 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          GestureDetector(
-            onTap: onProfileTap,
-            child: BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) {
-                if(state is UserAuthenticated){
-                  return AvatarCircleWidget(
-                    diameter: kToolbarHeight-5,
-                    imageUrl: state.user.profilePicture,
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-            ),
-          ),
-          // DecoratedBox(
-          //   decoration: BoxDecoration(
-          //     color: Palette.orangeLight,
-          //     borderRadius: BorderRadius.circular(12),
-          //   ),
-          //   child: const Padding(
-          //     padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-          //     child: Text(
-          //       '234',
-          //       style: TextStyle(
-          //         fontFamily: 'EurostileRound',
-          //         fontWeight: FontWeight.w900,
-          //         fontSize: 20,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ],
+      child: BlocBuilder<UserBloc, UserState>(
+        builder: (context, state) {
+          if(state is UserAuthenticated){
+            final user = state.user;
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: onProfileTap,
+                  child: AvatarCircleWidget(
+                    diameter: kToolbarHeight - 5,
+                    imageUrl: user.profilePicture,
+                  ),
+                ),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Palette.orangeLight,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child:  Padding(
+                    padding:const EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                    child: Text(
+                      '${user.coins??0}',
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                ),
+              ],
+            );
+
+          }else{
+            return SizedBox.shrink();
+          }
+          },
       ),
     );
   }

@@ -19,9 +19,9 @@ class ChooseGoalsScreen extends StatelessWidget {
         children: [
           const Spacer(),
           const ConfigTitleWidget(
-            title: 'What are your top 3 goals?',
+            title: 'What are your main running goals?',
             subtitle:
-                'Rank your goals so your Coach can help you achieve them.',
+                'It will help us ',
           ),
           const SizedBox(height: 30),
           Column(

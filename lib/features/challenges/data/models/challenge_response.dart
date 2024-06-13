@@ -1,6 +1,75 @@
 import 'package:tracksync/features/challenges/domain/entities/challenge.dart';
 
+class ChallengesResponse {
+  List<ChallengeResponse>? daily;
+  List<ChallengeResponse>? weekly;
+  List<ChallengeResponse>? monthly;
+
+  ChallengesResponse({this.daily, this.weekly, this.monthly});
+
+  ChallengesResponse.fromJson(Map<String, dynamic> json) {
+    if (json['daily'] != null) {
+      daily = <ChallengeResponse>[];
+      json['daily'].forEach((v) {
+        daily!.add(ChallengeResponse.fromJson(v));
+      });
+    }
+    if (json['weekly'] != null) {
+      weekly = <ChallengeResponse>[];
+      json['weekly'].forEach((v) {
+        weekly!.add(ChallengeResponse.fromJson(v));
+      });
+    }
+    if (json['monthly'] != null) {
+      monthly = <ChallengeResponse>[];
+      json['monthly'].forEach((v) {
+        monthly!.add(ChallengeResponse.fromJson(v));
+      });
+    }
+  }
+}
+
 class ChallengeResponse {
+  int? id;
+  int? userId;
+  ChallengeInfo? challenge;
+  int? challengeStatus;
+
+  ChallengeResponse(
+      {this.id, this.userId, this.challenge, this.challengeStatus});
+
+  ChallengeResponse.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userId = json['user_id'];
+    challenge = json['challenge'] != null
+        ? new ChallengeInfo.fromJson(json['challenge'])
+        : null;
+    challengeStatus = json['challenge_status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['user_id'] = this.userId;
+    if (this.challenge != null) {
+      data['challenge'] = this.challenge!.toJson();
+    }
+    data['challenge_status'] = this.challengeStatus;
+    return data;
+  }
+
+  Challenge? toEntity() {
+    Challenge? temp = challenge?.toEntity();
+    bool isFinishedE = challengeStatus == 1;
+    if (temp != null) {
+      return temp..isFinished = isFinishedE;
+    } else {
+      return null;
+    }
+  }
+}
+
+class ChallengeInfo {
   int? id;
   String? title;
   String? description;
@@ -9,7 +78,7 @@ class ChallengeResponse {
   int? isActive;
   int? points;
 
-  ChallengeResponse(
+  ChallengeInfo(
       {this.id,
       this.title,
       this.description,
@@ -18,7 +87,7 @@ class ChallengeResponse {
       this.isActive,
       this.points});
 
-  ChallengeResponse.fromMap(Map<String, dynamic> json) {
+  ChallengeInfo.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     description = json['description'];
@@ -28,7 +97,7 @@ class ChallengeResponse {
     points = json['points'];
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['title'] = this.title;
@@ -44,7 +113,6 @@ class ChallengeResponse {
     if ([id, title, description, points].contains(null)) {
       return null;
     }
-    bool isActiveE = isActive == 1;
     DueType? dueTypeE;
     ChallengeType? challengeTypeE;
 
@@ -63,10 +131,12 @@ class ChallengeResponse {
     }
 
     switch (challengeType) {
-      case null || '':
-        return null;
       case 'distanceChallenge':
         challengeTypeE = ChallengeType.distanceChallenge;
+      case 'timeChallenge':
+        challengeTypeE = ChallengeType.timeChallenge;
+      default:
+        challengeTypeE = null;
     }
 
     return Challenge(
@@ -75,7 +145,7 @@ class ChallengeResponse {
       description: description!,
       dueType: dueTypeE!,
       challengeType: challengeTypeE!,
-      isActive: isActiveE,
+      isFinished: false,
       points: points!,
     );
   }

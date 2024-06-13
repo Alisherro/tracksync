@@ -6,9 +6,11 @@ abstract class RunResultState {}
 class RunResultInitial extends RunResultState {}
 
 class RunResultSuccess extends RunResultState {
-  RunResultSuccess(this.result);
+  RunResultSuccess({required this.result, this.polylines});
 
   final RunResult result;
+  final Set<Polyline>? polylines;
+
 }
 
 class RunResultError extends RunResultState {}

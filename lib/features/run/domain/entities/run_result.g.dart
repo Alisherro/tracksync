@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of '../../domain/entities/run_result.dart';
+part of 'run_result.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -22,29 +22,39 @@ const RunResultSchema = CollectionSchema(
       name: r'avgPaceSeconds',
       type: IsarType.long,
     ),
-    r'dateTime': PropertySchema(
+    r'coins': PropertySchema(
       id: 1,
+      name: r'coins',
+      type: IsarType.long,
+    ),
+    r'dateTime': PropertySchema(
+      id: 2,
       name: r'dateTime',
       type: IsarType.dateTime,
     ),
     r'distance': PropertySchema(
-      id: 2,
+      id: 3,
       name: r'distance',
       type: IsarType.double,
     ),
     r'kcal': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'kcal',
       type: IsarType.double,
     ),
     r'points': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'points',
       type: IsarType.objectList,
       target: r'PointLatLng',
     ),
+    r'speeds': PropertySchema(
+      id: 6,
+      name: r'speeds',
+      type: IsarType.doubleList,
+    ),
     r'totalSeconds': PropertySchema(
-      id: 5,
+      id: 7,
       name: r'totalSeconds',
       type: IsarType.long,
     )
@@ -83,6 +93,12 @@ int _runResultEstimateSize(
       }
     }
   }
+  {
+    final value = object.speeds;
+    if (value != null) {
+      bytesCount += 3 + value.length * 8;
+    }
+  }
   return bytesCount;
 }
 
@@ -93,16 +109,18 @@ void _runResultSerialize(
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.avgPaceSeconds);
-  writer.writeDateTime(offsets[1], object.dateTime);
-  writer.writeDouble(offsets[2], object.distance);
-  writer.writeDouble(offsets[3], object.kcal);
+  writer.writeLong(offsets[1], object.coins);
+  writer.writeDateTime(offsets[2], object.dateTime);
+  writer.writeDouble(offsets[3], object.distance);
+  writer.writeDouble(offsets[4], object.kcal);
   writer.writeObjectList<PointLatLng>(
-    offsets[4],
+    offsets[5],
     allOffsets,
     PointLatLngSchema.serialize,
     object.points,
   );
-  writer.writeLong(offsets[5], object.totalSeconds);
+  writer.writeDoubleList(offsets[6], object.speeds);
+  writer.writeLong(offsets[7], object.totalSeconds);
 }
 
 RunResult _runResultDeserialize(
@@ -111,19 +129,22 @@ RunResult _runResultDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = RunResult();
-  object.avgPaceSeconds = reader.readLongOrNull(offsets[0]);
-  object.dateTime = reader.readDateTimeOrNull(offsets[1]);
-  object.distance = reader.readDoubleOrNull(offsets[2]);
-  object.id = id;
-  object.kcal = reader.readDoubleOrNull(offsets[3]);
-  object.points = reader.readObjectList<PointLatLng>(
-    offsets[4],
-    PointLatLngSchema.deserialize,
-    allOffsets,
-    PointLatLng(),
+  final object = RunResult(
+    avgPaceSeconds: reader.readLongOrNull(offsets[0]),
+    coins: reader.readLongOrNull(offsets[1]),
+    dateTime: reader.readDateTimeOrNull(offsets[2]),
+    distance: reader.readDoubleOrNull(offsets[3]),
+    id: id,
+    kcal: reader.readDoubleOrNull(offsets[4]),
+    points: reader.readObjectList<PointLatLng>(
+      offsets[5],
+      PointLatLngSchema.deserialize,
+      allOffsets,
+      PointLatLng(),
+    ),
+    speeds: reader.readDoubleList(offsets[6]),
+    totalSeconds: reader.readLongOrNull(offsets[7]),
   );
-  object.totalSeconds = reader.readLongOrNull(offsets[5]);
   return object;
 }
 
@@ -137,19 +158,23 @@ P _runResultDeserializeProp<P>(
     case 0:
       return (reader.readLongOrNull(offset)) as P;
     case 1:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 2:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 3:
       return (reader.readDoubleOrNull(offset)) as P;
     case 4:
+      return (reader.readDoubleOrNull(offset)) as P;
+    case 5:
       return (reader.readObjectList<PointLatLng>(
         offset,
         PointLatLngSchema.deserialize,
         allOffsets,
         PointLatLng(),
       )) as P;
-    case 5:
+    case 6:
+      return (reader.readDoubleList(offset)) as P;
+    case 7:
       return (reader.readLongOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -313,6 +338,75 @@ extension RunResultQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'avgPaceSeconds',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> coinsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'coins',
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> coinsIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'coins',
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> coinsEqualTo(
+      int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'coins',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> coinsGreaterThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'coins',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> coinsLessThan(
+    int? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'coins',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> coinsBetween(
+    int? lower,
+    int? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'coins',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -703,6 +797,174 @@ extension RunResultQueryFilter
     });
   }
 
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> speedsIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'speeds',
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> speedsIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'speeds',
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition>
+      speedsElementEqualTo(
+    double value, {
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'speeds',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition>
+      speedsElementGreaterThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'speeds',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition>
+      speedsElementLessThan(
+    double value, {
+    bool include = false,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'speeds',
+        value: value,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition>
+      speedsElementBetween(
+    double lower,
+    double upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    double epsilon = Query.epsilon,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'speeds',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        epsilon: epsilon,
+      ));
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> speedsLengthEqualTo(
+      int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'speeds',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> speedsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'speeds',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> speedsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'speeds',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition>
+      speedsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'speeds',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition>
+      speedsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'speeds',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterFilterCondition> speedsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'speeds',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
+
   QueryBuilder<RunResult, RunResult, QAfterFilterCondition>
       totalSecondsIsNull() {
     return QueryBuilder.apply(this, (query) {
@@ -803,6 +1065,18 @@ extension RunResultQuerySortBy on QueryBuilder<RunResult, RunResult, QSortBy> {
     });
   }
 
+  QueryBuilder<RunResult, RunResult, QAfterSortBy> sortByCoins() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coins', Sort.asc);
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterSortBy> sortByCoinsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coins', Sort.desc);
+    });
+  }
+
   QueryBuilder<RunResult, RunResult, QAfterSortBy> sortByDateTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'dateTime', Sort.asc);
@@ -863,6 +1137,18 @@ extension RunResultQuerySortThenBy
   QueryBuilder<RunResult, RunResult, QAfterSortBy> thenByAvgPaceSecondsDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'avgPaceSeconds', Sort.desc);
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterSortBy> thenByCoins() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coins', Sort.asc);
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QAfterSortBy> thenByCoinsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'coins', Sort.desc);
     });
   }
 
@@ -935,6 +1221,12 @@ extension RunResultQueryWhereDistinct
     });
   }
 
+  QueryBuilder<RunResult, RunResult, QDistinct> distinctByCoins() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'coins');
+    });
+  }
+
   QueryBuilder<RunResult, RunResult, QDistinct> distinctByDateTime() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'dateTime');
@@ -950,6 +1242,12 @@ extension RunResultQueryWhereDistinct
   QueryBuilder<RunResult, RunResult, QDistinct> distinctByKcal() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'kcal');
+    });
+  }
+
+  QueryBuilder<RunResult, RunResult, QDistinct> distinctBySpeeds() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'speeds');
     });
   }
 
@@ -971,6 +1269,12 @@ extension RunResultQueryProperty
   QueryBuilder<RunResult, int?, QQueryOperations> avgPaceSecondsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'avgPaceSeconds');
+    });
+  }
+
+  QueryBuilder<RunResult, int?, QQueryOperations> coinsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'coins');
     });
   }
 
@@ -996,6 +1300,12 @@ extension RunResultQueryProperty
       pointsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'points');
+    });
+  }
+
+  QueryBuilder<RunResult, List<double>?, QQueryOperations> speedsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'speeds');
     });
   }
 
@@ -1059,9 +1369,10 @@ PointLatLng _pointLatLngDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = PointLatLng();
-  object.latitude = reader.readDoubleOrNull(offsets[0]);
-  object.longitude = reader.readDoubleOrNull(offsets[1]);
+  final object = PointLatLng(
+    latitude: reader.readDoubleOrNull(offsets[0]),
+    longitude: reader.readDoubleOrNull(offsets[1]),
+  );
   return object;
 }
 

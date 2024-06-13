@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../../../../utils/helper/helper.dart';
@@ -37,6 +39,7 @@ class _RunningMapScreenState extends State<RunningMapScreen> {
                 polylines: {
                   Polyline(
                     width: 6,
+                    color: Palette.sunsetOrange,
                     points: state.points,
                     polylineId: const PolylineId('runningRoute'),
                     visible: true,
@@ -129,12 +132,14 @@ class _RunningMapScreenState extends State<RunningMapScreen> {
                               children: [
                                 Column(
                                   children: [
-                                    Text(
-                                      state.distance.toStringAsFixed(2),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                      textAlign: TextAlign.center,
+                                    FittedBox(
+                                      child: Text(
+                                        state.distance.toStringAsFixed(2),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                     Text(
                                       'Distance',
@@ -149,12 +154,14 @@ class _RunningMapScreenState extends State<RunningMapScreen> {
                                 const SizedBox(height: 10),
                                 Column(
                                   children: [
-                                    Text(
-                                      '${state.kcal.toStringAsFixed(1)}k',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                      textAlign: TextAlign.center,
+                                    FittedBox(
+                                      child: Text(
+                                        '${state.kcal.toStringAsFixed(1)}k',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                     Text(
                                       'Сalories',
@@ -169,12 +176,14 @@ class _RunningMapScreenState extends State<RunningMapScreen> {
                                 const SizedBox(height: 10),
                                 Column(
                                   children: [
-                                    Text(
-                                      '${minutesStr(state.avgPace.inSeconds)}:${secondsStr(state.avgPace.inSeconds)}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
-                                      textAlign: TextAlign.center,
+                                    FittedBox(
+                                      child: Text(
+                                        '${minutesStr(state.avgPace.inSeconds)}:${secondsStr(state.avgPace.inSeconds)}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                     Text(
                                       'Avg. pace (min/km)',

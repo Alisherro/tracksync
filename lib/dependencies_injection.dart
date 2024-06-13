@@ -101,7 +101,7 @@ Future<void> setupLocator() async {
   }
 
   void _bloc() {
-    sl.registerSingleton<UserBloc>(UserBloc(sl()));
+    sl.registerSingleton<UserBloc>(UserBloc(sl(), sl()));
     sl.registerSingleton<ChallengesBloc>(ChallengesBloc(sl()));
   }
 

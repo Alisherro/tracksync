@@ -8,7 +8,7 @@ final class ChallengesLoading extends ChallengesState {}
 final class ChallengesLoaded extends ChallengesState {
   ChallengesLoaded(this.challenges);
 
-  final List<Challenge> challenges;
+  final Challenges challenges;
 }
 
 final class ChallengesError extends ChallengesState {}

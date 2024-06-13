@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tracksync/core/core.dart';
+import '../../../../run/domain/repositories/run_result_repository.dart';
 import '../../../domain/entities/user.dart';
 import '../../../domain/repositories/user_repository.dart';
 
@@ -11,8 +12,10 @@ part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository userRepository;
+  final RunResultRepository runResultRepository;
 
-  UserBloc(this.userRepository) : super(UserLoading()) {
+  UserBloc(this.userRepository, this.runResultRepository)
+      : super(UserLoading()) {
     on<UserEvent>(
       (event, emit) async {
         switch (event) {
@@ -69,6 +72,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   Future<void> onUserLogOut(Emitter emitter) async {
+    await runResultRepository.clear();
     userRepository.logout();
     emitter(UserUnauthenticated());
   }
@@ -82,7 +86,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       },
       (r) {
         emitter(UserUnauthenticated());
-        emitter(SSuccess(r??'Account deleted successfully'));
+        emitter(SSuccess(r ?? 'Account deleted successfully'));
       },
     );
   }

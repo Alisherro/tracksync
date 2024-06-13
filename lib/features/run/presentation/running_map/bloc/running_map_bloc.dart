@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
@@ -11,11 +12,12 @@ import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracksync/core/core.dart';
+import 'package:tracksync/features/auth/presentation/profile/bloc/user_bloc.dart';
 import 'package:tracksync/features/run/presentation/run_history/cubit/results_list_cubit.dart';
 import 'package:tracksync/features/run/presentation/running_map/bloc/running_map_event.dart';
-
+import '../../../../../dependencies_injection.dart';
+import '../../../../auth/domain/entities/user.dart';
 import '../../../domain/entities/run_result.dart';
 import '../../../domain/repositories/run_result_repository.dart';
 
@@ -37,10 +39,14 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     on<PositionChanged>(_positionChanged);
     on<RunButtonTapped>(_runButtonTapped);
     on<TimerTicked>(_timerTicked);
+    user = (sl<UserBloc>().state as UserAuthenticated).user;
   }
 
+  final SpeedManager speedManager = SpeedManager();
+  DateTime? lastUpdateTime;
   final RunResultRepository _repo;
   final ResultsListCubit resultsListCubit;
+  late User user;
   late Position position;
   late GoogleMapController controller;
   bool isRunning = false;
@@ -73,22 +79,26 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
         add(TimerTicked(duration: Duration(seconds: event)));
       });
     } else {
+      speedManager.clear();
       _tickerSubscription?.cancel();
       final currentState = state as RunningMapAvailableState;
       int? id;
-      id = await resultsListCubit.saveRunResult(
-        RunResult()
-          ..totalSeconds = currentState.duration.inSeconds
-          ..points = currentState.points
+      final result = RunResult(
+          totalSeconds: currentState.duration.inSeconds,
+          points: currentState.points
               .map((e) => PointLatLng()
                 ..latitude = e.latitude
                 ..longitude = e.longitude)
-              .toList()
-          ..dateTime = DateTime.now()
-          ..kcal = currentState.kcal
-          ..distance = currentState.distance
-          ..avgPaceSeconds = currentState.avgPace.inSeconds,
-      );
+              .toList(),
+          dateTime: DateTime.now(),
+          kcal: currentState.kcal,
+          distance: currentState.distance,
+          avgPaceSeconds: currentState.avgPace.inSeconds,
+          speeds: currentState.speeds);
+      int coins = calculateRunningPoints(
+          result.totalSeconds, result.avgPaceSeconds, result.distance);
+      result.coins=coins;
+      id = await resultsListCubit.saveRunResult(result);
       if (event.context.mounted) {
         event.context.go('/health/result/$id');
       }
@@ -126,37 +136,33 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
   }
 
   _positionChanged(PositionChanged event, Emitter<RunningMapState> emit) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    int weight = prefs.getInt('weight') ?? 0;
+    int weight = user.weight ?? 0;
     if (isRunning) {
+      final points = (state as RunningMapAvailableState).points;
+      final distance = (state as RunningMapAvailableState).distance;
+      final point = LatLng(event.position.latitude, event.position.longitude);
+
+      double newDistance = calculateDistance(points.last, point);
+      int timeInSeconds =
+          DateTime.now().difference(lastUpdateTime ?? DateTime.now()).inSeconds;
+      lastUpdateTime = DateTime.now();
+
+      double speedKms = timeInSeconds > 0 ? newDistance / timeInSeconds : 0;
+      double speedKph = speedKms * 3600;
+      speedManager.add(speedKph);
+
       emit(
         (state as RunningMapAvailableState).copyWith(
           icon: icon,
           currentPosition: event.position,
-          points: List.from((state as RunningMapAvailableState).points)
-            ..add(
-              LatLng(event.position.latitude, event.position.longitude),
-            ),
+          points: List.from(points)..add(point),
+          speeds: speedManager.speeds,
           isRunning: true,
-          distance: (state as RunningMapAvailableState).distance +
-              calculateDistance((state as RunningMapAvailableState).points.last,
-                  LatLng(event.position.latitude, event.position.longitude)),
-          kcal: weight *
-              ((state as RunningMapAvailableState).distance +
-                  calculateDistance(
-                      (state as RunningMapAvailableState).points.last,
-                      LatLng(
-                          event.position.latitude, event.position.longitude))),
+          distance: distance + newDistance,
+          kcal: weight * (distance + newDistance),
           avgPace: Duration(
             seconds: (state as RunningMapAvailableState).duration.inSeconds ~/
-                ((state as RunningMapAvailableState).distance +
-                    calculateDistance(
-                      (state as RunningMapAvailableState).points.last,
-                      LatLng(
-                        event.position.latitude,
-                        event.position.longitude,
-                      ),
-                    )),
+                (distance + newDistance),
           ),
         ),
       );
@@ -169,6 +175,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           distance: 0,
           kcal: 0,
           icon: icon,
+          speeds: [],
         ),
       );
     }
@@ -246,10 +253,52 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
     }
   }
 
+  int calculateRunningPoints(
+      int? totalSeconds, int? avgPaceSeconds, double? distance) {
+    if (totalSeconds == null || avgPaceSeconds == null || distance == null) {
+      return 0;
+    }
+    int distancePoints = (distance * 10).toInt();
+    double paceBonus = 300 / avgPaceSeconds;
+    int timeBonus = (totalSeconds / 60).toInt();
+    int totalPoints = distancePoints + paceBonus.toInt() + timeBonus;
+    return totalPoints;
+  }
+
   @override
   Future<void> close() async {
     await _tickerSubscription?.cancel();
     await _positionSubscription?.cancel();
     return super.close();
+  }
+}
+
+class SpeedManager {
+  final int maxCount = 12;
+  List<double> speeds = [];
+  int count = 0;
+
+  void add(double newSpeed) {
+    if (speeds.length < maxCount) {
+      speeds.add(newSpeed);
+    } else {
+      double first = speeds[count];
+      double second = speeds[count + 1];
+      speeds.removeAt(count);
+      speeds.removeAt(count);
+      speeds.insert(count, (first + second) / 2);
+      speeds.add(newSpeed);
+
+      if (count == 10) {
+        count = 0;
+      } else {
+        count++;
+      }
+    }
+  }
+
+  void clear() {
+    count = 0;
+    speeds = [];
   }
 }

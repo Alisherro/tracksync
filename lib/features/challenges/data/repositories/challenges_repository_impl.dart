@@ -11,17 +11,16 @@ class ChallengesRepositoryImpl implements ChallengesRepository {
   final ChallengesRemoteDataSource remote;
 
   @override
-  Future<Either<Failure, List<Challenge>>> getChallenges() async {
+  Future<Either<Failure, Challenges>> getChallenges() async {
     final response = await remote.getChallenges();
     return response.fold(
       (l) => Left(l),
       (r) {
-        final List<Challenge> challenges = r
-            .map((challengeResponse) => challengeResponse.toEntity())
-            .where((challenge) => challenge != null)
-            .cast<Challenge>()
-            .toList();
-        return Right(challenges);
+        return Right(Challenges(
+          daily: r.daily?.map((e) => e.toEntity()).where((element) => element!=null).cast<Challenge>().toList()??[],
+          weekly: r.weekly?.map((e) => e.toEntity()).where((element) => element!=null).cast<Challenge>().toList()??[],
+          monthly: r.monthly?.map((e) => e.toEntity()).where((element) => element!=null).cast<Challenge>().toList()??[],
+        ));
       },
     );
   }

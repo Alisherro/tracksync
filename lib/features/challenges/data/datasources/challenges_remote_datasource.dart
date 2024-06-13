@@ -4,7 +4,7 @@ import 'package:tracksync/core/core.dart';
 import 'package:tracksync/features/challenges/data/models/challenge_response.dart';
 
 abstract interface class ChallengesRemoteDataSource {
-  Future<Either<Failure, List<ChallengeResponse>>> getChallenges();
+  Future<Either<Failure, ChallengesResponse>> getChallenges();
 }
 
 class ChallengesRemoteDataSourceImpl implements ChallengesRemoteDataSource {
@@ -13,14 +13,11 @@ class ChallengesRemoteDataSourceImpl implements ChallengesRemoteDataSource {
   final DioClient _client;
 
   @override
-  Future<Either<Failure, List<ChallengeResponse>>> getChallenges() async {
+  Future<Either<Failure, ChallengesResponse>> getChallenges() async {
     return await _client.getRequest(
       ListAPI.challenges,
       converter: (response) {
-        List<dynamic> data = (response as Map<String, dynamic>)['data'] as List;
-        List<ChallengeResponse> list =
-            data.map((e) => ChallengeResponse.fromMap(e)).toList();
-        return list;
+        return ChallengesResponse.fromJson(response);
       },
     );
   }

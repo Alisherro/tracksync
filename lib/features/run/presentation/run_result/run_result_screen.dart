@@ -23,6 +23,10 @@ class RunResultScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is RunResultSuccess) {
             final RunResult result = state.result;
+            final maxSpeed = result.speeds?.isEmpty ?? false
+                ? 0
+                : result.speeds!.reduce((a, b) => a > b ? a : b);
+
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -67,7 +71,8 @@ class RunResultScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Total time',
-                                    style: Theme.of(context).textTheme.labelSmall,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
                                   ),
                                   Text(
                                       '${hoursStr(result.totalSeconds ?? 0)}:${minutesStr(result.totalSeconds ?? 0)}:${secondsStr(result.totalSeconds ?? 0)}',
@@ -83,9 +88,11 @@ class RunResultScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Distance',
-                                    style: Theme.of(context).textTheme.labelSmall,
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
                                   ),
-                                  Text('${result.distance?.toStringAsFixed(2)}km',
+                                  Text(
+                                      '${result.distance?.toStringAsFixed(2)}km',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -97,10 +104,12 @@ class RunResultScreen extends StatelessWidget {
                               Column(
                                 children: [
                                   Text(
-                                    'Calories',
-                                    style: Theme.of(context).textTheme.labelSmall,
+                                    'AVG pace',
+                                    style:
+                                        Theme.of(context).textTheme.labelSmall,
                                   ),
-                                  Text('${result.kcal?.toStringAsFixed(2)}kCal',
+                                  Text(
+                                      '${minutesStr(result.avgPaceSeconds??0)}:${secondsStr(result.avgPaceSeconds??0)} min',
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodySmall
@@ -116,7 +125,7 @@ class RunResultScreen extends StatelessWidget {
                     const SizedBox(height: 15),
                     IntrinsicHeight(
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           RoundedShadowContainer(
                             child: Padding(
@@ -124,11 +133,11 @@ class RunResultScreen extends StatelessWidget {
                               child: Column(
                                 children: [
                                   Text(
-                                    'Total Calories',
-                                    style: Theme.of(context).textTheme.bodySmall,
+                                    'Calories burned',
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
                                   ),
-                                  Text(
-                                    '${result.kcal?.toStringAsFixed(2)} kCal',
+                                  Text('${result.kcal?.toStringAsFixed(2)}kCal',
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelLarge
@@ -145,200 +154,165 @@ class RunResultScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(5.0),
                               child: Column(
                                 children: [
-                                  Text('Elevation Gain',
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall),
                                   Text(
-                                    '54 Ft',
+                                    'Earned',
+                                    style:
+                                    Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                  Text('${result.coins} points',
                                     style: Theme.of(context)
                                         .textTheme
                                         .labelLarge
                                         ?.copyWith(
-                                          color: Palette.limeGreen,
-                                        ),
+                                      color: Palette.limeGreen,
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          RoundedShadowContainer(
-                            child: Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Column(
-                                children: [
-                                  Text('Heart Rate',
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall),
-                                  Text(
-                                    '120 Bpm',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .labelLarge
-                                        ?.copyWith(
-                                          color: Palette.limeGreen,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
                         ],
                       ),
                     ),
                     const SizedBox(height: 30),
-                    Row(
-                      children: [
-                        Text(
-                          'Heart Rate',
-                          style: Theme.of(context).textTheme.titleMedium,
+                    if (state.result.speeds?.isNotEmpty ?? false) ...[
+                      Text(
+                        'Speed change',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 5),
+                      Text(
+                        'max: ${maxSpeed.toStringAsFixed(0)} km/h',
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            color: Palette.greyColor
                         ),
-                        const SizedBox(width: 15),
-                        Text(
-                          '123Bpm AVG',
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                color: Palette.electricBlue,
+                      ),
+                      const SizedBox(height: 25),
+                      AspectRatio(
+                        aspectRatio: 2.5,
+                        child: LineChart(
+                          LineChartData(
+                            gridData: FlGridData(
+                              show: true,
+                              drawVerticalLine: true,
+                              drawHorizontalLine: false,
+                              horizontalInterval: 1,
+                              verticalInterval: 1,
+                              getDrawingVerticalLine: (value) {
+                                return const FlLine(
+                                  color: Color(0xff120A27),
+                                  strokeWidth: 1,
+                                );
+                              },
+                            ),
+                            titlesData: const FlTitlesData(
+                              show: true,
+                              leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                              bottomTitles: AxisTitles(
+                                axisNameWidget: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'start',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff715BA7),
+                                      ),
+                                    ),
+                                    Text(
+                                      'end',
+                                      style: TextStyle(
+                                        fontSize: 11,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xff715BA7),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                axisNameSize: 30,
                               ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(height: 25),
-                    // AspectRatio(
-                    //   aspectRatio: 2.5,
-                    //   child: LineChart(
-                    //     LineChartData(
-                    //       gridData: FlGridData(
-                    //         show: true,
-                    //         drawVerticalLine: true,
-                    //         drawHorizontalLine: false,
-                    //         horizontalInterval: 1,
-                    //         verticalInterval: 1,
-                    //         getDrawingVerticalLine: (value) {
-                    //           return const FlLine(
-                    //             color: Color(0xff120A27),
-                    //             strokeWidth: 1,
-                    //           );
-                    //         },
-                    //       ),
-                    //       titlesData: const FlTitlesData(
-                    //         show: true,
-                    //         leftTitles: AxisTitles(
-                    //             sideTitles: SideTitles(showTitles: false)),
-                    //         topTitles: AxisTitles(
-                    //             sideTitles: SideTitles(showTitles: false)),
-                    //         rightTitles: AxisTitles(
-                    //             sideTitles: SideTitles(showTitles: false)),
-                    //         bottomTitles: AxisTitles(
-                    //           axisNameWidget: Row(
-                    //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //             children: [
-                    //               Text(
-                    //                 '8:42 AM',
-                    //                 style: TextStyle(
-                    //                   fontSize: 11,
-                    //                   fontWeight: FontWeight.w400,
-                    //                   color: Color(0xff715BA7),
-                    //                 ),
-                    //               ),
-                    //               Text(
-                    //                 '9:42 AM',
-                    //                 style: TextStyle(
-                    //                   fontSize: 11,
-                    //                   fontWeight: FontWeight.w400,
-                    //                   color: Color(0xff715BA7),
-                    //                 ),
-                    //               ),
-                    //               Text(
-                    //                 '10:42 AM',
-                    //                 style: TextStyle(
-                    //                   fontSize: 11,
-                    //                   fontWeight: FontWeight.w400,
-                    //                   color: Color(0xff715BA7),
-                    //                 ),
-                    //               ),
-                    //               Text(
-                    //                 '11:42 AM',
-                    //                 style: TextStyle(
-                    //                   fontSize: 11,
-                    //                   fontWeight: FontWeight.w400,
-                    //                   color: Color(0xff715BA7),
-                    //                 ),
-                    //               )
-                    //             ],
-                    //           ),
-                    //           axisNameSize: 30,
-                    //         ),
-                    //       ),
-                    //       borderData: FlBorderData(
-                    //         show: false,
-                    //       ),
-                    //       minX: 0,
-                    //       maxX: 11,
-                    //       minY: 0,
-                    //       maxY: 6,
-                    //       lineBarsData: [
-                    //         LineChartBarData(
-                    //           spots: const [
-                    //             FlSpot(0, 3),
-                    //             FlSpot(2.6, 2),
-                    //             FlSpot(4.9, 5),
-                    //             FlSpot(6.8, 3.1),
-                    //             FlSpot(8, 4),
-                    //             FlSpot(9.5, 3),
-                    //             FlSpot(11, 4),
-                    //           ],
-                    //           isCurved: true,
-                    //           gradient: const LinearGradient(
-                    //             colors: [
-                    //               Palette.secondColor,
-                    //               Palette.secondColor
-                    //             ],
-                    //           ),
-                    //           barWidth: 2,
-                    //           isStrokeCapRound: true,
-                    //           dotData: const FlDotData(
-                    //             show: false,
-                    //           ),
-                    //           belowBarData: BarAreaData(
-                    //             show: true,
-                    //             color: const Color(0xff11BB8D).withOpacity(0.1),
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    const SizedBox(height: 30),
+                            ),
+                            borderData: FlBorderData(
+                              show: false,
+                            ),
+                            minX: 0,
+                            maxX: state.result.speeds!.length - 1,
+                            minY: state.result.speeds!
+                                    .reduce((a, b) => a < b ? a : b) -
+                                1,
+                            maxY: state.result.speeds!
+                                    .reduce((a, b) => a > b ? a : b) +
+                                1,
+                            lineBarsData: [
+                              LineChartBarData(
+                                spots: state.result.speeds!
+                                    .asMap()
+                                    .entries
+                                    .map((entry) {
+                                  return FlSpot(
+                                      entry.key.toDouble(), entry.value);
+                                }).toList(),
+                                isCurved: true,
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Palette.secondColor,
+                                    Palette.secondColor
+                                  ],
+                                ),
+                                barWidth: 2,
+                                isStrokeCapRound: true,
+                                dotData: const FlDotData(
+                                  show: false,
+                                ),
+                                belowBarData: BarAreaData(
+                                  show: true,
+                                  color:
+                                      const Color(0xff11BB8D).withOpacity(0.1),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                    ],
                     Text(
                       'Route map',
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 15),
-                    // SizedBox(
-                    //   width: double.infinity,
-                    //   height: 180,
-                    //   child: GoogleMap(
-                    //     gestureRecognizers: <Factory<
-                    //         OneSequenceGestureRecognizer>>{
-                    //       Factory<OneSequenceGestureRecognizer>(
-                    //         () => EagerGestureRecognizer(),
-                    //       ),
-                    //     },
-                    //     zoomControlsEnabled: false,
-                    //     mapType: MapType.normal,
-                    //     initialCameraPosition: const CameraPosition(
-                    //       target: LatLng(51.1478, 71.3571),
-                    //       zoom: 13.5,
-                    //     ),
-                    //     markers: {
-                    //       const Marker(
-                    //           markerId: MarkerId('a'),
-                    //           position: LatLng(51.1504, 71.5679)),
-                    //       const Marker(
-                    //           markerId: MarkerId('b'),
-                    //           position: LatLng(51.1698, 71.3711)),
-                    //     },
-                    //   ),
-                    // ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 180,
+                      child: GoogleMap(
+                        gestureRecognizers: <Factory<
+                            OneSequenceGestureRecognizer>>{
+                          Factory<OneSequenceGestureRecognizer>(
+                            () => EagerGestureRecognizer(),
+                          ),
+                        },
+                        rotateGesturesEnabled : false,
+                        scrollGesturesEnabled : false,
+                        zoomControlsEnabled : false,
+                        zoomGesturesEnabled : false,
+                        liteModeEnabled : false,
+                        tiltGesturesEnabled : true,
+
+                        onMapCreated: (GoogleMapController controller) {
+                          context.read<RunResultCubit>().mapCreated(controller);
+                        },
+                        mapType: MapType.normal,
+                        initialCameraPosition: const CameraPosition(
+                          target: LatLng(51.1478, 71.3571),
+                          zoom: 13.5,
+                        ),
+                        polylines: state.polylines??{},
+                      ),
+                    ),
                     const SizedBox(height: 90),
                   ],
                 ),

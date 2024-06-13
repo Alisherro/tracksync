@@ -4,7 +4,7 @@ class ListAPI {
   static const String baseUrl = "http://77.91.75.55";
 
 
-  static const String storeSession = "/api/run/session";
+  static const String runSession = "/api/run/session";
 
 
   static const String register = "/api/register";
@@ -17,7 +17,7 @@ class ListAPI {
 
 
 
-  static const String challenges = "/api/challenges";
+  static const String challenges = "/api/user/challenges";
 
   static const String leaderboard = "/api/leaderboard";
 }

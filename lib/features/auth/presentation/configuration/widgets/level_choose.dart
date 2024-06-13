@@ -31,12 +31,12 @@ class _ChooseLevelScreenState extends State<ChooseLevelScreen> {
           children: [
             const Spacer(),
             const ConfigTitleWidget(
-                title: 'What are your fitness level ?',
+                title: 'Assess Your Running Level',
                 subtitle:
-                    ''' To get a training program with the right level of difficulty, select the option that most closely matches you.'''),
+                    '''To understand your level corresponding to your current capabilities, move to the position that best describes your usual running experience'''),
             const SizedBox(height: 20),
             const Text(
-              'Really fit',
+              'Seasoned Runner',
               style: TextStyle(color: Palette.sunsetOrange),
               textAlign: TextAlign.center,
             ),
@@ -91,7 +91,7 @@ class _ChooseLevelScreenState extends State<ChooseLevelScreen> {
             ),
             const SizedBox(height: 20),
             const Text(
-              'Not fit at all',
+              'New to Running',
               style: TextStyle(color: Palette.greyColor),
               textAlign: TextAlign.center,
             ),

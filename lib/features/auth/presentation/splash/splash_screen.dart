@@ -24,10 +24,7 @@ class SplashScreen extends StatelessWidget {
       },
       child: const Scaffold(
         body: DecoratedBox(
-          decoration: BoxDecoration(color: Colors.green),
-          child: Center(
-            child: Text('Splash Screen'),
-          ),
+          decoration: BoxDecoration(color: Colors.white),
         ),
       ),
     );

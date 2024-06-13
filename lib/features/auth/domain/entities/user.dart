@@ -1,4 +1,3 @@
-
 class User {
   int? id;
   bool? isMale;
@@ -25,22 +24,29 @@ class User {
       this.email,
       this.location,
       this.totalKm,
-        this.profilePicture
-      });
+      this.profilePicture});
 
   User.fromJson(Map<String, dynamic> json) {
+    print(json);
     id = json['id'];
-    isMale = json['isMale']==1;
+    isMale = json['isMale'] == 1;
     birthDate = json['birthDate'];
     weight = json['weight_kg'];
     height = json['height_cm'];
-    fitPercentage = double.tryParse(json["fitPercentage"]??'0');
     totalKm = json['totalKm'];
-    coins = json['coins'];
+    coins = json['points'];
     name = json['name'];
     email = json['email'];
     location = json['location'];
     profilePicture = json['profile_picture'];
+
+    if (json["fitPercentage"] is String) {
+      fitPercentage = double.tryParse(json["fitPercentage"]) ?? 0.0;
+    } else if (json["fitPercentage"] is double) {
+      fitPercentage = json["fitPercentage"];
+    } else {
+      fitPercentage = null;
+    }
   }
 
   Map<String, dynamic> toMap() {
