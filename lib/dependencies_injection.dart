@@ -97,7 +97,7 @@ Future<void> setupLocator() async {
     sl.registerFactory(() => LoginCubit(sl()));
     sl.registerFactory(() => LeaderboardCubit(sl()));
     sl.registerFactory(() => ResultsListCubit(sl()));
-    sl.registerFactory(() => RunningMapBloc(sl(), sl()));
+    sl.registerFactory(() => RunningMapBloc(sl(), sl(), sl()));
   }
 
   void _bloc() {

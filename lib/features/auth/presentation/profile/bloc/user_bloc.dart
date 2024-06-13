@@ -31,6 +31,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             await onUserUpdateInformation(event, emit);
           case UserDelete():
             await onUserDelete(event, emit);
+          case UserGetUpdate():
+            await onGetUpdate(event, emit);
         }
       },
     );
@@ -114,5 +116,12 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       UserUpdateInformation event, Emitter emitter) async {
     userRepository.saveUser(event.user);
     emitter(UserAuthenticated(user: event.user));
+  }
+
+  Future<void> onGetUpdate(event, Emitter emitter) async{
+    final response = await userRepository.getRemoteUser();
+    response.fold((l) => null, (r) {
+      emitter(UserAuthenticated(user: r));
+    });
   }
 }

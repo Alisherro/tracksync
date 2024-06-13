@@ -32,20 +32,21 @@ class Ticker {
 }
 
 class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
-  RunningMapBloc(this._repo, this.resultsListCubit)
+  RunningMapBloc(this._repo, this.resultsListCubit, this.userBloc)
       : super(RunningMapInitial()) {
     on<InitPermissions>(_onInitPermissions);
     on<MapCreated>(_mapCreated);
     on<PositionChanged>(_positionChanged);
     on<RunButtonTapped>(_runButtonTapped);
     on<TimerTicked>(_timerTicked);
-    user = (sl<UserBloc>().state as UserAuthenticated).user;
+    user = (userBloc.state as UserAuthenticated).user;
   }
 
   final SpeedManager speedManager = SpeedManager();
   DateTime? lastUpdateTime;
   final RunResultRepository _repo;
   final ResultsListCubit resultsListCubit;
+  final UserBloc userBloc;
   late User user;
   late Position position;
   late GoogleMapController controller;
@@ -99,6 +100,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           result.totalSeconds, result.avgPaceSeconds, result.distance);
       result.coins=coins;
       id = await resultsListCubit.saveRunResult(result);
+      userBloc.add(const UserGetUpdate());
       if (event.context.mounted) {
         event.context.go('/health/result/$id');
       }

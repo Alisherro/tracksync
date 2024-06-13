@@ -32,3 +32,7 @@ class UserUpdateInformation extends UserEvent{
   const UserUpdateInformation(this.user);
   final User user;
 }
+
+class UserGetUpdate extends UserEvent {
+  const UserGetUpdate();
+}
