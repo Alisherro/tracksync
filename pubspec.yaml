@@ -51,7 +51,6 @@ dependencies:
   get_it: ^7.6.6
   dio: ^5.4.1
   dartz: ^0.10.1
-  flutter_screenutil: ^5.9.0
   oktoast: ^3.4.0
   logger: ^2.1.0
   cached_network_image: ^3.3.1

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Toast extends StatelessWidget {
   final IconData? icon;
@@ -20,7 +19,7 @@ class Toast extends StatelessWidget {
             color: bgColor,
             borderRadius: BorderRadius.circular(15),
           ),
-          padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -28,11 +27,11 @@ class Toast extends StatelessWidget {
                 icon,
                 color: textColor,
               ),
-              SizedBox(
-                width: 4.w,
+              const SizedBox(
+                width: 4,
               ),
               Container(
-                constraints: BoxConstraints(maxWidth: 250.w),
+                constraints: const BoxConstraints(maxWidth: 250),
                 child: Text(
                   message!,
                   style: Theme.of(context)

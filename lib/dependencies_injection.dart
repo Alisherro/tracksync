@@ -97,12 +97,12 @@ Future<void> setupLocator() async {
     sl.registerFactory(() => LoginCubit(sl()));
     sl.registerFactory(() => LeaderboardCubit(sl()));
     sl.registerFactory(() => ResultsListCubit(sl(), sl()));
-    sl.registerFactory(() => RunningMapBloc(sl(), sl(), sl()));
   }
 
   void _bloc() {
     sl.registerSingleton<UserBloc>(UserBloc(sl(), sl()));
     sl.registerFactory<ChallengesBloc>(()=>ChallengesBloc(sl(), sl()));
+    sl.registerFactory(() => RunningMapBloc(sl(), sl(), sl()));
   }
 
   _dataSources();

@@ -98,7 +98,7 @@ class RunningMapBloc extends Bloc<RunningMapEvent, RunningMapState> {
           speeds: currentState.speeds);
       int coins = calculateRunningPoints(
           result.totalSeconds, result.avgPaceSeconds, result.distance);
-      result.coins=coins;
+      result.coins = coins;
       id = await resultsListCubit.saveRunResult(result);
       // userBloc.add(const UserGetUpdate());
       if (event.context.mounted) {
