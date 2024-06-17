@@ -65,13 +65,14 @@ class RunResultResponse {
       return null;
     } else {
       DateFormat dateFormat = DateFormat("yyyy-MM-dd HH:mm:ss");
+      DateFormat timeFormat = DateFormat("HH:mm:ss");
       return RunResult(
           id: id!,
           distance: double.tryParse(distanceKm!),
-          avgPaceSeconds: int.tryParse(averageSpeed!),
+          avgPaceSeconds: double.tryParse(averageSpeed!)?.toInt(),
           dateTime: dateFormat.parse(endTime!),
           kcal: double.tryParse(caloriesBurned!) ?? 0,
-          totalSeconds: int.tryParse(totalTime ?? '0'),
+          totalSeconds: timeFormat.parse(totalTime!).second,
           speeds: speeds,
           coins: points,
           points: locations.map((e) => e.toEntity()).toList());
