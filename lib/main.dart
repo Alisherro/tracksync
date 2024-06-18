@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tracksync/tracksync_app.dart';
 import 'dependencies_injection.dart';
 import 'dart:developer';
