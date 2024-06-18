@@ -11,7 +11,7 @@ workflows:
         - google_play
       vars:
         PACKAGE_NAME: "com.alisher.tracksync"
-        GOOGLE_PLAY_TRACK: alpha
+        GOOGLE_PLAY_TRACK: internal
     scripts:
       - name: Get Flutter packages
         script: |
