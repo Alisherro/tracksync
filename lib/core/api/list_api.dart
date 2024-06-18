@@ -1,7 +1,7 @@
 class ListAPI {
   ListAPI._();
 
-  static const String baseUrl = "http://77.91.75.55";
+  static const String baseUrl = String.fromEnvironment('API_URL', defaultValue: "http://77.91.75.55");
 
 
   static const String runSession = "/api/run/session";

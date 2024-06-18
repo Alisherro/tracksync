@@ -1,7 +1,5 @@
 import 'dart:isolate';
 
-import 'package:tracksync/core/core.dart';
-
 class IsolateParser<T> {
   final Map<String, dynamic> json;
   final T Function(dynamic response) converter;
