@@ -22,17 +22,17 @@ workflows:
           flutter build appbundle --release \
           --build-name=1.0.$BUILD_NUMBER \
           --build-number=$BUILD_NUMBER
-      - name: Build APK with Flutter
-        script: |
-          flutter build apk --release
-      - name: Build universal apk
-        script: |
-          android-app-bundle build-universal-apk \ 
-            --bundle 'project_directory/build/**/outputs/**/*.aab' \
-            --ks /tmp/keystore.keystore \
-            --ks-pass $CM_KEYSTORE_PASSWORD \
-            --ks-key-alias $CM_KEY_ALIAS \
-            --key-pass $CM_KEY_PASSWORD
+#      - name: Build APK with Flutter
+#        script: |
+#          flutter build apk --release
+#      - name: Build universal apk
+#        script: |
+#          android-app-bundle build-universal-apk \
+#            --bundle 'project_directory/build/**/outputs/**/*.aab' \
+#            --ks /tmp/keystore.keystore \
+#            --ks-pass $CM_KEYSTORE_PASSWORD \
+#            --ks-key-alias $CM_KEY_ALIAS \
+#            --key-pass $CM_KEY_PASSWORD
     artifacts:
       - build/**/outputs/**/*.aab
       - build/**/outputs/**/mapping.txt
