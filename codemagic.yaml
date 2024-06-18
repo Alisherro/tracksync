@@ -1,0 +1,60 @@
+workflows:
+  android-workflow:
+    name: Android Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      flutter: fvm
+      android_signing:
+        - keystore
+      groups:
+        - google_play
+      vars:
+        PACKAGE_NAME: "com.alisher.tracksync"
+        GOOGLE_PLAY_TRACK: alpha
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
+      - name: Build AAB with Flutter
+        script: |
+          BUILD_NUMBER=$(($(google-play get-latest-build-number --package-name "$PACKAGE_NAME" --tracks="$GOOGLE_PLAY_TRACK") + 1))      
+          flutter build appbundle --release \
+          --build-name=1.0.$BUILD_NUMBER \
+          --build-number=$BUILD_NUMBER
+      - name: Build APK with Flutter
+        script: |
+          flutter build apk --release
+      - name: Build universal apk
+        script: |
+          android-app-bundle build-universal-apk \ 
+            --bundle 'project_directory/build/**/outputs/**/*.aab' \
+            --ks /tmp/keystore.keystore \
+            --ks-pass $CM_KEYSTORE_PASSWORD \
+            --ks-key-alias $CM_KEY_ALIAS \
+            --key-pass $CM_KEY_PASSWORD
+    artifacts:
+      - build/**/outputs/**/*.aab
+      - build/**/outputs/**/mapping.txt
+      - flutter_drive.log
+    publishing:
+      email:
+        recipients:
+          - alish071104@gmail.com
+        notify:
+          success: true
+          failure: true
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
+  ios-workflow:
+    name: IOS Workflow
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      flutter: fvm
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter packages pub get
