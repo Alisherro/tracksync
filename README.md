@@ -4,9 +4,9 @@ Pet Project
 ## Getting Started
 
     Flutter 
-- Run `fvm flutter gen-l10n` to generate localization files
-- Run `fvm flutter run --dart-define-from-file .env.dev.json` for **development**
-- Run `fvm flutter run --dart-define-from-file .env.prd.json` for **production**
+- Run `make gen_local` to generate localization files
+- Run `make build_dev` for **development**
+- Run `make build_prod` for **production**
 
 ## Feature
 

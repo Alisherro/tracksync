@@ -1,4 +1,4 @@
-.PHONY: run build_dev build_prod test
+.PHONY: run build_dev build_prod test gen_local
 
 build_dev:
 	@echo "Running Flutter app with environment variables from .env.dev.json"
@@ -11,3 +11,7 @@ build_prod:
 test:
 	@echo "Running Flutter tests"
 	fvm flutter test
+
+gen_local:
+	@echo "Generating localization files"
+	fvm flutter gen-l10n
