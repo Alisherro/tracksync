@@ -48,3 +48,7 @@ app.*.map.json
 
 # local var
 *.properties
+
+# Environment configuration files
+.env.dev.json
+.env.prd.json
